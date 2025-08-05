@@ -194,14 +194,13 @@
 
     <div class="form-group">
       <label for="currentStat">Current Stat:</label>
-      <input type="number" id="currentStat" placeholder="e.g. 1e15" required>
+      <input type="text" id="currentStat" placeholder="e.g. 1.5sx or 1e15" required>
     </div>
 
     <div class="checkbox-group">
       <label><input type="checkbox" id="doubleGamepass"> 2x Gamepass</label>
       <label><input type="checkbox" id="eventBoost"> Event Boost (5x)</label>
       <label><input type="checkbox" id="personalBoost"> Personal Boost (1.5x)</label>
-
     </div>
 
     <button onclick="calculateGains()">Calculate</button>
@@ -241,6 +240,56 @@
       { name: "x10B Area", boost: 10000000000, required: 1e29 }
     ];
 
+    // Function to parse number with suffix (e.g. "1.5sx" or "1e15")
+    function parseNumberWithSuffix(input) {
+      if (!input) return NaN;
+      
+      // Check if input is in scientific notation (e.g. 1e15)
+      if (/^[0-9.]+e[0-9]+$/i.test(input)) {
+        return parseFloat(input);
+      }
+      
+      // Remove any whitespace and convert to lowercase
+      input = input.toString().trim().toLowerCase();
+      
+      // Define suffix multipliers
+      const suffixes = {
+        'k': 1e3,
+        'm': 1e6,
+        'b': 1e9,
+        't': 1e12,
+        'qd': 1e15,
+        'qn': 1e18,
+        'sx': 1e21,
+        'sp': 1e24,
+        'oc': 1e27,
+        'no': 1e30,
+        'dc': 1e33
+      };
+      
+      // Find the suffix at the end of the string
+      let suffix = '';
+      let numberPart = input;
+      for (const s in suffixes) {
+        if (input.endsWith(s)) {
+          suffix = s;
+          numberPart = input.substring(0, input.length - s.length);
+          break;
+        }
+      }
+      
+      // Parse the number part
+      const number = parseFloat(numberPart);
+      if (isNaN(number)) return NaN;
+      
+      // Apply the suffix multiplier if found
+      if (suffix && suffixes[suffix]) {
+        return number * suffixes[suffix];
+      }
+      
+      return number;
+    }
+
     function abbreviateNumber(num) {
       const units = [
         { value: 1e33, symbol: "Dc" },
@@ -262,46 +311,52 @@
     }
 
     function calculateGains() {
-  const time = parseFloat(document.getElementById("time").value);
-  const multiplier = parseFloat(document.getElementById("multiplier").value);
-  const statType = document.getElementById("statType").value;
-  const currentStat = parseFloat(document.getElementById("currentStat").value);
-  const hasGamepass = document.getElementById("doubleGamepass").checked;
-  const hasEvent = document.getElementById("eventBoost").checked;
-  const hasPersonalBoost = document.getElementById("personalBoost").checked;
+      const time = parseFloat(document.getElementById("time").value);
+      const multiplier = parseFloat(document.getElementById("multiplier").value);
+      const statType = document.getElementById("statType").value;
+      const currentStatInput = document.getElementById("currentStat").value;
+      const hasGamepass = document.getElementById("doubleGamepass").checked;
+      const hasEvent = document.getElementById("eventBoost").checked;
+      const hasPersonalBoost = document.getElementById("personalBoost").checked;
 
-  if (isNaN(time) || isNaN(multiplier) || isNaN(currentStat)) {
-    document.getElementById("result").innerHTML = `<p>Please fill out all fields with valid numbers.</p>`;
-    return;
-  }
+      if (isNaN(time) || isNaN(multiplier) || !currentStatInput) {
+        document.getElementById("result").innerHTML = `<p>Please fill out all fields with valid numbers.</p>`;
+        return;
+      }
 
-  let totalMultiplier = multiplier;
-  if (hasGamepass) totalMultiplier *= 2;
-  if (hasPersonalBoost) totalMultiplier *= 1.5;
+      const currentStat = parseNumberWithSuffix(currentStatInput);
+      if (isNaN(currentStat)) {
+        document.getElementById("result").innerHTML = `<p>Please enter a valid current stat (e.g. 1.5sx or 1e15).</p>`;
+        return;
+      }
 
-  let areaBoost = 1;
-  let areaName = "None";
-  for (let i = trainingAreas.length - 1; i >= 0; i--) {
-    if (currentStat >= trainingAreas[i].required) {
-      areaBoost = trainingAreas[i].boost;
-      areaName = trainingAreas[i].name;
-      break;
+      let totalMultiplier = multiplier;
+      if (hasGamepass) totalMultiplier *= 2;
+      if (hasPersonalBoost) totalMultiplier *= 1.5;
+
+      let areaBoost = 1;
+      let areaName = "None";
+      for (let i = trainingAreas.length - 1; i >= 0; i--) {
+        if (currentStat >= trainingAreas[i].required) {
+          areaBoost = trainingAreas[i].boost;
+          areaName = trainingAreas[i].name;
+          break;
+        }
+      }
+
+      let gain = baseRates[statType] * totalMultiplier * time * areaBoost;
+      if (hasEvent) gain *= 5;
+
+      document.getElementById("result").innerHTML = `
+        <p><strong>Training Type:</strong> ${statType.charAt(0).toUpperCase() + statType.slice(1)}</p>
+        <p><strong>Training Area:</strong> ${areaName} (x${areaBoost})</p>
+        ${hasGamepass ? `<p><strong>Gamepass Applied:</strong> x2</p>` : ""}
+        ${hasEvent ? `<p><strong>Event Boost Applied:</strong> x5</p>` : ""}
+        ${hasPersonalBoost ? `<p><strong>Personal Boost Applied:</strong> x1.5</p>` : ""}
+        <p><strong>Total Gain:</strong> ${abbreviateNumber(gain)}</p>
+        <p><strong>Current Stat Parsed:</strong> ${currentStat.toExponential(2)}</p>
+      `;
     }
-  }
-
-  let gain = baseRates[statType] * totalMultiplier * time * areaBoost;
-  if (hasEvent) gain *= 5;
-
-  document.getElementById("result").innerHTML = `
-    <p><strong>Training Type:</strong> ${statType.charAt(0).toUpperCase() + statType.slice(1)}</p>
-    <p><strong>Training Area:</strong> ${areaName} (x${areaBoost})</p>
-    ${hasGamepass ? `<p><strong>Gamepass Applied:</strong> x2</p>` : ""}
-    ${hasEvent ? `<p><strong>Event Boost Applied:</strong> x5</p>` : ""}
-    ${hasPersonalBoost ? `<p><strong>Personal Boost Applied:</strong> x1.5</p>` : ""}
-    <p><strong>Total Gain:</strong> ${abbreviateNumber(gain)}</p>
-  `;
-}
   </script>
 </body>
-
 </html>
