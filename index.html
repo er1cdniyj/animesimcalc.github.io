@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stats Multiplier Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;700&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1683895430624790"
+     crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-1683895430624790">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Oxanium', sans-serif;
+      background: #0e0e12;
+      color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .navbar {
+      width: 100%;
+      background: #1e1e26;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 195, 255, 0.2);
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
+
+    .navbar a {
+      color: #00c3ff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      margin: 0 10px;
+    }
+
+    marquee {
+      margin-bottom: 20px;
+      color: #cccccc;
+    }
+
+    .container {
+      background: #1c1c24;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0, 195, 255, 0.1);
+      max-width: 700px;
+      width: 100%;
+    }
+
+    .container img {
+      display: block;
+      margin: 0 auto 25px;
+      max-width: 140px;
+      filter: drop-shadow(0 0 10px #00c3ff);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      background: linear-gradient(90deg, #00c3ff, #ff1b6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #888;
+    }
+
+    p {
+      font-size: 14px;
+      color: #bbb;
+      text-align: center;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    input,
+    select {
+      background: #292933;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 10px;
+      color: #f0f0f0;
+      font-size: 15px;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #00c3ff;
+      outline: none;
+      box-shadow: 0 0 8px rgba(0, 195, 255, 0.4);
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #00c3ff, #ff1b6b);
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 27, 107, 0.4);
+    }
+
+    .result {
+      margin-top: 30px;
+      background: #222228;
+      padding: 20px;
+      border-left: 5px solid #00c3ff;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .form-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <a href="index2.html">Coin Calculator</a>
+  </div>
+
+  <marquee>
+    <p>Trading Value Calculator Coming Soon! Dm "urmumscouch" for suggestions and bug reports! Thank you to Nick for making this project possible!</p>
+  </marquee>
+
+  <div class="container">
+    <img src="image1.png" alt="Anime Simulator Logo">
+    <h1>Stats Multiplier Calculator</h1>
+    <h3>By Babatunde2289</h3>
+    <p>Enter your training time, stat multipliers,current stat, and watch the calculator cook.</p>
+
+    <div class="form-group">
+      <label for="time">Time (minutes):</label>
+      <input type="number" id="time" placeholder="e.g. 60" required>
+    </div>
+
+    <div class="form-group">
+      <label for="multiplier">Multiplier:</label>
+      <input type="number" id="multiplier" min="2" max="2000000" value="2">
+    </div>
+
+    <div class="form-group">
+      <label for="statType">Training Type:</label>
+      <select id="statType">
+        <option value="strength">Strength</option>
+        <option value="energy">Energy</option>
+        <option value="defense">Defense</option>
+        <option value="sword">Sword</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="currentStat">Current Stat:</label>
+      <input type="number" id="currentStat" placeholder="e.g. 1e15" required>
+    </div>
+
+    <div class="checkbox-group">
+      <label><input type="checkbox" id="doubleGamepass"> 2x Gamepass</label>
+      <label><input type="checkbox" id="eventBoost"> Event Boost (5x)</label>
+      <label><input type="checkbox" id="personalBoost"> Personal Boost (1.5x)</label>
+
+    </div>
+
+    <button onclick="calculateGains()">Calculate</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const baseRates = {
+      strength: 55,
+      energy: 28,
+      defense: 36,
+      sword: 55
+    };
+
+    const trainingAreas = [
+      { name: "None", boost: 1, required: 0 },
+      { name: "x5 Area", boost: 5, required: 500 },
+      { name: "x15 Area", boost: 15, required: 10000 },
+      { name: "x50 Area", boost: 50, required: 100000 },
+      { name: "x100 Area", boost: 100, required: 1000000 },
+      { name: "x500 Area", boost: 500, required: 10000000 },
+      { name: "x1000 Area", boost: 1000, required: 100000000 },
+      { name: "x2500 Area", boost: 2500, required: 1000000000 },
+      { name: "x5000 Area", boost: 5000, required: 10000000000 },
+      { name: "x10000 Area", boost: 10000, required: 100000000000 },
+      { name: "x25000 Area", boost: 25000, required: 1000000000000 },
+      { name: "x100000 Area", boost: 100000, required: 100000000000000 },
+      { name: "x250000 Area", boost: 250000, required: 1000000000000000 },
+      { name: "x1M Area", boost: 1000000, required: 1e17 },
+      { name: "x2.5M Area", boost: 2500000, required: 1e18 },
+      { name: "x10M Area", boost: 10000000, required: 1e20 },
+      { name: "x25M Area", boost: 25000000, required: 1e21 },
+      { name: "x100M Area", boost: 100000000, required: 1e23 },
+      { name: "x250M Area", boost: 250000000, required: 1e24 },
+      { name: "x1B Area", boost: 1000000000, required: 1e26 },
+      { name: "x2.5B Area", boost: 2500000000, required: 1e27 },
+      { name: "x10B Area", boost: 10000000000, required: 1e29 }
+    ];
+
+    function abbreviateNumber(num) {
+      const units = [
+        { value: 1e33, symbol: "Dc" },
+        { value: 1e30, symbol: "No" },
+        { value: 1e27, symbol: "Oc" },
+        { value: 1e24, symbol: "Sp" },
+        { value: 1e21, symbol: "Sx" },
+        { value: 1e18, symbol: "Qn" },
+        { value: 1e15, symbol: "Qd" },
+        { value: 1e12, symbol: "T" },
+        { value: 1e9, symbol: "B" },
+        { value: 1e6, symbol: "M" },
+        { value: 1e3, symbol: "K" }
+      ];
+      for (const { value, symbol } of units) {
+        if (num >= value) return (num / value).toFixed(2) + symbol;
+      }
+      return num.toString();
+    }
+
+    function calculateGains() {
+  const time = parseFloat(document.getElementById("time").value);
+  const multiplier = parseFloat(document.getElementById("multiplier").value);
+  const statType = document.getElementById("statType").value;
+  const currentStat = parseFloat(document.getElementById("currentStat").value);
+  const hasGamepass = document.getElementById("doubleGamepass").checked;
+  const hasEvent = document.getElementById("eventBoost").checked;
+  const hasPersonalBoost = document.getElementById("personalBoost").checked;
+
+  if (isNaN(time) || isNaN(multiplier) || isNaN(currentStat)) {
+    document.getElementById("result").innerHTML = `<p>Please fill out all fields with valid numbers.</p>`;
+    return;
+  }
+
+  let totalMultiplier = multiplier;
+  if (hasGamepass) totalMultiplier *= 2;
+  if (hasPersonalBoost) totalMultiplier *= 1.5;
+
+  let areaBoost = 1;
+  let areaName = "None";
+  for (let i = trainingAreas.length - 1; i >= 0; i--) {
+    if (currentStat >= trainingAreas[i].required) {
+      areaBoost = trainingAreas[i].boost;
+      areaName = trainingAreas[i].name;
+      break;
+    }
+  }
+
+  let gain = baseRates[statType] * totalMultiplier * time * areaBoost;
+  if (hasEvent) gain *= 5;
+
+  document.getElementById("result").innerHTML = `
+    <p><strong>Training Type:</strong> ${statType.charAt(0).toUpperCase() + statType.slice(1)}</p>
+    <p><strong>Training Area:</strong> ${areaName} (x${areaBoost})</p>
+    ${hasGamepass ? `<p><strong>Gamepass Applied:</strong> x2</p>` : ""}
+    ${hasEvent ? `<p><strong>Event Boost Applied:</strong> x5</p>` : ""}
+    ${hasPersonalBoost ? `<p><strong>Personal Boost Applied:</strong> x1.5</p>` : ""}
+    <p><strong>Total Gain:</strong> ${abbreviateNumber(gain)}</p>
+  `;
+}
+  </script>
+</body>
+
+</html>
