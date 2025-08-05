@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coin Calculator</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1683895430624790"
+     crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-1683895430624790">
+
+  <style>
+
+    body {
+      font-family: 'Oxanium', sans-serif;
+      background: linear-gradient(145deg, #0f0f0f, #1a1a1d);
+      margin: 0;
+      padding: 20px;
+      color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .navbar {
+      background-color: #222228;
+      width: 100%;
+      padding: 15px 20px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 200, 255, 0.2);
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    .navbar a {
+      color: #00c3ff;
+      font-size: 18px;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      background: #1b1b1f;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(0, 200, 255, 0.15);
+      max-width: 700px;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #00c3ff, #ff1b6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      color: #cccccc;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+
+    label {
+      font-size: 14px;
+      text-align: right;
+      color: #bbbbbb;
+      padding-right: 10px;
+    }
+
+    input,
+    select {
+      background-color: #292933;
+      border: 1px solid #444;
+      color: #f0f0f0;
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 8px;
+      width: 100%;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #00c3ff;
+      box-shadow: 0 0 8px rgba(0, 200, 255, 0.3);
+      outline: none;
+    }
+
+    button {
+      background: linear-gradient(135deg, #00c3ff, #ff1b6b);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 27, 107, 0.4);
+    }
+
+    .result {
+      margin-top: 30px;
+      background-color: #222228;
+      border-left: 5px solid #00c3ff;
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(0, 195, 255, 0.1);
+    }
+
+    .result p {
+      margin: 10px 0;
+    }
+
+    @media (max-width: 600px) {
+      .form-group {
+        grid-template-columns: 1fr;
+        text-align: left;
+      }
+
+      label {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <a href="index.html">Stats Calculator</a>
+  </div>
+
+  <div class="container">
+    <img src="image1.png" alt="Coin Calculator Logo" style="max-width: 140px; display: block; margin: 0 auto 25px; filter: drop-shadow(0 0 10px #00c3ff);" />
+
+    <h1>Coin Calculator</h1>
+    <p>Enter your starting coins and the desired coin multiplier.</p>
+
+    <div class="form-group">
+      <label for="rankSelect">Select Rank:</label>
+      <select id="rankSelect">
+        <option value="0">Rookie</option>
+        <option value="1">Ninja</option>
+        <option value="2">Pirate</option>
+        <option value="3">Ghoul</option>
+        <option value="4">Hero</option>
+        <option value="5">Reaper</option>
+        <option value="6">Warrior</option>
+        <option value="7">Sin</option>
+        <option value="8">Mage</option>
+        <option value="9">Demon</option>
+        <option value="10">Emperor</option>
+        <option value="11">Elder</option>
+        <option value="12">Overlord</option>
+        <option value="13">Leader</option>
+        <option value="14">Deity</option>
+        <option value="15">Sage</option>
+        <option value="16">Mask</option>
+        <option value="17">Shinigami</option>
+        <option value="18">Hashira</option>
+        <option value="19">Destroyer</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="doubleCoins">2x Coins Gamepass:</label>
+      <input type="checkbox" id="doubleCoins" />
+    </div>
+    <div class="form-group">
+      <label for="goldCompanion">Gold Companion:</label>
+      <input type="checkbox" id="goldCompanion" />
+    </div>
+
+
+    <div class="form-group">
+      <label for="timeInput">Time (in minutes):</label>
+      <input type="number" id="timeInput" placeholder="Enter time in minutes" />
+    </div>
+
+    <button onclick="calculateCoins()">Calculate</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const ranks = [
+      { name: "Rookie", coinPerMinute: 5 },
+      { name: "Ninja", coinPerMinute: 10 },
+      { name: "Pirate", coinPerMinute: 25 },
+      { name: "Ghoul", coinPerMinute: 50 },
+      { name: "Hero", coinPerMinute: 100 },
+      { name: "Reaper", coinPerMinute: 250 },
+      { name: "Warrior", coinPerMinute: 500 },
+      { name: "Sin", coinPerMinute: 1000 },
+      { name: "Mage", coinPerMinute: 5000 },
+      { name: "Demon", coinPerMinute: 10000 },
+      { name: "Emperor", coinPerMinute: 50000 },
+      { name: "Elder", coinPerMinute: 100000 },
+      { name: "Overlord", coinPerMinute: 500000 },
+      { name: "Leader", coinPerMinute: 1000000 },
+      { name: "Deity", coinPerMinute: 5000000 },
+      { name: "Sage", coinPerMinute: 10000000 },
+      { name: "Mask", coinPerMinute: 50000000 },
+      { name: "Shinigami", coinPerMinute: 100000000 },
+      { name: "Hashira", coinPerMinute: 500000000 },
+      { name: "Destroyer", coinPerMinute: 1000000000 }
+    ];
+
+    function calculateCoins() {
+      const selectedRankIndex = parseInt(document.getElementById("rankSelect").value);
+      const selectedRank = ranks[selectedRankIndex];
+      const doubleCoins = document.getElementById("doubleCoins").checked;
+      const goldCompanion = document.getElementById("goldCompanion").checked;
+      const time = parseInt(document.getElementById("timeInput").value);
+
+      if (isNaN(time) || time <= 0) {
+        alert("Please enter a valid time.");
+        return;
+      }
+
+      let coinsPerMinute = selectedRank.coinPerMinute;
+
+      if (doubleCoins) {
+        coinsPerMinute *= 2;
+      }
+
+      if (goldCompanion) {
+        coinsPerMinute *= 1.2; // Increase by 20%
+      }
+
+      const totalCoins = coinsPerMinute * time;
+
+      const formattedCoinsPerMinute = Math.floor(coinsPerMinute).toLocaleString();
+      const formattedTotalCoins = Math.floor(totalCoins).toLocaleString();
+
+      document.getElementById("result").innerHTML = `
+        <p><strong>Rank:</strong> ${selectedRank.name}</p>
+        <p><strong>Coins Per Minute:</strong> ${formattedCoinsPerMinute} (x${doubleCoins ? '2' : '1'}${goldCompanion ? ' + 20% Gold Companion' : ''})</p>
+        <p><strong>Total Coins Earned in ${time} minutes:</strong> ${formattedTotalCoins}</p>
+      `;
+    }
+
+  </script>
+</body>
+
+</html>
