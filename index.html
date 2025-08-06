@@ -5,215 +5,269 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stats Multiplier Calculator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1683895430624790"
      crossorigin="anonymous"></script>
   <meta name="google-adsense-account" content="ca-pub-1683895430624790">
   <style>
-    body {
+    :root {
+      --primary: #00c3ff;
+      --secondary: #ff1b6b;
+      --bg-dark: #0e0e12;
+      --bg-card: #1c1c24;
+      --bg-element: #292933;
+      --border: #444;
+      --text-main: #f0f0f0;
+      --text-secondary: #bbb;
+      --accent: #222228;
+    }
+    
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+    }
+    
+    body {
       font-family: 'Oxanium', sans-serif;
-      background: #0e0e12;
-      color: #f0f0f0;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 2rem 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 30px;
     }
-
+    
     .navbar {
       width: 100%;
-      background: #1e1e26;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(0, 195, 255, 0.2);
-      border-radius: 10px;
-      margin-bottom: 25px;
+      max-width: 800px;
+      background: var(--accent);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0, 195, 255, 0.1);
     }
-
+    
     .navbar a {
-      color: #00c3ff;
+      color: var(--primary);
       text-decoration: none;
-      font-weight: bold;
-      font-size: 18px;
-      margin: 0 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin: 0 0.75rem;
+      transition: all 0.2s ease;
     }
-
-    marquee {
-      margin-bottom: 20px;
-      color: #cccccc;
+    
+    .navbar a:hover {
+      text-shadow: 0 0 8px rgba(0, 195, 255, 0.6);
     }
-
-    .container {
-      background: #1c1c24;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 0 30px rgba(0, 195, 255, 0.1);
-      max-width: 700px;
+    
+    .marquee {
       width: 100%;
+      max-width: 800px;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
     }
-
-    .container img {
+    
+    .container {
+      background: var(--bg-card);
+      width: 100%;
+      max-width: 800px;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 30px rgba(0, 195, 255, 0.05);
+    }
+    
+    .logo {
       display: block;
-      margin: 0 auto 25px;
-      max-width: 140px;
-      filter: drop-shadow(0 0 10px #00c3ff);
+      margin: 0 auto 1.5rem;
+      width: 120px;
+      filter: drop-shadow(0 0 10px var(--primary));
     }
-
-    h1 {
+    
+    .title {
       text-align: center;
-      font-size: 32px;
-      background: linear-gradient(90deg, #00c3ff, #ff1b6b);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
     }
-
-    h3 {
+    
+    .subtitle {
       text-align: center;
-      margin-bottom: 25px;
-      color: #888;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+      font-weight: 400;
     }
-
-    p {
-      font-size: 14px;
-      color: #bbb;
-      text-align: center;
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
     }
-
+    
     .form-group {
       display: flex;
       flex-direction: column;
-      margin-bottom: 20px;
+      gap: 0.5rem;
     }
-
+    
     label {
-      margin-bottom: 5px;
-      font-size: 14px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
     }
-
-    input,
-    select {
-      background: #292933;
-      border: 1px solid #444;
-      border-radius: 8px;
-      padding: 10px;
-      color: #f0f0f0;
-      font-size: 15px;
+    
+    input, select {
+      background: var(--bg-element);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      color: var(--text-main);
+      font-size: 1rem;
+      transition: all 0.2s ease;
     }
-
-    input:focus,
-    select:focus {
-      border-color: #00c3ff;
+    
+    input:focus, select:focus {
+      border-color: var(--primary);
       outline: none;
-      box-shadow: 0 0 8px rgba(0, 195, 255, 0.4);
+      box-shadow: 0 0 0 3px rgba(0, 195, 255, 0.2);
     }
-
-    .checkbox-group {
+    
+    .checkboxes {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
-
-    .checkbox-group label {
+    
+    .checkbox-label {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 14px;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      cursor: pointer;
     }
-
-    button {
-      background: linear-gradient(135deg, #00c3ff, #ff1b6b);
-      color: #fff;
-      font-size: 16px;
-      font-weight: bold;
-      padding: 12px;
+    
+    .btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0.75rem;
       border: none;
-      border-radius: 10px;
+      border-radius: 0.5rem;
       cursor: pointer;
       transition: all 0.2s ease;
       width: 100%;
     }
-
-    button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255, 27, 107, 0.4);
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 27, 107, 0.3);
     }
-
+    
     .result {
-      margin-top: 30px;
-      background: #222228;
-      padding: 20px;
-      border-left: 5px solid #00c3ff;
-      border-radius: 10px;
+      margin-top: 2rem;
+      background: var(--accent);
+      padding: 1.5rem;
+      border-left: 4px solid var(--primary);
+      border-radius: 0.5rem;
     }
-
-    @media (max-width: 600px) {
-      .form-group {
-        flex-direction: column;
+    
+    .result-item {
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .result-value {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    @media (min-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="navbar">
+  <nav class="navbar">
     <a href="index2.html">Coin Calculator</a>
+  </nav>
+
+  <div class="marquee">
+    Trading Value Calculator Coming Soon! Dm "urmumscouch" for suggestions and bug reports! Thank you to Nick for making this project possible!
   </div>
 
-  <marquee>
-    <p>Trading Value Calculator Coming Soon! Dm "urmumscouch" for suggestions and bug reports! Thank you to Nick for making this project possible!</p>
-  </marquee>
-
   <div class="container">
-    <img src="image1.png" alt="Anime Simulator Logo">
-    <h1>Stats Multiplier Calculator</h1>
-    <h3>By Babatunde2289</h3>
-    <p>Enter your training time, stat multipliers, current stat, and watch the calculator cook.</p>
+    <img src="image1.png" alt="Anime Simulator Logo" class="logo">
+    <h1 class="title">Stats Multiplier Calculator</h1>
+    <p class="subtitle">By Babatunde2289</p>
+    <p class="subtitle">Enter your training time, stat multipliers, current stat, and watch the calculator cook.</p>
 
-    <div class="form-group">
-      <label for="time">Time (minutes):</label>
-      <input type="number" id="time" placeholder="e.g. 60" required>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="time">Time (minutes)</label>
+        <input type="number" id="time" placeholder="e.g. 60" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="multiplier">Multiplier</label>
+        <input type="text" id="multiplier" placeholder="e.g. 2 or 1.5sx" value="2">
+      </div>
+      
+      <div class="form-group">
+        <label for="statType">Training Type</label>
+        <select id="statType">
+          <option value="strength">Strength</option>
+          <option value="energy">Energy</option>
+          <option value="defense">Defense</option>
+          <option value="sword">Sword</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="currentStat">Current Stat</label>
+        <input type="text" id="currentStat" placeholder="e.g. 1.5sx or 1e15" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="world">World</label>
+        <select id="world">
+          <option value="1">World 1 (x1)</option>
+          <option value="2">World 2 (x2)</option>
+          <option value="3">World 3 (x3)</option>
+        </select>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="multiplier">Multiplier:</label>
-      <input type="text" id="multiplier" placeholder="e.g. 2 or 1.5sx" value="2">
+    <div class="checkboxes">
+      <label class="checkbox-label">
+        <input type="checkbox" id="doubleGamepass"> 2x Gamepass
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="eventBoost"> Event Boost (5x)
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="personalBoost"> Personal Boost (1.5x)
+      </label>
     </div>
 
-    <div class="form-group">
-      <label for="statType">Training Type:</label>
-      <select id="statType">
-        <option value="strength">Strength</option>
-        <option value="energy">Energy</option>
-        <option value="defense">Defense</option>
-        <option value="sword">Sword</option>
-      </select>
+    <button class="btn" onclick="calculateGains()">Calculate</button>
+    
+    <div class="result" id="result">
+      <div class="result-item">
+        <span>Fill in the form and click Calculate</span>
+      </div>
     </div>
-
-    <div class="form-group">
-      <label for="currentStat">Current Stat:</label>
-      <input type="text" id="currentStat" placeholder="e.g. 1.5sx or 1e15" required>
-    </div>
-
-    <div class="form-group">
-      <label for="world">World:</label>
-      <select id="world">
-        <option value="1">World 1 (x1)</option>
-        <option value="2">World 2 (x2)</option>
-        <option value="3">World 3 (x3)</option>
-      </select>
-    </div>
-
-    <div class="checkbox-group">
-      <label><input type="checkbox" id="doubleGamepass"> 2x Gamepass</label>
-      <label><input type="checkbox" id="eventBoost"> Event Boost (5x)</label>
-      <label><input type="checkbox" id="personalBoost"> Personal Boost (1.5x)</label>
-    </div>
-
-    <button onclick="calculateGains()">Calculate</button>
-    <div class="result" id="result"></div>
   </div>
 
   <script>
@@ -249,34 +303,21 @@
       { name: "x10B Area", boost: 10000000000, required: 1e29 }
     ];
 
-    // Function to parse number with suffix (e.g. "1.5sx" or "1e15")
     function parseNumberWithSuffix(input) {
       if (!input) return NaN;
       
-      // Check if input is in scientific notation (e.g. 1e15)
       if (/^[0-9.]+e[0-9]+$/i.test(input)) {
         return parseFloat(input);
       }
       
-      // Remove any whitespace and convert to lowercase
       input = input.toString().trim().toLowerCase();
       
-      // Define suffix multipliers
       const suffixes = {
-        'k': 1e3,
-        'm': 1e6,
-        'b': 1e9,
-        't': 1e12,
-        'qd': 1e15,
-        'qn': 1e18,
-        'sx': 1e21,
-        'sp': 1e24,
-        'oc': 1e27,
-        'no': 1e30,
-        'dc': 1e33
+        'k': 1e3, 'm': 1e6, 'b': 1e9, 't': 1e12,
+        'qd': 1e15, 'qn': 1e18, 'sx': 1e21, 'sp': 1e24,
+        'oc': 1e27, 'no': 1e30, 'dc': 1e33
       };
       
-      // Find the suffix at the end of the string
       let suffix = '';
       let numberPart = input;
       for (const s in suffixes) {
@@ -287,32 +328,22 @@
         }
       }
       
-      // Parse the number part
       const number = parseFloat(numberPart);
       if (isNaN(number)) return NaN;
       
-      // Apply the suffix multiplier if found
-      if (suffix && suffixes[suffix]) {
-        return number * suffixes[suffix];
-      }
-      
-      return number;
+      return suffix ? number * suffixes[suffix] : number;
     }
 
     function abbreviateNumber(num) {
       const units = [
-        { value: 1e33, symbol: "Dc" },
-        { value: 1e30, symbol: "No" },
-        { value: 1e27, symbol: "Oc" },
-        { value: 1e24, symbol: "Sp" },
-        { value: 1e21, symbol: "Sx" },
-        { value: 1e18, symbol: "Qn" },
-        { value: 1e15, symbol: "Qd" },
-        { value: 1e12, symbol: "T" },
-        { value: 1e9, symbol: "B" },
-        { value: 1e6, symbol: "M" },
+        { value: 1e33, symbol: "Dc" }, { value: 1e30, symbol: "No" },
+        { value: 1e27, symbol: "Oc" }, { value: 1e24, symbol: "Sp" },
+        { value: 1e21, symbol: "Sx" }, { value: 1e18, symbol: "Qn" },
+        { value: 1e15, symbol: "Qd" }, { value: 1e12, symbol: "T" },
+        { value: 1e9, symbol: "B" }, { value: 1e6, symbol: "M" },
         { value: 1e3, symbol: "K" }
       ];
+      
       for (const { value, symbol } of units) {
         if (num >= value) return (num / value).toFixed(2) + symbol;
       }
@@ -320,6 +351,7 @@
     }
 
     function calculateGains() {
+      // Get input values
       const time = parseFloat(document.getElementById("time").value);
       const multiplierInput = document.getElementById("multiplier").value;
       const statType = document.getElementById("statType").value;
@@ -329,8 +361,13 @@
       const hasEvent = document.getElementById("eventBoost").checked;
       const hasPersonalBoost = document.getElementById("personalBoost").checked;
 
+      // Validate inputs
       if (isNaN(time) || !multiplierInput || !currentStatInput) {
-        document.getElementById("result").innerHTML = `<p>Please fill out all fields with valid numbers.</p>`;
+        document.getElementById("result").innerHTML = `
+          <div class="result-item" style="color: #ff6b6b;">
+            <span>Please fill out all fields with valid numbers</span>
+          </div>
+        `;
         return;
       }
 
@@ -338,19 +375,29 @@
       const currentStat = parseNumberWithSuffix(currentStatInput);
       
       if (isNaN(multiplier)) {
-        document.getElementById("result").innerHTML = `<p>Please enter a valid multiplier (e.g. 2 or 1.5sx).</p>`;
+        document.getElementById("result").innerHTML = `
+          <div class="result-item" style="color: #ff6b6b;">
+            <span>Please enter a valid multiplier (e.g. 2 or 1.5sx)</span>
+          </div>
+        `;
         return;
       }
       
       if (isNaN(currentStat)) {
-        document.getElementById("result").innerHTML = `<p>Please enter a valid current stat (e.g. 1.5sx or 1e15).</p>`;
+        document.getElementById("result").innerHTML = `
+          <div class="result-item" style="color: #ff6b6b;">
+            <span>Please enter a valid current stat (e.g. 1.5sx or 1e15)</span>
+          </div>
+        `;
         return;
       }
 
+      // Calculate total multiplier
       let totalMultiplier = multiplier;
       if (hasGamepass) totalMultiplier *= 2;
       if (hasPersonalBoost) totalMultiplier *= 1.5;
 
+      // Determine training area boost
       let areaBoost = 1;
       let areaName = "None";
       for (let i = trainingAreas.length - 1; i >= 0; i--) {
@@ -364,19 +411,51 @@
       // Apply world multiplier (W1 x1, W2 x2, W3 x3)
       const worldMultiplier = world;
 
+      // Calculate final gain
       let gain = baseRates[statType] * totalMultiplier * time * areaBoost * worldMultiplier;
       if (hasEvent) gain *= 5;
 
+      // Prepare bonuses list
+      const bonuses = [];
+      if (hasGamepass) bonuses.push("2x Gamepass");
+      if (hasEvent) bonuses.push("5x Event");
+      if (hasPersonalBoost) bonuses.push("1.5x Personal");
+
+      // Display results
       document.getElementById("result").innerHTML = `
-        <p><strong>Training Type:</strong> ${statType.charAt(0).toUpperCase() + statType.slice(1)}</p>
-        <p><strong>Training Area:</strong> ${areaName} (x${areaBoost})</p>
-        <p><strong>World Multiplier:</strong> x${worldMultiplier}</p>
-        <p><strong>Multiplier Used:</strong> ${abbreviateNumber(multiplier)} (${multiplier.toExponential(2)})</p>
-        ${hasGamepass ? `<p><strong>Gamepass Applied:</strong> x2</p>` : ""}
-        ${hasEvent ? `<p><strong>Event Boost Applied:</strong> x5</p>` : ""}
-        ${hasPersonalBoost ? `<p><strong>Personal Boost Applied:</strong> x1.5</p>` : ""}
-        <p><strong>Current Stat:</strong> ${abbreviateNumber(currentStat)} (${currentStat.toExponential(2)})</p>
-        <p><strong>Total Gain:</strong> ${abbreviateNumber(gain)} (${gain.toExponential(2)})</p>
+        <div class="result-item">
+          <span>Training Type:</span>
+          <span class="result-value">${statType.charAt(0).toUpperCase() + statType.slice(1)}</span>
+        </div>
+        <div class="result-item">
+          <span>Training Area:</span>
+          <span class="result-value">${areaName} (x${areaBoost})</span>
+        </div>
+        <div class="result-item">
+          <span>World Multiplier:</span>
+          <span class="result-value">x${worldMultiplier}</span>
+        </div>
+        <div class="result-item">
+          <span>Base Multiplier:</span>
+          <span class="result-value">${abbreviateNumber(multiplier)}</span>
+        </div>
+        ${bonuses.length > 0 ? `
+        <div class="result-item">
+          <span>Active Bonuses:</span>
+          <span class="result-value">${bonuses.join(", ")}</span>
+        </div>` : ''}
+        <div class="result-item">
+          <span>Current Stat:</span>
+          <span class="result-value">${abbreviateNumber(currentStat)}</span>
+        </div>
+        <div class="result-item" style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #333;">
+          <span style="font-weight: 700;">Total Gain:</span>
+          <span class="result-value" style="font-weight: 700;">${abbreviateNumber(gain)}</span>
+        </div>
+        <div class="result-item" style="font-size: 0.85rem; color: var(--text-secondary);">
+          <span>Full value:</span>
+          <span>${gain.toExponential(2)}</span>
+        </div>
       `;
     }
   </script>
