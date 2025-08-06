@@ -179,7 +179,7 @@
 
     <div class="form-group">
       <label for="multiplier">Multiplier:</label>
-      <input type="number" id="multiplier" min="2" max="2000000" value="2">
+      <input type="text" id="multiplier" placeholder="e.g. 2 or 1.5sx" value="2">
     </div>
 
     <div class="form-group">
@@ -312,19 +312,26 @@
 
     function calculateGains() {
       const time = parseFloat(document.getElementById("time").value);
-      const multiplier = parseFloat(document.getElementById("multiplier").value);
+      const multiplierInput = document.getElementById("multiplier").value;
       const statType = document.getElementById("statType").value;
       const currentStatInput = document.getElementById("currentStat").value;
       const hasGamepass = document.getElementById("doubleGamepass").checked;
       const hasEvent = document.getElementById("eventBoost").checked;
       const hasPersonalBoost = document.getElementById("personalBoost").checked;
 
-      if (isNaN(time) || isNaN(multiplier) || !currentStatInput) {
+      if (isNaN(time) || !multiplierInput || !currentStatInput) {
         document.getElementById("result").innerHTML = `<p>Please fill out all fields with valid numbers.</p>`;
         return;
       }
 
+      const multiplier = parseNumberWithSuffix(multiplierInput);
       const currentStat = parseNumberWithSuffix(currentStatInput);
+      
+      if (isNaN(multiplier) {
+        document.getElementById("result").innerHTML = `<p>Please enter a valid multiplier (e.g. 2 or 1.5sx).</p>`;
+        return;
+      }
+      
       if (isNaN(currentStat)) {
         document.getElementById("result").innerHTML = `<p>Please enter a valid current stat (e.g. 1.5sx or 1e15).</p>`;
         return;
@@ -350,11 +357,12 @@
       document.getElementById("result").innerHTML = `
         <p><strong>Training Type:</strong> ${statType.charAt(0).toUpperCase() + statType.slice(1)}</p>
         <p><strong>Training Area:</strong> ${areaName} (x${areaBoost})</p>
+        <p><strong>Multiplier Used:</strong> ${abbreviateNumber(multiplier)} (${multiplier.toExponential(2)})</p>
         ${hasGamepass ? `<p><strong>Gamepass Applied:</strong> x2</p>` : ""}
         ${hasEvent ? `<p><strong>Event Boost Applied:</strong> x5</p>` : ""}
         ${hasPersonalBoost ? `<p><strong>Personal Boost Applied:</strong> x1.5</p>` : ""}
-        <p><strong>Total Gain:</strong> ${abbreviateNumber(gain)}</p>
-        <p><strong>Current Stat Parsed:</strong> ${currentStat.toExponential(2)}</p>
+        <p><strong>Current Stat:</strong> ${abbreviateNumber(currentStat)} (${currentStat.toExponential(2)})</p>
+        <p><strong>Total Gain:</strong> ${abbreviateNumber(gain)} (${gain.toExponential(2)})</p>
       `;
     }
   </script>
