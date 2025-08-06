@@ -170,7 +170,7 @@
     <img src="image1.png" alt="Anime Simulator Logo">
     <h1>Stats Multiplier Calculator</h1>
     <h3>By Babatunde2289</h3>
-    <p>Enter your training time, stat multipliers,current stat, and watch the calculator cook.</p>
+    <p>Enter your training time, stat multipliers, current stat, and watch the calculator cook.</p>
 
     <div class="form-group">
       <label for="time">Time (minutes):</label>
@@ -195,6 +195,15 @@
     <div class="form-group">
       <label for="currentStat">Current Stat:</label>
       <input type="text" id="currentStat" placeholder="e.g. 1.5sx or 1e15" required>
+    </div>
+
+    <div class="form-group">
+      <label for="world">World:</label>
+      <select id="world">
+        <option value="1">World 1 (x1)</option>
+        <option value="2">World 2 (x2)</option>
+        <option value="3">World 3 (x3)</option>
+      </select>
     </div>
 
     <div class="checkbox-group">
@@ -315,6 +324,7 @@
       const multiplierInput = document.getElementById("multiplier").value;
       const statType = document.getElementById("statType").value;
       const currentStatInput = document.getElementById("currentStat").value;
+      const world = parseInt(document.getElementById("world").value);
       const hasGamepass = document.getElementById("doubleGamepass").checked;
       const hasEvent = document.getElementById("eventBoost").checked;
       const hasPersonalBoost = document.getElementById("personalBoost").checked;
@@ -327,7 +337,7 @@
       const multiplier = parseNumberWithSuffix(multiplierInput);
       const currentStat = parseNumberWithSuffix(currentStatInput);
       
-      if (isNaN(multiplier) {
+      if (isNaN(multiplier)) {
         document.getElementById("result").innerHTML = `<p>Please enter a valid multiplier (e.g. 2 or 1.5sx).</p>`;
         return;
       }
@@ -351,12 +361,16 @@
         }
       }
 
-      let gain = baseRates[statType] * totalMultiplier * time * areaBoost;
+      // Apply world multiplier (W1 x1, W2 x2, W3 x3)
+      const worldMultiplier = world;
+
+      let gain = baseRates[statType] * totalMultiplier * time * areaBoost * worldMultiplier;
       if (hasEvent) gain *= 5;
 
       document.getElementById("result").innerHTML = `
         <p><strong>Training Type:</strong> ${statType.charAt(0).toUpperCase() + statType.slice(1)}</p>
         <p><strong>Training Area:</strong> ${areaName} (x${areaBoost})</p>
+        <p><strong>World Multiplier:</strong> x${worldMultiplier}</p>
         <p><strong>Multiplier Used:</strong> ${abbreviateNumber(multiplier)} (${multiplier.toExponential(2)})</p>
         ${hasGamepass ? `<p><strong>Gamepass Applied:</strong> x2</p>` : ""}
         ${hasEvent ? `<p><strong>Event Boost Applied:</strong> x5</p>` : ""}
