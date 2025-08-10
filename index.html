@@ -333,16 +333,16 @@
         }
       }
 
-      const baseGainPerTick = baseRates[statType] * totalMultiplier * areaBoost * world;
+      const baseGainPerMinute = baseRates[statType] * totalMultiplier * areaBoost * world;
       const eventMultiplier = hasEvent ? 5 : 1;
-      const ticksPerMinute = 10;
       
-      let mainGain = baseGainPerTick * ticksPerMinute * time * eventMultiplier;
+      let mainGain = baseGainPerMinute * time * eventMultiplier;
       let companionGain = 0;
 
       if (hasCompanion && companionStat === statType) {
         const companionBoost = companionPercent / 100;
-        companionGain = baseGainPerTick * companionBoost * ticksPerMinute * time * eventMultiplier;
+        const ticksPerMinute = 10;
+        companionGain = baseGainPerMinute * companionBoost * time * eventMultiplier;
       }
 
       const totalGain = mainGain + companionGain;
