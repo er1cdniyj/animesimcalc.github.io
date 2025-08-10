@@ -164,95 +164,108 @@
       </div>
     </div>
 
-    <button class="btn" onclick="calculateGains()">Calculate</button>
+    <button class="btn" id="calculateBtn">Calculate</button>
     
     <div class="result" id="result"></div>
   </div>
 
   <script>
-    const ticksPerMinute = {
-      strength: 55,
-      energy: 28,
-      defense: 36,
-      sword: 55
-    };
-
-    function parseNumberWithSuffix(input) {
-      if (!input) return NaN;
-      if (/^[0-9.]+e[0-9]+$/i.test(input)) return parseFloat(input);
-      input = input.toString().trim().toLowerCase();
-      const suffixes = {
-        'k':1e3,'m':1e6,'b':1e9,'t':1e12,'qd':1e15,'qn':1e18,
-        'sx':1e21,'sp':1e24,'oc':1e27,'no':1e30,'dc':1e33
+    document.addEventListener('DOMContentLoaded', function() {
+      const ticksPerMinute = {
+        strength: 55,
+        energy: 28,
+        defense: 36,
+        sword: 55
       };
-      let suffix = '';
-      let numberPart = input;
-      for (const s in suffixes) {
-        if (input.endsWith(s)) {
-          suffix = s;
-          numberPart = input.substring(0, input.length - s.length);
-          break;
+
+      function parseNumberWithSuffix(input) {
+        if (!input) return NaN;
+        if (/^[0-9.]+e[0-9]+$/i.test(input)) return parseFloat(input);
+        input = input.toString().trim().toLowerCase();
+        const suffixes = {
+          'k':1e3,'m':1e6,'b':1e9,'t':1e12,'qd':1e15,'qn':1e18,
+          'sx':1e21,'sp':1e24,'oc':1e27,'no':1e30,'dc':1e33
+        };
+        let suffix = '';
+        let numberPart = input;
+        for (const s in suffixes) {
+          if (input.endsWith(s)) {
+            suffix = s;
+            numberPart = input.substring(0, input.length - s.length);
+            break;
+          }
         }
-      }
-      const number = parseFloat(numberPart);
-      return isNaN(number) ? NaN : suffix ? number * suffixes[suffix] : number;
-    }
-
-    function abbreviateNumber(num) {
-      const units = [
-        {v:1e33,s:"Dc"},{v:1e30,s:"No"},{v:1e27,s:"Oc"},{v:1e24,s:"Sp"},
-        {v:1e21,s:"Sx"},{v:1e18,s:"Qn"},{v:1e15,s:"Qd"},{v:1e12,s:"T"},
-        {v:1e9,s:"B"},{v:1e6,s:"M"},{v:1e3,s:"K"}
-      ];
-      for (const {v,s} of units) if (num >= v) return (num/v).toFixed(2)+s;
-      return num.toString();
-    }
-
-    function calculateGains() {
-      const statType = document.getElementById("statType").value;
-      const gainPerTick = parseNumberWithSuffix(document.getElementById("gainPerTick").value);
-      const time = parseFloat(document.getElementById("time").value);
-
-      if (isNaN(gainPerTick) {
-        document.getElementById("result").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter a valid gain per tick</div>`;
-        return;
+        const number = parseFloat(numberPart);
+        return isNaN(number) ? NaN : suffix ? number * suffixes[suffix] : number;
       }
 
-      if (isNaN(time) || time <= 0) {
-        document.getElementById("result").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter a valid time</div>`;
-        return;
+      function abbreviateNumber(num) {
+        const units = [
+          {v:1e33,s:"Dc"},{v:1e30,s:"No"},{v:1e27,s:"Oc"},{v:1e24,s:"Sp"},
+          {v:1e21,s:"Sx"},{v:1e18,s:"Qn"},{v:1e15,s:"Qd"},{v:1e12,s:"T"},
+          {v:1e9,s:"B"},{v:1e6,s:"M"},{v:1e3,s:"K"}
+        ];
+        for (const {v,s} of units) if (num >= v) return (num/v).toFixed(2)+s;
+        return num.toString();
       }
 
-      const ticks = ticksPerMinute[statType] * time;
-      const totalGain = gainPerTick * ticks;
+      function calculateGains() {
+        const statType = document.getElementById("statType").value;
+        const gainPerTick = parseNumberWithSuffix(document.getElementById("gainPerTick").value);
+        const time = parseFloat(document.getElementById("time").value);
 
-      document.getElementById("result").innerHTML = `
-        <div class="result-item">
-          <span>Training Type:</span>
-          <span class="result-value">${statType.charAt(0).toUpperCase()+statType.slice(1)}</span>
-        </div>
-        <div class="result-item">
-          <span>Ticks Per Minute:</span>
-          <span class="result-value">${ticksPerMinute[statType]}</span>
-        </div>
-        <div class="result-item">
-          <span>Total Ticks:</span>
-          <span class="result-value">${ticks}</span>
-        </div>
-        <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid #333">
-          <span style="font-weight:700">Total Gain:</span>
-          <span class="result-value" style="font-weight:700">${abbreviateNumber(totalGain)}</span>
-        </div>
-        <div class="result-item">
-          <span>Gain Per Minute:</span>
-          <span class="result-value">${abbreviateNumber(gainPerTick * ticksPerMinute[statType])}</span>
-        </div>
-        <div class="result-item">
-          <span>Gain Per Hour:</span>
-          <span class="result-value">${abbreviateNumber(gainPerTick * ticksPerMinute[statType] * 60)}</span>
-        </div>
-      `;
-    }
+        if (isNaN(gainPerTick)) {
+          document.getElementById("result").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter a valid gain per tick</div>`;
+          return;
+        }
+
+        if (isNaN(time) || time <= 0) {
+          document.getElementById("result").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter a valid time</div>`;
+          return;
+        }
+
+        const ticks = ticksPerMinute[statType] * time;
+        const totalGain = gainPerTick * ticks;
+
+        document.getElementById("result").innerHTML = `
+          <div class="result-item">
+            <span>Training Type:</span>
+            <span class="result-value">${statType.charAt(0).toUpperCase()+statType.slice(1)}</span>
+          </div>
+          <div class="result-item">
+            <span>Ticks Per Minute:</span>
+            <span class="result-value">${ticksPerMinute[statType]}</span>
+          </div>
+          <div class="result-item">
+            <span>Total Ticks:</span>
+            <span class="result-value">${ticks}</span>
+          </div>
+          <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid #333">
+            <span style="font-weight:700">Total Gain:</span>
+            <span class="result-value" style="font-weight:700">${abbreviateNumber(totalGain)}</span>
+          </div>
+          <div class="result-item">
+            <span>Gain Per Minute:</span>
+            <span class="result-value">${abbreviateNumber(gainPerTick * ticksPerMinute[statType])}</span>
+          </div>
+          <div class="result-item">
+            <span>Gain Per Hour:</span>
+            <span class="result-value">${abbreviateNumber(gainPerTick * ticksPerMinute[statType] * 60)}</span>
+          </div>
+        `;
+      }
+
+      // Add event listener to the button
+      document.getElementById("calculateBtn").addEventListener("click", calculateGains);
+      
+      // Also allow calculation when pressing Enter in input fields
+      document.getElementById("gainPerTick").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") calculateGains();
+      });
+      document.getElementById("time").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") calculateGains();
+      });
+    });
   </script>
 </body>
 </html>
