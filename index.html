@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stats Multiplier Calculator</title>
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -18,13 +17,11 @@
       --text-secondary: #bbb;
       --accent: #222228;
     }
-    
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    
     body {
       font-family: 'Oxanium', sans-serif;
       background: var(--bg-dark);
@@ -35,7 +32,6 @@
       flex-direction: column;
       align-items: center;
     }
-    
     .navbar {
       width: 100%;
       max-width: 800px;
@@ -45,7 +41,6 @@
       margin-bottom: 1.5rem;
       box-shadow: 0 2px 10px rgba(0, 195, 255, 0.1);
     }
-    
     .navbar a {
       color: var(--primary);
       text-decoration: none;
@@ -54,7 +49,6 @@
       margin: 0 0.75rem;
       transition: all 0.2s ease;
     }
-    
     .container {
       background: var(--bg-card);
       width: 100%;
@@ -63,14 +57,12 @@
       border-radius: 1rem;
       box-shadow: 0 0 30px rgba(0, 195, 255, 0.05);
     }
-    
     .logo {
       display: block;
       margin: 0 auto 1.5rem;
       width: 120px;
       filter: drop-shadow(0 0 10px var(--primary));
     }
-    
     .title {
       text-align: center;
       font-size: 2rem;
@@ -79,33 +71,27 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    
     .subtitle {
       text-align: center;
       color: var(--text-secondary);
       font-size: 0.9rem;
       margin-bottom: 2rem;
-      font-weight: 400;
     }
-    
     .form-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.25rem;
       margin-bottom: 1.5rem;
     }
-    
     .form-group {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
     }
-    
     label {
       font-size: 0.9rem;
       color: var(--text-secondary);
     }
-    
     input, select {
       background: var(--bg-element);
       border: 1px solid var(--border);
@@ -113,31 +99,20 @@
       padding: 0.75rem 1rem;
       color: var(--text-main);
       font-size: 1rem;
-      transition: all 0.2s ease;
     }
-    
-    input:focus, select:focus {
-      border-color: var(--primary);
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(0, 195, 255, 0.2);
-    }
-    
     .checkboxes {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
-    
     .checkbox-label {
       display: flex;
       align-items: center;
       gap: 0.5rem;
       font-size: 0.9rem;
       color: var(--text-secondary);
-      cursor: pointer;
     }
-    
     .btn {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
@@ -147,15 +122,8 @@
       border: none;
       border-radius: 0.5rem;
       cursor: pointer;
-      transition: all 0.2s ease;
       width: 100%;
     }
-    
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(255, 27, 107, 0.3);
-    }
-    
     .result {
       margin-top: 2rem;
       background: var(--accent);
@@ -163,34 +131,21 @@
       border-left: 4px solid var(--primary);
       border-radius: 0.5rem;
     }
-    
     .result-item {
       margin-bottom: 0.75rem;
       display: flex;
       justify-content: space-between;
     }
-    
     .result-value {
       font-weight: 600;
       color: var(--primary);
     }
-    
     .companion-section {
       background: rgba(0, 195, 255, 0.1);
       padding: 1rem;
       border-radius: 0.5rem;
       margin-bottom: 1.5rem;
-      border: 1px solid rgba(0, 195, 255, 0.2);
     }
-    
-    .companion-title {
-      color: var(--primary);
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
     @media (min-width: 640px) {
       .form-grid {
         grid-template-columns: 1fr 1fr;
@@ -198,29 +153,25 @@
     }
   </style>
 </head>
-
 <body>
   <nav class="navbar">
     <a href="index2.html">Coin Calculator</a>
   </nav>
 
   <div class="container">
-    <img src="image1.png" alt="Anime Simulator Logo" class="logo">
+    <img src="image1.png" alt="Logo" class="logo">
     <h1 class="title">Stats Multiplier Calculator</h1>
-    <p class="subtitle">By Babatunde2289</p>
-    <p class="subtitle">Enter your training time, stat multipliers, current stat, and watch the calculator cook.</p>
+    <p class="subtitle">Enter your training details to calculate gains</p>
 
     <div class="form-grid">
       <div class="form-group">
         <label for="time">Time (minutes)</label>
         <input type="number" id="time" placeholder="e.g. 60" required>
       </div>
-      
       <div class="form-group">
         <label for="multiplier">Multiplier</label>
         <input type="text" id="multiplier" placeholder="e.g. 2 or 1.5sx" value="2">
       </div>
-      
       <div class="form-group">
         <label for="statType">Training Type</label>
         <select id="statType">
@@ -230,12 +181,10 @@
           <option value="sword">Sword</option>
         </select>
       </div>
-      
       <div class="form-group">
         <label for="currentStat">Current Stat</label>
         <input type="text" id="currentStat" placeholder="e.g. 1.5sx or 1e15" required>
       </div>
-      
       <div class="form-group">
         <label for="world">World</label>
         <select id="world">
@@ -247,17 +196,16 @@
     </div>
 
     <div class="companion-section">
-      <h3 class="companion-title">Companion Settings</h3>
       <div class="form-grid">
         <div class="form-group">
           <label for="companionActive">Companion Active</label>
           <select id="companionActive">
-            <option value="false">No Companion</option>
-            <option value="true">Has Companion</option>
+            <option value="false">No</option>
+            <option value="true">Yes</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="companionStat">Companion Boosts</label>
+          <label for="companionStat">Boosts</label>
           <select id="companionStat">
             <option value="strength">Strength</option>
             <option value="energy">Energy</option>
@@ -266,8 +214,8 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="companionPercent">Boost Percentage</label>
-          <input type="number" id="companionPercent" placeholder="e.g. 20 for 20%" value="20">
+          <label for="companionPercent">Boost %</label>
+          <input type="number" id="companionPercent" placeholder="e.g. 20" value="20">
         </div>
       </div>
     </div>
@@ -286,11 +234,7 @@
 
     <button class="btn" onclick="calculateGains()">Calculate</button>
     
-    <div class="result" id="result">
-      <div class="result-item">
-        <span>Fill in the form and click Calculate</span>
-      </div>
-    </div>
+    <div class="result" id="result"></div>
   </div>
 
   <script>
@@ -328,19 +272,12 @@
 
     function parseNumberWithSuffix(input) {
       if (!input) return NaN;
-      
-      if (/^[0-9.]+e[0-9]+$/i.test(input)) {
-        return parseFloat(input);
-      }
-      
+      if (/^[0-9.]+e[0-9]+$/i.test(input)) return parseFloat(input);
       input = input.toString().trim().toLowerCase();
-      
       const suffixes = {
-        'k': 1e3, 'm': 1e6, 'b': 1e9, 't': 1e12,
-        'qd': 1e15, 'qn': 1e18, 'sx': 1e21, 'sp': 1e24,
-        'oc': 1e27, 'no': 1e30, 'dc': 1e33
+        'k':1e3,'m':1e6,'b':1e9,'t':1e12,'qd':1e15,'qn':1e18,
+        'sx':1e21,'sp':1e24,'oc':1e27,'no':1e30,'dc':1e33
       };
-      
       let suffix = '';
       let numberPart = input;
       for (const s in suffixes) {
@@ -350,35 +287,25 @@
           break;
         }
       }
-      
       const number = parseFloat(numberPart);
-      if (isNaN(number)) return NaN;
-      
-      return suffix ? number * suffixes[suffix] : number;
+      return isNaN(number) ? NaN : suffix ? number * suffixes[suffix] : number;
     }
 
     function abbreviateNumber(num) {
       const units = [
-        { value: 1e33, symbol: "Dc" }, { value: 1e30, symbol: "No" },
-        { value: 1e27, symbol: "Oc" }, { value: 1e24, symbol: "Sp" },
-        { value: 1e21, symbol: "Sx" }, { value: 1e18, symbol: "Qn" },
-        { value: 1e15, symbol: "Qd" }, { value: 1e12, symbol: "T" },
-        { value: 1e9, symbol: "B" }, { value: 1e6, symbol: "M" },
-        { value: 1e3, symbol: "K" }
+        {v:1e33,s:"Dc"},{v:1e30,s:"No"},{v:1e27,s:"Oc"},{v:1e24,s:"Sp"},
+        {v:1e21,s:"Sx"},{v:1e18,s:"Qn"},{v:1e15,s:"Qd"},{v:1e12,s:"T"},
+        {v:1e9,s:"B"},{v:1e6,s:"M"},{v:1e3,s:"K"}
       ];
-      
-      for (const { value, symbol } of units) {
-        if (num >= value) return (num / value).toFixed(2) + symbol;
-      }
+      for (const {v,s} of units) if (num >= v) return (num/v).toFixed(2)+s;
       return num.toString();
     }
 
     function calculateGains() {
-      // Get input values
       const time = parseFloat(document.getElementById("time").value);
-      const multiplierInput = document.getElementById("multiplier").value;
+      const multiplier = parseNumberWithSuffix(document.getElementById("multiplier").value);
       const statType = document.getElementById("statType").value;
-      const currentStatInput = document.getElementById("currentStat").value;
+      const currentStat = parseNumberWithSuffix(document.getElementById("currentStat").value);
       const world = parseInt(document.getElementById("world").value);
       const hasGamepass = document.getElementById("doubleGamepass").checked;
       const hasEvent = document.getElementById("eventBoost").checked;
@@ -387,43 +314,15 @@
       const companionStat = document.getElementById("companionStat").value;
       const companionPercent = parseFloat(document.getElementById("companionPercent").value) || 0;
 
-      // Validate inputs
-      if (isNaN(time) || !multiplierInput || !currentStatInput) {
-        document.getElementById("result").innerHTML = `
-          <div class="result-item" style="color: #ff6b6b;">
-            <span>Please fill out all fields with valid numbers</span>
-          </div>
-        `;
+      if (isNaN(time) || isNaN(multiplier) || isNaN(currentStat)) {
+        document.getElementById("result").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please fill all fields</div>`;
         return;
       }
 
-      const multiplier = parseNumberWithSuffix(multiplierInput);
-      const currentStat = parseNumberWithSuffix(currentStatInput);
-      
-      if (isNaN(multiplier)) {
-        document.getElementById("result").innerHTML = `
-          <div class="result-item" style="color: #ff6b6b;">
-            <span>Please enter a valid multiplier (e.g. 2 or 1.5sx)</span>
-          </div>
-        `;
-        return;
-      }
-      
-      if (isNaN(currentStat)) {
-        document.getElementById("result").innerHTML = `
-          <div class="result-item" style="color: #ff6b6b;">
-            <span>Please enter a valid current stat (e.g. 1.5sx or 1e15)</span>
-          </div>
-        `;
-        return;
-      }
-
-      // Calculate total multiplier
       let totalMultiplier = multiplier;
       if (hasGamepass) totalMultiplier *= 2;
       if (hasPersonalBoost) totalMultiplier *= 1.5;
 
-      // Determine training area boost
       let areaBoost = 1;
       let areaName = "None";
       for (let i = trainingAreas.length - 1; i >= 0; i--) {
@@ -434,71 +333,51 @@
         }
       }
 
-      // Apply world multiplier (W1 x1, W2 x2, W3 x3)
-      const worldMultiplier = world;
-
-      // Calculate base gain
-      let gain = baseRates[statType] * totalMultiplier * time * areaBoost * worldMultiplier;
+      const baseGainPerTick = baseRates[statType] * totalMultiplier * areaBoost * world;
+      const eventMultiplier = hasEvent ? 5 : 1;
+      const ticksPerMinute = 10;
       
-      // Apply event boost if active
-      if (hasEvent) gain *= 5;
-
-      // Calculate companion boost (ticks every 6 seconds = 10x per minute)
+      let mainGain = baseGainPerTick * ticksPerMinute * time * eventMultiplier;
       let companionGain = 0;
+
       if (hasCompanion && companionStat === statType) {
-        const companionMultiplier = companionPercent / 100;
-        companionGain = gain * companionMultiplier * time * 10; // 10 ticks per minute
+        const companionBoost = companionPercent / 100;
+        companionGain = baseGainPerTick * companionBoost * ticksPerMinute * time * eventMultiplier;
       }
 
-      // Total gain with companion
-      const totalGain = gain + companionGain;
-
-      // Prepare bonuses list
+      const totalGain = mainGain + companionGain;
       const bonuses = [];
       if (hasGamepass) bonuses.push("2x Gamepass");
       if (hasEvent) bonuses.push("5x Event");
       if (hasPersonalBoost) bonuses.push("1.5x Personal");
       if (hasCompanion && companionStat === statType) bonuses.push(`${companionPercent}% Companion`);
 
-      // Display results
       document.getElementById("result").innerHTML = `
         <div class="result-item">
-          <span>Training Type:</span>
-          <span class="result-value">${statType.charAt(0).toUpperCase() + statType.slice(1)}</span>
+          <span>Training:</span>
+          <span class="result-value">${statType.charAt(0).toUpperCase()+statType.slice(1)}</span>
         </div>
         <div class="result-item">
-          <span>Training Area:</span>
+          <span>Area:</span>
           <span class="result-value">${areaName} (x${areaBoost})</span>
         </div>
         <div class="result-item">
-          <span>World Multiplier:</span>
-          <span class="result-value">x${worldMultiplier}</span>
+          <span>World:</span>
+          <span class="result-value">x${world}</span>
         </div>
+        ${bonuses.length ? `
         <div class="result-item">
-          <span>Base Multiplier:</span>
-          <span class="result-value">${abbreviateNumber(multiplier)}</span>
-        </div>
-        ${bonuses.length > 0 ? `
-        <div class="result-item">
-          <span>Active Bonuses:</span>
+          <span>Bonuses:</span>
           <span class="result-value">${bonuses.join(", ")}</span>
         </div>` : ''}
-        ${hasCompanion && companionStat === statType ? `
+        ${companionGain ? `
         <div class="result-item">
-          <span>Companion Contribution:</span>
-          <span class="result-value">${abbreviateNumber(companionGain)}</span>
+          <span>Companion:</span>
+          <span class="result-value">+${abbreviateNumber(companionGain)}</span>
         </div>` : ''}
-        <div class="result-item">
-          <span>Current Stat:</span>
-          <span class="result-value">${abbreviateNumber(currentStat)}</span>
-        </div>
-        <div class="result-item" style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #333;">
-          <span style="font-weight: 700;">Total Gain:</span>
-          <span class="result-value" style="font-weight: 700;">${abbreviateNumber(totalGain)}</span>
-        </div>
-        <div class="result-item" style="font-size: 0.85rem; color: var(--text-secondary);">
-          <span>Full value:</span>
-          <span>${totalGain.toExponential(2)}</span>
+        <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid #333">
+          <span style="font-weight:700">Total Gain:</span>
+          <span class="result-value" style="font-weight:700">${abbreviateNumber(totalGain)}</span>
         </div>
       `;
     }
