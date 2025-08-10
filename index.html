@@ -34,7 +34,7 @@
     }
     .navbar {
       width: 100%;
-      max-width: 800px;
+      max-width: 1200px;
       background: var(--accent);
       padding: 1rem;
       border-radius: 0.5rem;
@@ -49,10 +49,18 @@
       margin: 0 0.75rem;
       transition: all 0.2s ease;
     }
-    .container {
+    .main-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      width: 100%;
+      max-width: 1200px;
+      justify-content: center;
+    }
+    .calculator-container {
       background: var(--bg-card);
       width: 100%;
-      max-width: 800px;
+      max-width: 550px;
       padding: 2rem;
       border-radius: 1rem;
       box-shadow: 0 0 30px rgba(0, 195, 255, 0.05);
@@ -137,7 +145,6 @@
       background: rgba(255, 27, 107, 0.1);
       padding: 1rem;
       border-radius: 0.5rem;
-      margin-top: 2rem;
       margin-bottom: 1.5rem;
     }
     .section-title {
@@ -151,6 +158,11 @@
         grid-template-columns: 1fr 1fr;
       }
     }
+    @media (min-width: 1000px) {
+      .calculator-container {
+        max-width: 550px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -158,59 +170,17 @@
     <a href="index2.html">Coin Calculator</a>
   </nav>
 
-  <div class="container">
-    <img src="image1.png" alt="Logo" class="logo">
-    <h1 class="title">Stats Gain Calculator</h1>
-    <p class="subtitle">Calculate your training gains and time to reach goals</p>
+  <div class="main-container">
+    <!-- Original Calculator -->
+    <div class="calculator-container">
+      <img src="image1.png" alt="Logo" class="logo">
+      <h1 class="title">Stats Gain Calculator</h1>
+      <p class="subtitle">Calculate your training gains</p>
 
-    <!-- Training Calculator Section -->
-    <div class="form-grid">
-      <div class="form-group">
-        <label for="statType">Training Type</label>
-        <select id="statType">
-          <option value="strength">Strength</option>
-          <option value="energy">Energy</option>
-          <option value="defense">Defense</option>
-          <option value="sword">Sword</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="gainPerTick">Gain Per Tick</label>
-        <input type="text" id="gainPerTick" placeholder="e.g. 1.5sx or 1e21" required>
-      </div>
-      <div class="form-group">
-        <label for="time">Time (minutes)</label>
-        <input type="number" id="time" placeholder="e.g. 60" required>
-      </div>
-    </div>
-
-    <div class="companion-section">
       <div class="form-grid">
         <div class="form-group">
-          <label for="companionActive">Companion Active</label>
-          <select id="companionActive">
-            <option value="false">No</option>
-            <option value="true">Yes</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="companionGain">Companion Gain Per Tick</label>
-          <input type="text" id="companionGain" placeholder="e.g. 1.5qd or 1e15">
-        </div>
-      </div>
-    </div>
-
-    <button class="btn" id="calculateBtn">Calculate Gains</button>
-    
-    <div class="result" id="result"></div>
-
-    <!-- Goal Calculator Section -->
-    <div class="goal-section">
-      <div class="section-title">Calculate Time to Reach Goal</div>
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="goalStatType">Training Type</label>
-          <select id="goalStatType">
+          <label for="statType">Training Type</label>
+          <select id="statType">
             <option value="strength">Strength</option>
             <option value="energy">Energy</option>
             <option value="defense">Defense</option>
@@ -218,26 +188,74 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="goalGainPerTick">Your Gain Per Tick</label>
-          <input type="text" id="goalGainPerTick" placeholder="e.g. 1.5sx or 1e21">
+          <label for="gainPerTick">Gain Per Tick</label>
+          <input type="text" id="gainPerTick" placeholder="e.g. 1.5sx or 1e21" required>
         </div>
         <div class="form-group">
-          <label for="goalCompanionGain">Companion Gain Per Tick</label>
-          <input type="text" id="goalCompanionGain" placeholder="e.g. 1.5qd or 1e15">
-        </div>
-        <div class="form-group">
-          <label for="currentStat">Current Stat Value</label>
-          <input type="text" id="currentStat" placeholder="e.g. 1.5sx or 1e21">
-        </div>
-        <div class="form-group">
-          <label for="desiredStat">Desired Stat Value</label>
-          <input type="text" id="desiredStat" placeholder="e.g. 2.5sx or 2.5e21">
+          <label for="time">Time (minutes)</label>
+          <input type="number" id="time" placeholder="e.g. 60" required>
         </div>
       </div>
 
-      <button class="btn" id="calculateGoalBtn">Calculate Time Needed</button>
+      <div class="companion-section">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="companionActive">Companion Active</label>
+            <select id="companionActive">
+              <option value="false">No</option>
+              <option value="true">Yes</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="companionGain">Companion Gain Per Tick</label>
+            <input type="text" id="companionGain" placeholder="e.g. 1.5qd or 1e15">
+          </div>
+        </div>
+      </div>
+
+      <button class="btn" id="calculateBtn">Calculate Gains</button>
       
-      <div class="result" id="goalResult"></div>
+      <div class="result" id="result"></div>
+    </div>
+
+    <!-- Goal Calculator -->
+    <div class="calculator-container">
+      <h1 class="title">Goal Calculator</h1>
+      <p class="subtitle">Calculate time to reach your target</p>
+
+      <div class="goal-section">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="goalStatType">Training Type</label>
+            <select id="goalStatType">
+              <option value="strength">Strength</option>
+              <option value="energy">Energy</option>
+              <option value="defense">Defense</option>
+              <option value="sword">Sword</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="goalGainPerTick">Your Gain Per Tick</label>
+            <input type="text" id="goalGainPerTick" placeholder="e.g. 1.5sx or 1e21">
+          </div>
+          <div class="form-group">
+            <label for="goalCompanionGain">Companion Gain Per Tick</label>
+            <input type="text" id="goalCompanionGain" placeholder="e.g. 1.5qd or 1e15">
+          </div>
+          <div class="form-group">
+            <label for="currentStat">Current Stat Value</label>
+            <input type="text" id="currentStat" placeholder="e.g. 1.5sx or 1e21">
+          </div>
+          <div class="form-group">
+            <label for="desiredStat">Desired Stat Value</label>
+            <input type="text" id="desiredStat" placeholder="e.g. 2.5sx or 2.5e21">
+          </div>
+        </div>
+
+        <button class="btn" id="calculateGoalBtn">Calculate Time Needed</button>
+        
+        <div class="result" id="goalResult"></div>
+      </div>
     </div>
   </div>
 
