@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Training Calculator</title>
+  <title>Stats Gain Calculator</title>
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -32,93 +32,139 @@
       flex-direction: column;
       align-items: center;
     }
+    .navbar {
+      width: 100%;
+      max-width: 800px;
+      background: var(--accent);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0, 195, 255, 0.1);
+    }
+    .navbar a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin: 0 0.75rem;
+      transition: all 0.2s ease;
+    }
     .container {
       background: var(--bg-card);
       width: 100%;
-      max-width: 500px;
+      max-width: 800px;
       padding: 2rem;
       border-radius: 1rem;
       box-shadow: 0 0 30px rgba(0, 195, 255, 0.05);
     }
+    .logo {
+      display: block;
+      margin: 0 auto 1.5rem;
+      width: 120px;
+      filter: drop-shadow(0 0 10px var(--primary));
+    }
     .title {
       text-align: center;
       font-size: 2rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .form-group {
+    .subtitle {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
       margin-bottom: 1.5rem;
     }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
     label {
-      display: block;
-      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
       color: var(--text-secondary);
     }
     input, select {
-      width: 100%;
-      padding: 0.75rem;
       background: var(--bg-element);
       border: 1px solid var(--border);
       border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
       color: var(--text-main);
       font-size: 1rem;
     }
     .btn {
-      width: 100%;
-      padding: 0.75rem;
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0.75rem;
       border: none;
       border-radius: 0.5rem;
-      font-weight: bold;
       cursor: pointer;
-      margin-top: 1rem;
+      width: 100%;
     }
     .result {
       margin-top: 2rem;
-      padding: 1rem;
       background: var(--accent);
-      border-radius: 0.5rem;
+      padding: 1.5rem;
       border-left: 4px solid var(--primary);
+      border-radius: 0.5rem;
     }
     .result-item {
+      margin-bottom: 0.75rem;
       display: flex;
       justify-content: space-between;
-      margin-bottom: 0.5rem;
     }
     .result-value {
+      font-weight: 600;
       color: var(--primary);
-      font-weight: bold;
+    }
+    @media (min-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
   </style>
 </head>
 <body>
+  <nav class="navbar">
+    <a href="index2.html">Coin Calculator</a>
+  </nav>
+
   <div class="container">
-    <h1 class="title">Training Calculator</h1>
-    
-    <div class="form-group">
-      <label for="statType">Training Type</label>
-      <select id="statType">
-        <option value="strength">Strength (55 ticks/min)</option>
-        <option value="energy">Energy (28 ticks/min)</option>
-        <option value="defense">Defense (36 ticks/min)</option>
-        <option value="sword">Sword (55 ticks/min)</option>
-      </select>
+    <img src="image1.png" alt="Logo" class="logo">
+    <h1 class="title">Stats Gain Calculator</h1>
+    <p class="subtitle">Enter your training details to calculate gains</p>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="statType">Training Type</label>
+        <select id="statType">
+          <option value="strength">Strength</option>
+          <option value="energy">Energy</option>
+          <option value="defense">Defense</option>
+          <option value="sword">Sword</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="gainPerTick">Gain Per Tick</label>
+        <input type="text" id="gainPerTick" placeholder="e.g. 1.5sx or 1e21" required>
+      </div>
+      <div class="form-group">
+        <label for="time">Time (minutes)</label>
+        <input type="number" id="time" placeholder="e.g. 60" required>
+      </div>
     </div>
-    
-    <div class="form-group">
-      <label for="gainPerTick">Gain Per Tick</label>
-      <input type="text" id="gainPerTick" placeholder="e.g. 1.5sx or 1e21">
-    </div>
-    
-    <div class="form-group">
-      <label for="time">Time (minutes)</label>
-      <input type="number" id="time" placeholder="e.g. 60">
-    </div>
-    
-    <button class="btn" onclick="calculate()">Calculate</button>
+
+    <button class="btn" onclick="calculateGains()">Calculate</button>
     
     <div class="result" id="result"></div>
   </div>
@@ -131,7 +177,7 @@
       sword: 55
     };
 
-    function parseNumber(input) {
+    function parseNumberWithSuffix(input) {
       if (!input) return NaN;
       if (/^[0-9.]+e[0-9]+$/i.test(input)) return parseFloat(input);
       input = input.toString().trim().toLowerCase();
@@ -139,61 +185,71 @@
         'k':1e3,'m':1e6,'b':1e9,'t':1e12,'qd':1e15,'qn':1e18,
         'sx':1e21,'sp':1e24,'oc':1e27,'no':1e30,'dc':1e33
       };
-      for (const suffix in suffixes) {
-        if (input.endsWith(suffix)) {
-          const num = parseFloat(input.substring(0, input.length - suffix.length));
-          return isNaN(num) ? NaN : num * suffixes[suffix];
+      let suffix = '';
+      let numberPart = input;
+      for (const s in suffixes) {
+        if (input.endsWith(s)) {
+          suffix = s;
+          numberPart = input.substring(0, input.length - s.length);
+          break;
         }
       }
-      return parseFloat(input);
+      const number = parseFloat(numberPart);
+      return isNaN(number) ? NaN : suffix ? number * suffixes[suffix] : number;
     }
 
-    function formatNumber(num) {
-      const suffixes = [
+    function abbreviateNumber(num) {
+      const units = [
         {v:1e33,s:"Dc"},{v:1e30,s:"No"},{v:1e27,s:"Oc"},{v:1e24,s:"Sp"},
         {v:1e21,s:"Sx"},{v:1e18,s:"Qn"},{v:1e15,s:"Qd"},{v:1e12,s:"T"},
         {v:1e9,s:"B"},{v:1e6,s:"M"},{v:1e3,s:"K"}
       ];
-      for (const {v,s} of suffixes) {
-        if (num >= v) return (num/v).toFixed(2) + s;
-      }
+      for (const {v,s} of units) if (num >= v) return (num/v).toFixed(2)+s;
       return num.toString();
     }
 
-    function calculate() {
+    function calculateGains() {
       const statType = document.getElementById("statType").value;
-      const gainPerTick = parseNumber(document.getElementById("gainPerTick").value);
+      const gainPerTick = parseNumberWithSuffix(document.getElementById("gainPerTick").value);
       const time = parseFloat(document.getElementById("time").value);
-      
+
       if (isNaN(gainPerTick) {
-        document.getElementById("result").innerHTML = "Please enter a valid gain per tick";
+        document.getElementById("result").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter a valid gain per tick</div>`;
         return;
       }
-      
+
       if (isNaN(time) || time <= 0) {
-        document.getElementById("result").innerHTML = "Please enter a valid time";
+        document.getElementById("result").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter a valid time</div>`;
         return;
       }
-      
+
       const ticks = ticksPerMinute[statType] * time;
       const totalGain = gainPerTick * ticks;
-      
+
       document.getElementById("result").innerHTML = `
+        <div class="result-item">
+          <span>Training Type:</span>
+          <span class="result-value">${statType.charAt(0).toUpperCase()+statType.slice(1)}</span>
+        </div>
+        <div class="result-item">
+          <span>Ticks Per Minute:</span>
+          <span class="result-value">${ticksPerMinute[statType]}</span>
+        </div>
         <div class="result-item">
           <span>Total Ticks:</span>
           <span class="result-value">${ticks}</span>
         </div>
-        <div class="result-item">
-          <span>Total Gain:</span>
-          <span class="result-value">${formatNumber(totalGain)}</span>
+        <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid #333">
+          <span style="font-weight:700">Total Gain:</span>
+          <span class="result-value" style="font-weight:700">${abbreviateNumber(totalGain)}</span>
         </div>
         <div class="result-item">
-          <span>Per Minute:</span>
-          <span class="result-value">${formatNumber(gainPerTick * ticksPerMinute[statType])}</span>
+          <span>Gain Per Minute:</span>
+          <span class="result-value">${abbreviateNumber(gainPerTick * ticksPerMinute[statType])}</span>
         </div>
         <div class="result-item">
-          <span>Per Hour:</span>
-          <span class="result-value">${formatNumber(gainPerTick * ticksPerMinute[statType] * 60)}</span>
+          <span>Gain Per Hour:</span>
+          <span class="result-value">${abbreviateNumber(gainPerTick * ticksPerMinute[statType] * 60)}</span>
         </div>
       `;
     }
