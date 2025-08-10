@@ -6,9 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stats Multiplier Calculator</title>
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1683895430624790"
-     crossorigin="anonymous"></script>
-  <meta name="google-adsense-account" content="ca-pub-1683895430624790">
   <style>
     :root {
       --primary: #00c3ff;
@@ -56,18 +53,6 @@
       font-size: 1.1rem;
       margin: 0 0.75rem;
       transition: all 0.2s ease;
-    }
-    
-    .navbar a:hover {
-      text-shadow: 0 0 8px rgba(0, 195, 255, 0.6);
-    }
-    
-    .marquee {
-      width: 100%;
-      max-width: 800px;
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      font-size: 0.9rem;
     }
     
     .container {
@@ -190,6 +175,22 @@
       color: var(--primary);
     }
     
+    .companion-section {
+      background: rgba(0, 195, 255, 0.1);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(0, 195, 255, 0.2);
+    }
+    
+    .companion-title {
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
     @media (min-width: 640px) {
       .form-grid {
         grid-template-columns: 1fr 1fr;
@@ -202,10 +203,6 @@
   <nav class="navbar">
     <a href="index2.html">Coin Calculator</a>
   </nav>
-
-  <div class="marquee">
-    Trading Value Calculator Coming Soon! Dm "urmumscouch" for suggestions and bug reports! Thank you to Nick for making this project possible!
-  </div>
 
   <div class="container">
     <img src="image1.png" alt="Anime Simulator Logo" class="logo">
@@ -246,6 +243,32 @@
           <option value="2">World 2 (x2)</option>
           <option value="3">World 3 (x3)</option>
         </select>
+      </div>
+    </div>
+
+    <div class="companion-section">
+      <h3 class="companion-title">Companion Settings</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="companionActive">Companion Active</label>
+          <select id="companionActive">
+            <option value="false">No Companion</option>
+            <option value="true">Has Companion</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="companionStat">Companion Boosts</label>
+          <select id="companionStat">
+            <option value="strength">Strength</option>
+            <option value="energy">Energy</option>
+            <option value="defense">Defense</option>
+            <option value="sword">Sword</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="companionPercent">Boost Percentage</label>
+          <input type="number" id="companionPercent" placeholder="e.g. 20 for 20%" value="20">
+        </div>
       </div>
     </div>
 
@@ -360,6 +383,9 @@
       const hasGamepass = document.getElementById("doubleGamepass").checked;
       const hasEvent = document.getElementById("eventBoost").checked;
       const hasPersonalBoost = document.getElementById("personalBoost").checked;
+      const hasCompanion = document.getElementById("companionActive").value === "true";
+      const companionStat = document.getElementById("companionStat").value;
+      const companionPercent = parseFloat(document.getElementById("companionPercent").value) || 0;
 
       // Validate inputs
       if (isNaN(time) || !multiplierInput || !currentStatInput) {
@@ -411,15 +437,28 @@
       // Apply world multiplier (W1 x1, W2 x2, W3 x3)
       const worldMultiplier = world;
 
-      // Calculate final gain
+      // Calculate base gain
       let gain = baseRates[statType] * totalMultiplier * time * areaBoost * worldMultiplier;
+      
+      // Apply event boost if active
       if (hasEvent) gain *= 5;
+
+      // Calculate companion boost (ticks every 6 seconds = 10x per minute)
+      let companionGain = 0;
+      if (hasCompanion && companionStat === statType) {
+        const companionMultiplier = companionPercent / 100;
+        companionGain = gain * companionMultiplier * time * 10; // 10 ticks per minute
+      }
+
+      // Total gain with companion
+      const totalGain = gain + companionGain;
 
       // Prepare bonuses list
       const bonuses = [];
       if (hasGamepass) bonuses.push("2x Gamepass");
       if (hasEvent) bonuses.push("5x Event");
       if (hasPersonalBoost) bonuses.push("1.5x Personal");
+      if (hasCompanion && companionStat === statType) bonuses.push(`${companionPercent}% Companion`);
 
       // Display results
       document.getElementById("result").innerHTML = `
@@ -444,17 +483,22 @@
           <span>Active Bonuses:</span>
           <span class="result-value">${bonuses.join(", ")}</span>
         </div>` : ''}
+        ${hasCompanion && companionStat === statType ? `
+        <div class="result-item">
+          <span>Companion Contribution:</span>
+          <span class="result-value">${abbreviateNumber(companionGain)}</span>
+        </div>` : ''}
         <div class="result-item">
           <span>Current Stat:</span>
           <span class="result-value">${abbreviateNumber(currentStat)}</span>
         </div>
         <div class="result-item" style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #333;">
           <span style="font-weight: 700;">Total Gain:</span>
-          <span class="result-value" style="font-weight: 700;">${abbreviateNumber(gain)}</span>
+          <span class="result-value" style="font-weight: 700;">${abbreviateNumber(totalGain)}</span>
         </div>
         <div class="result-item" style="font-size: 0.85rem; color: var(--text-secondary);">
           <span>Full value:</span>
-          <span>${gain.toExponential(2)}</span>
+          <span>${totalGain.toExponential(2)}</span>
         </div>
       `;
     }
