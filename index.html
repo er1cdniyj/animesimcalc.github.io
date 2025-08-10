@@ -335,14 +335,15 @@
 
       const baseGainPerMinute = baseRates[statType] * totalMultiplier * areaBoost * world;
       const eventMultiplier = hasEvent ? 5 : 1;
+      const ticksPerMinute = 10;
       
       let mainGain = baseGainPerMinute * time * eventMultiplier;
       let companionGain = 0;
 
       if (hasCompanion && companionStat === statType) {
         const companionBoost = companionPercent / 100;
-        const ticksPerMinute = 10;
-        companionGain = baseGainPerMinute * companionBoost * time * eventMultiplier;
+        const gainPerTick = (baseGainPerMinute / ticksPerMinute) * eventMultiplier;
+        companionGain = gainPerTick * companionBoost * ticksPerMinute * time;
       }
 
       const totalGain = mainGain + companionGain;
