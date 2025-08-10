@@ -127,6 +127,12 @@
       font-weight: 600;
       color: var(--primary);
     }
+    .companion-section {
+      background: rgba(0, 195, 255, 0.1);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
     @media (min-width: 640px) {
       .form-grid {
         grid-template-columns: 1fr 1fr;
@@ -164,6 +170,22 @@
       </div>
     </div>
 
+    <div class="companion-section">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="companionActive">Companion Active</label>
+          <select id="companionActive">
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="companionGain">Companion Gain Per Tick</label>
+          <input type="text" id="companionGain" placeholder="e.g. 1.5qd or 1e15">
+        </div>
+      </div>
+    </div>
+
     <button class="btn" id="calculateBtn">Calculate</button>
     
     <div class="result" id="result"></div>
@@ -177,6 +199,7 @@
         defense: 36,
         sword: 55
       };
+      const companionTicksPerMinute = 10;
 
       function parseNumberWithSuffix(input) {
         if (!input) return NaN;
@@ -213,6 +236,8 @@
         const statType = document.getElementById("statType").value;
         const gainPerTick = parseNumberWithSuffix(document.getElementById("gainPerTick").value);
         const time = parseFloat(document.getElementById("time").value);
+        const hasCompanion = document.getElementById("companionActive").value === "true";
+        const companionGain = hasCompanion ? parseNumberWithSuffix(document.getElementById("companionGain").value) : 0;
 
         if (isNaN(gainPerTick)) {
           document.getElementById("result").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter a valid gain per tick</div>`;
@@ -224,8 +249,23 @@
           return;
         }
 
+        if (hasCompanion && isNaN(companionGain)) {
+          document.getElementById("result").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter valid companion gains</div>`;
+          return;
+        }
+
+        // Calculate main gains
         const ticks = ticksPerMinute[statType] * time;
-        const totalGain = gainPerTick * ticks;
+        const mainGain = gainPerTick * ticks;
+        
+        // Calculate companion gains
+        let companionTotalGain = 0;
+        if (hasCompanion) {
+          const companionTicks = companionTicksPerMinute * time;
+          companionTotalGain = companionGain * companionTicks;
+        }
+
+        const totalGain = mainGain + companionTotalGain;
 
         document.getElementById("result").innerHTML = `
           <div class="result-item">
@@ -240,17 +280,30 @@
             <span>Total Ticks:</span>
             <span class="result-value">${ticks}</span>
           </div>
+          <div class="result-item">
+            <span>Main Gain:</span>
+            <span class="result-value">${abbreviateNumber(mainGain)}</span>
+          </div>
+          ${hasCompanion ? `
+          <div class="result-item">
+            <span>Companion Ticks:</span>
+            <span class="result-value">${companionTicksPerMinute * time}</span>
+          </div>
+          <div class="result-item">
+            <span>Companion Gain:</span>
+            <span class="result-value">${abbreviateNumber(companionTotalGain)}</span>
+          </div>` : ''}
           <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid #333">
             <span style="font-weight:700">Total Gain:</span>
             <span class="result-value" style="font-weight:700">${abbreviateNumber(totalGain)}</span>
           </div>
           <div class="result-item">
             <span>Gain Per Minute:</span>
-            <span class="result-value">${abbreviateNumber(gainPerTick * ticksPerMinute[statType])}</span>
+            <span class="result-value">${abbreviateNumber(totalGain / time)}</span>
           </div>
           <div class="result-item">
             <span>Gain Per Hour:</span>
-            <span class="result-value">${abbreviateNumber(gainPerTick * ticksPerMinute[statType] * 60)}</span>
+            <span class="result-value">${abbreviateNumber(totalGain / time * 60)}</span>
           </div>
         `;
       }
@@ -263,6 +316,9 @@
         if (e.key === "Enter") calculateGains();
       });
       document.getElementById("time").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") calculateGains();
+      });
+      document.getElementById("companionGain").addEventListener("keypress", function(e) {
         if (e.key === "Enter") calculateGains();
       });
     });
