@@ -133,6 +133,19 @@
       border-radius: 0.5rem;
       margin-bottom: 1.5rem;
     }
+    .goal-section {
+      background: rgba(255, 27, 107, 0.1);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-title {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      text-align: center;
+    }
     @media (min-width: 640px) {
       .form-grid {
         grid-template-columns: 1fr 1fr;
@@ -148,8 +161,9 @@
   <div class="container">
     <img src="image1.png" alt="Logo" class="logo">
     <h1 class="title">Stats Gain Calculator</h1>
-    <p class="subtitle">Enter your training details to calculate gains</p>
+    <p class="subtitle">Calculate your training gains and time to reach goals</p>
 
+    <!-- Training Calculator Section -->
     <div class="form-grid">
       <div class="form-group">
         <label for="statType">Training Type</label>
@@ -186,9 +200,45 @@
       </div>
     </div>
 
-    <button class="btn" id="calculateBtn">Calculate</button>
+    <button class="btn" id="calculateBtn">Calculate Gains</button>
     
     <div class="result" id="result"></div>
+
+    <!-- Goal Calculator Section -->
+    <div class="goal-section">
+      <div class="section-title">Calculate Time to Reach Goal</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="goalStatType">Training Type</label>
+          <select id="goalStatType">
+            <option value="strength">Strength</option>
+            <option value="energy">Energy</option>
+            <option value="defense">Defense</option>
+            <option value="sword">Sword</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="goalGainPerTick">Your Gain Per Tick</label>
+          <input type="text" id="goalGainPerTick" placeholder="e.g. 1.5sx or 1e21">
+        </div>
+        <div class="form-group">
+          <label for="goalCompanionGain">Companion Gain Per Tick</label>
+          <input type="text" id="goalCompanionGain" placeholder="e.g. 1.5qd or 1e15">
+        </div>
+        <div class="form-group">
+          <label for="currentStat">Current Stat Value</label>
+          <input type="text" id="currentStat" placeholder="e.g. 1.5sx or 1e21">
+        </div>
+        <div class="form-group">
+          <label for="desiredStat">Desired Stat Value</label>
+          <input type="text" id="desiredStat" placeholder="e.g. 2.5sx or 2.5e21">
+        </div>
+      </div>
+
+      <button class="btn" id="calculateGoalBtn">Calculate Time Needed</button>
+      
+      <div class="result" id="goalResult"></div>
+    </div>
   </div>
 
   <script>
@@ -230,6 +280,14 @@
         ];
         for (const {v,s} of units) if (num >= v) return (num/v).toFixed(2)+s;
         return num.toString();
+      }
+
+      function formatTime(minutes) {
+        if (minutes < 60) return `${minutes.toFixed(1)} minutes`;
+        const hours = minutes / 60;
+        if (hours < 24) return `${hours.toFixed(1)} hours`;
+        const days = hours / 24;
+        return `${days.toFixed(1)} days`;
       }
 
       function calculateGains() {
@@ -308,18 +366,83 @@
         `;
       }
 
-      // Add event listener to the button
+      function calculateTimeToGoal() {
+        const statType = document.getElementById("goalStatType").value;
+        const gainPerTick = parseNumberWithSuffix(document.getElementById("goalGainPerTick").value);
+        const companionGain = parseNumberWithSuffix(document.getElementById("goalCompanionGain").value) || 0;
+        const currentStat = parseNumberWithSuffix(document.getElementById("currentStat").value);
+        const desiredStat = parseNumberWithSuffix(document.getElementById("desiredStat").value);
+
+        if (isNaN(gainPerTick)) {
+          document.getElementById("goalResult").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter a valid gain per tick</div>`;
+          return;
+        }
+
+        if (isNaN(currentStat)) {
+          document.getElementById("goalResult").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter your current stat value</div>`;
+          return;
+        }
+
+        if (isNaN(desiredStat) || desiredStat <= currentStat) {
+          document.getElementById("goalResult").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter a valid desired stat higher than current</div>`;
+          return;
+        }
+
+        const neededGain = desiredStat - currentStat;
+        const gainPerMinute = (gainPerTick * ticksPerMinute[statType]) + (companionGain * companionTicksPerMinute);
+        const minutesNeeded = neededGain / gainPerMinute;
+
+        document.getElementById("goalResult").innerHTML = `
+          <div class="result-item">
+            <span>Training Type:</span>
+            <span class="result-value">${statType.charAt(0).toUpperCase()+statType.slice(1)}</span>
+          </div>
+          <div class="result-item">
+            <span>Current Stat:</span>
+            <span class="result-value">${abbreviateNumber(currentStat)}</span>
+          </div>
+          <div class="result-item">
+            <span>Desired Stat:</span>
+            <span class="result-value">${abbreviateNumber(desiredStat)}</span>
+          </div>
+          <div class="result-item">
+            <span>Gain Needed:</span>
+            <span class="result-value">${abbreviateNumber(neededGain)}</span>
+          </div>
+          <div class="result-item">
+            <span>Gain Per Minute:</span>
+            <span class="result-value">${abbreviateNumber(gainPerMinute)}</span>
+          </div>
+          <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid #333">
+            <span style="font-weight:700">Time Needed:</span>
+            <span class="result-value" style="font-weight:700">${formatTime(minutesNeeded)}</span>
+          </div>
+          <div class="result-item">
+            <span>At This Rate You'll Reach It:</span>
+            <span class="result-value">${new Date(Date.now() + minutesNeeded * 60000).toLocaleString()}</span>
+          </div>
+        `;
+      }
+
+      // Add event listeners
       document.getElementById("calculateBtn").addEventListener("click", calculateGains);
+      document.getElementById("calculateGoalBtn").addEventListener("click", calculateTimeToGoal);
       
-      // Also allow calculation when pressing Enter in input fields
-      document.getElementById("gainPerTick").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") calculateGains();
-      });
-      document.getElementById("time").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") calculateGains();
-      });
-      document.getElementById("companionGain").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") calculateGains();
+      // Enter key support
+      const inputs = [
+        "gainPerTick", "time", "companionGain", 
+        "goalGainPerTick", "goalCompanionGain", "currentStat", "desiredStat"
+      ];
+      inputs.forEach(id => {
+        document.getElementById(id).addEventListener("keypress", function(e) {
+          if (e.key === "Enter") {
+            if (id === "gainPerTick" || id === "time" || id === "companionGain") {
+              calculateGains();
+            } else {
+              calculateTimeToGoal();
+            }
+          }
+        });
       });
     });
   </script>
