@@ -10,13 +10,12 @@
       --primary: #00c3ff;
       --secondary: #ff1b6b;
       --bg-dark: #0e0e12;
-      --bg-card: rgba(28, 28, 36, 0.85);
+      --bg-card: #1c1c24;
       --bg-element: #292933;
       --border: #444;
       --text-main: #f0f0f0;
       --text-secondary: #bbb;
       --accent: #222228;
-      --neon-glow: 0 0 10px rgba(0, 195, 255, 0.7);
     }
     * {
       box-sizing: border-box;
@@ -25,6 +24,7 @@
     }
     body {
       font-family: 'Oxanium', sans-serif;
+      background: var(--bg-dark);
       color: var(--text-main);
       min-height: 100vh;
       padding: 2rem 1rem;
@@ -34,87 +34,45 @@
       position: relative;
       overflow-x: hidden;
     }
-    
-    /* Cyberpunk Video Background */
-    .video-background {
+    /* New Animated Background */
+    .bg-grid {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: -1;
-      object-fit: cover;
-      opacity: 0.4;
+      background: var(--bg-dark);
+      opacity: 0.8;
+      background-image: 
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 120s linear infinite;
     }
-    
-    /* Animated Grid Overlay */
-    .grid-overlay {
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
+    }
+    .bg-particles {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1;
-      background: 
-        linear-gradient(rgba(14, 14, 18, 0.7) 0%,
-        transparent 20%,
-        transparent 80%,
-        rgba(14, 14, 18, 0.7) 100%),
-        linear-gradient(90deg, 
-          rgba(14, 14, 18, 0.7) 0%,
-          transparent 20%,
-          transparent 80%,
-          rgba(14, 14, 18, 0.7) 100%);
-      background-size: 3px 3px;
-      animation: gridPulse 8s infinite alternate;
+      z-index: -2;
+      overflow: hidden;
     }
-    
-    @keyframes gridPulse {
-      0% { opacity: 0.3; }
-      100% { opacity: 0.7; }
-    }
-    
-    /* Animated Neon Scanlines */
-    .scanlines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: repeating-linear-gradient(
-        to bottom,
-        transparent,
-        transparent 3px,
-        rgba(0, 195, 255, 0.05) 3px,
-        rgba(0, 195, 255, 0.05) 6px
-      );
-      animation: scan 8s linear infinite;
-    }
-    
-    @keyframes scan {
-      from { background-position: 0 0; }
-      to { background-position: 0 100vh; }
-    }
-    
-    /* Floating Holographic Elements */
-    .holographic-circle {
-      position: fixed;
+    .particle {
+      position: absolute;
+      background: var(--primary);
       border-radius: 50%;
-      border: 1px solid var(--primary);
-      box-shadow: 0 0 20px var(--primary);
-      opacity: 0.1;
-      z-index: -1;
-      animation: float 15s infinite ease-in-out;
+      opacity: 0.15;
+      animation: float linear infinite;
     }
-    
     @keyframes float {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      25% { transform: translate(10vw, 5vh) rotate(5deg); }
-      50% { transform: translate(5vw, 10vh) rotate(0deg); }
-      75% { transform: translate(-5vw, 5vh) rotate(-5deg); }
+      to { transform: translateY(-100vh) translateX(20vw); }
     }
-    
     .navbar {
       width: 100%;
       max-width: 1200px;
@@ -122,12 +80,17 @@
       padding: 1rem;
       border-radius: 0.5rem;
       margin-bottom: 1.5rem;
-      box-shadow: var(--neon-glow);
+      box-shadow: 0 2px 10px rgba(0, 195, 255, 0.1);
       z-index: 10;
-      backdrop-filter: blur(5px);
     }
-    
-    /* Rest of your existing styles remain exactly the same */
+    .navbar a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin: 0 0.75rem;
+      transition: all 0.2s ease;
+    }
     .main-container {
       display: flex;
       flex-wrap: wrap;
@@ -138,13 +101,13 @@
       z-index: 10;
     }
     .calculator-container {
-      background: var(--bg-card);
+      background: rgba(28, 28, 36, 0.85);
       backdrop-filter: blur(10px);
       width: 100%;
       max-width: 550px;
       padding: 2rem;
       border-radius: 1rem;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), var(--neon-glow);
+      box-shadow: 0 0 30px rgba(0, 195, 255, 0.05);
       border: 1px solid var(--border);
     }
     .logo {
@@ -160,7 +123,6 @@
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 5px rgba(0, 195, 255, 0.3);
     }
     .subtitle {
       text-align: center;
@@ -193,12 +155,6 @@
       padding: 0.75rem 1rem;
       color: var(--text-main);
       font-size: 1rem;
-      transition: all 0.3s;
-    }
-    input:focus, select:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 10px rgba(0, 195, 255, 0.3);
     }
     .btn {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -214,7 +170,7 @@
     }
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 195, 255, 0.5);
+      box-shadow: 0 5px 15px rgba(0, 195, 255, 0.3);
     }
     .result {
       margin-top: 2rem;
@@ -222,7 +178,6 @@
       padding: 1.5rem;
       border-left: 4px solid var(--primary);
       border-radius: 0.5rem;
-      box-shadow: 0 0 15px rgba(0, 195, 255, 0.2);
     }
     .result-item {
       margin-bottom: 0.75rem;
@@ -283,7 +238,6 @@
       transition: opacity 0.3s;
       font-size: 0.8rem;
       border: 1px solid var(--border);
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     }
     .tooltip:hover .tooltiptext {
       visibility: visible;
@@ -326,17 +280,9 @@
   </style>
 </head>
 <body>
-  <!-- Cyberpunk Background Elements -->
-  <video autoplay muted loop class="video-background">
-    <source src="https://assets.mixkit.co/videos/preview/mixkit-grid-pattern-on-a-black-background-1417-large.mp4" type="video/mp4">
-  </video>
-  <div class="grid-overlay"></div>
-  <div class="scanlines"></div>
-  
-  <!-- Holographic floating circles -->
-  <div class="holographic-circle" style="width: 300px; height: 300px; top: 20%; left: 10%; animation-delay: 0s;"></div>
-  <div class="holographic-circle" style="width: 200px; height: 200px; top: 60%; left: 80%; animation-delay: 2s;"></div>
-  <div class="holographic-circle" style="width: 400px; height: 400px; top: 30%; left: 60%; animation-delay: 4s;"></div>
+  <!-- New Background Elements -->
+  <div class="bg-grid"></div>
+  <div class="bg-particles" id="particles"></div>
 
   <nav class="navbar">
     <a href="index2.html">Coin Calculator</a>
@@ -465,6 +411,35 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      
+      function createParticles() {
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = Math.floor(window.innerWidth / 10);
+        
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.classList.add('particle');
+          
+          
+          const size = Math.random() * 5 + 1;
+          const posX = Math.random() * window.innerWidth;
+          const posY = Math.random() * window.innerHeight;
+          const duration = Math.random() * 30 + 20;
+          const delay = Math.random() * 5;
+          
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${posX}px`;
+          particle.style.top = `${posY}px`;
+          particle.style.animationDuration = `${duration}s`;
+          particle.style.animationDelay = `${delay}s`;
+          
+          particlesContainer.appendChild(particle);
+        }
+      }
+      
+      createParticles();
+
       const ticksPerMinute = {
         strength: 55,
         energy: 28,
@@ -534,11 +509,11 @@
           return;
         }
 
-        // Calculate main gains
+        
         const ticks = ticksPerMinute[statType] * time;
         const mainGain = gainPerTick * ticks;
         
-        // Calculate companion gains
+        
         let companionTotalGain = 0;
         if (hasCompanion) {
           const companionTicks = companionTicksPerMinute * time;
@@ -646,7 +621,7 @@
         `;
       }
 
-      // Profile functions
+     
       function saveProfile() {
         const profileName = document.getElementById("profileName").value.trim();
         if (!profileName) {
@@ -737,7 +712,7 @@
         }
       }
 
-      // Event listeners
+      
       document.getElementById("calculateBtn").addEventListener("click", calculateGains);
       document.getElementById("calculateGoalBtn").addEventListener("click", calculateTimeToGoal);
       document.getElementById("saveProfileBtn").addEventListener("click", saveProfile);
@@ -745,7 +720,7 @@
       document.getElementById("saveGoalProfileBtn").addEventListener("click", saveGoalProfile);
       document.getElementById("loadGoalProfileBtn").addEventListener("click", loadGoalProfile);
       
-      // Enter key support
+      
       const inputs = [
         "gainPerTick", "time", "companionGain", 
         "goalGainPerTick", "goalCompanionGain", "currentStat", "desiredStat"
