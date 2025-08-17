@@ -560,11 +560,7 @@
       }
 
       // Calculate the trade
-      function calculateTrade() {
-        if (yourOffer.length === 0 || theirOffer.length === 0) {
-          alert("Please add companions to both offers");
-          return;
-        }
+      
 
         // Calculate total values
         const yourTotal = yourOffer.reduce((sum, c) => sum + (c.value * c.amount), 0);
