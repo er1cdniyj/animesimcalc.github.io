@@ -99,6 +99,9 @@
     label {
       font-size: 0.9rem;
       color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
     }
     input, select {
       background: var(--bg-element);
@@ -153,6 +156,57 @@
       color: var(--primary);
       text-align: center;
     }
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: var(--primary);
+      color: var(--bg-dark);
+      border-radius: 50%;
+      text-align: center;
+      font-size: 12px;
+      line-height: 16px;
+      cursor: help;
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 200px;
+      background-color: var(--bg-element);
+      color: var(--text-main);
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.8rem;
+    }
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+    .profile-controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .profile-controls input {
+      flex-grow: 1;
+    }
+    .profile-btn {
+      background: var(--bg-element);
+      color: var(--text-main);
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0 0.75rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
     @media (min-width: 640px) {
       .form-grid {
         grid-template-columns: 1fr 1fr;
@@ -179,7 +233,9 @@
 
       <div class="form-grid">
         <div class="form-group">
-          <label for="statType">Training Type</label>
+          <label for="statType">Training Type
+            <div class="tooltip">?<span class="tooltiptext">Select the stat you're training (Strength, Energy, Defense, or Sword)</span></div>
+          </label>
           <select id="statType">
             <option value="strength">Strength</option>
             <option value="energy">Energy</option>
@@ -188,11 +244,15 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="gainPerTick">Gain Per Tick</label>
+          <label for="gainPerTick">Gain Per Tick
+            <div class="tooltip">?<span class="tooltiptext">Amount gained each training tick (e.g. 1.5sx or 1e21)</span></div>
+          </label>
           <input type="text" id="gainPerTick" placeholder="e.g. 1.5sx or 1e21" required>
         </div>
         <div class="form-group">
-          <label for="time">Time (minutes)</label>
+          <label for="time">Time (minutes)
+            <div class="tooltip">?<span class="tooltiptext">Duration of your training session in minutes</span></div>
+          </label>
           <input type="number" id="time" placeholder="e.g. 60" required>
         </div>
       </div>
@@ -200,17 +260,27 @@
       <div class="companion-section">
         <div class="form-grid">
           <div class="form-group">
-            <label for="companionActive">Companion Active</label>
+            <label for="companionActive">Companion Active
+              <div class="tooltip">?<span class="tooltiptext">Toggle if you have an active companion</span></div>
+            </label>
             <select id="companionActive">
               <option value="false">No</option>
               <option value="true">Yes</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="companionGain">Companion Gain Per Tick</label>
+            <label for="companionGain">Companion Gain Per Tick
+              <div class="tooltip">?<span class="tooltiptext">Amount your companion gives per tick (e.g. 1.5qd or 1e15)</span></div>
+            </label>
             <input type="text" id="companionGain" placeholder="e.g. 1.5qd or 1e15">
           </div>
         </div>
+      </div>
+
+      <div class="profile-controls">
+        <input type="text" id="profileName" placeholder="Profile name">
+        <button class="profile-btn" onclick="saveProfile()">Save</button>
+        <button class="profile-btn" onclick="loadProfile()">Load</button>
       </div>
 
       <button class="btn" id="calculateBtn">Calculate Gains</button>
@@ -226,7 +296,9 @@
       <div class="goal-section">
         <div class="form-grid">
           <div class="form-group">
-            <label for="goalStatType">Training Type</label>
+            <label for="goalStatType">Training Type
+              <div class="tooltip">?<span class="tooltiptext">Select the stat you're training (Strength, Energy, Defense, or Sword)</span></div>
+            </label>
             <select id="goalStatType">
               <option value="strength">Strength</option>
               <option value="energy">Energy</option>
@@ -235,21 +307,35 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="goalGainPerTick">Your Gain Per Tick</label>
+            <label for="goalGainPerTick">Your Gain Per Tick
+              <div class="tooltip">?<span class="tooltiptext">Amount you gain each training tick (e.g. 1.5sx or 1e21)</span></div>
+            </label>
             <input type="text" id="goalGainPerTick" placeholder="e.g. 1.5sx or 1e21">
           </div>
           <div class="form-group">
-            <label for="goalCompanionGain">Companion Gain Per Tick</label>
+            <label for="goalCompanionGain">Companion Gain Per Tick
+              <div class="tooltip">?<span class="tooltiptext">Amount your companion gives per tick (e.g. 1.5qd or 1e15)</span></div>
+            </label>
             <input type="text" id="goalCompanionGain" placeholder="e.g. 1.5qd or 1e15">
           </div>
           <div class="form-group">
-            <label for="currentStat">Current Stat Value</label>
+            <label for="currentStat">Current Stat Value
+              <div class="tooltip">?<span class="tooltiptext">Your current stat value (e.g. 1.5sx or 1e21)</span></div>
+            </label>
             <input type="text" id="currentStat" placeholder="e.g. 1.5sx or 1e21">
           </div>
           <div class="form-group">
-            <label for="desiredStat">Desired Stat Value</label>
+            <label for="desiredStat">Desired Stat Value
+              <div class="tooltip">?<span class="tooltiptext">Your target stat value (e.g. 2.5sx or 2.5e21)</span></div>
+            </label>
             <input type="text" id="desiredStat" placeholder="e.g. 2.5sx or 2.5e21">
           </div>
+        </div>
+
+        <div class="profile-controls">
+          <input type="text" id="goalProfileName" placeholder="Profile name">
+          <button class="profile-btn" onclick="saveGoalProfile()">Save</button>
+          <button class="profile-btn" onclick="loadGoalProfile()">Load</button>
         </div>
 
         <button class="btn" id="calculateGoalBtn">Calculate Time Needed</button>
@@ -442,11 +528,74 @@
         `;
       }
 
-  
+      // Profile functions
+      function saveProfile() {
+        const profileName = document.getElementById("profileName").value.trim();
+        if (!profileName) return;
+        
+        const profile = {
+          statType: document.getElementById("statType").value,
+          gainPerTick: document.getElementById("gainPerTick").value,
+          companionActive: document.getElementById("companionActive").value,
+          companionGain: document.getElementById("companionGain").value
+        };
+        
+        localStorage.setItem(`trainingProfile_${profileName}`, JSON.stringify(profile));
+        alert(`Profile "${profileName}" saved!`);
+      }
+
+      function loadProfile() {
+        const profileName = document.getElementById("profileName").value.trim();
+        if (!profileName) return;
+        
+        const savedProfile = localStorage.getItem(`trainingProfile_${profileName}`);
+        if (!savedProfile) {
+          alert(`Profile "${profileName}" not found!`);
+          return;
+        }
+        
+        const profile = JSON.parse(savedProfile);
+        document.getElementById("statType").value = profile.statType;
+        document.getElementById("gainPerTick").value = profile.gainPerTick;
+        document.getElementById("companionActive").value = profile.companionActive;
+        document.getElementById("companionGain").value = profile.companionGain;
+      }
+
+      function saveGoalProfile() {
+        const profileName = document.getElementById("goalProfileName").value.trim();
+        if (!profileName) return;
+        
+        const profile = {
+          statType: document.getElementById("goalStatType").value,
+          gainPerTick: document.getElementById("goalGainPerTick").value,
+          companionGain: document.getElementById("goalCompanionGain").value
+        };
+        
+        localStorage.setItem(`goalProfile_${profileName}`, JSON.stringify(profile));
+        alert(`Profile "${profileName}" saved!`);
+      }
+
+      function loadGoalProfile() {
+        const profileName = document.getElementById("goalProfileName").value.trim();
+        if (!profileName) return;
+        
+        const savedProfile = localStorage.getItem(`goalProfile_${profileName}`);
+        if (!savedProfile) {
+          alert(`Profile "${profileName}" not found!`);
+          return;
+        }
+        
+        const profile = JSON.parse(savedProfile);
+        document.getElementById("goalStatType").value = profile.statType;
+        document.getElementById("goalGainPerTick").value = profile.gainPerTick;
+        document.getElementById("goalCompanionGain").value = profile.companionGain;
+      }
+
+      // Event listeners
       document.getElementById("calculateBtn").addEventListener("click", calculateGains);
       document.getElementById("calculateGoalBtn").addEventListener("click", calculateTimeToGoal);
       
-     
+      // Enter key support
       const inputs = [
         "gainPerTick", "time", "companionGain", 
         "goalGainPerTick", "goalCompanionGain", "currentStat", "desiredStat"
