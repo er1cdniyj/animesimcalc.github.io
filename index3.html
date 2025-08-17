@@ -16,6 +16,8 @@
       --text-main: #f0f0f0;
       --text-secondary: #bbb;
       --accent: #222228;
+      --gold: #FFD700;
+      --atomic: #50C878;
     }
     * {
       box-sizing: border-box;
@@ -182,6 +184,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative;
     }
     .companion-info {
       display: flex;
@@ -329,6 +332,88 @@
       font-size: 0.7rem;
       color: var(--primary);
       margin-top: 0.25rem;
+    }
+    /* Trait Selector */
+    .trait-selector {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: var(--bg-element);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1;
+      border: 1px solid var(--border);
+    }
+    .trait-options {
+      position: absolute;
+      top: 30px;
+      right: 0;
+      background: var(--bg-element);
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 2;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    .trait-option {
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+    .trait-option:hover {
+      background: var(--bg-dark);
+    }
+    .trait-option.normal {
+      color: var(--text-main);
+    }
+    .trait-option.gold {
+      color: var(--gold);
+    }
+    .trait-option.atomic {
+      color: var(--atomic);
+    }
+    .trait-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 0.25rem;
+    }
+    .trait-indicator.normal {
+      background: var(--text-secondary);
+    }
+    .trait-indicator.gold {
+      background: var(--gold);
+    }
+    .trait-indicator.atomic {
+      background: var(--atomic);
+    }
+    .trait-display {
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      font-size: 0.7rem;
+      padding: 0.1rem 0.3rem;
+      border-radius: 0.25rem;
+      font-weight: bold;
+    }
+    .trait-display.gold {
+      background: var(--gold);
+      color: #000;
+    }
+    .trait-display.atomic {
+      background: var(--atomic);
+      color: #000;
     }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -504,13 +589,14 @@
           : document.getElementById('their-offer');
         
         // Check if companion already exists in offer
-        const existingIndex = offer.findIndex(c => c.name === companion.name);
+        const existingIndex = offer.findIndex(c => c.name === companion.name && c.trait === undefined);
         if (existingIndex >= 0) {
           offer[existingIndex].amount += 1;
         } else {
           offer.push({
             ...companion,
-            amount: 1
+            amount: 1,
+            trait: undefined // Start with no trait
           });
         }
         
@@ -524,7 +610,17 @@
         offer.forEach((companion, index) => {
           const companionItem = document.createElement('div');
           companionItem.classList.add('companion-item');
+          
+          // Add trait indicator if it exists
+          let traitBadge = '';
+          if (companion.trait === 'gold') {
+            traitBadge = '<span class="trait-display gold">GOLD</span>';
+          } else if (companion.trait === 'atomic') {
+            traitBadge = '<span class="trait-display atomic">ATOMIC</span>';
+          }
+          
           companionItem.innerHTML = `
+            ${traitBadge}
             <div class="companion-info">
               <img src="${companion.image}" alt="${companion.name}" class="companion-image">
               <span class="companion-name">${companion.name}</span>
@@ -534,6 +630,20 @@
               <button class="remove-btn" data-index="${index}">
                 <i class="fas fa-times"></i>
               </button>
+            </div>
+            <div class="trait-selector">
+              <i class="fas fa-tag"></i>
+              <div class="trait-options">
+                <div class="trait-option normal" data-trait="normal">
+                  <span class="trait-indicator normal"></span>Normal (×1)
+                </div>
+                <div class="trait-option gold" data-trait="gold">
+                  <span class="trait-indicator gold"></span>Gold (×0.2)
+                </div>
+                <div class="trait-option atomic" data-trait="atomic">
+                  <span class="trait-indicator atomic"></span>Atomic (×0.5)
+                </div>
+              </div>
             </div>
           `;
           
@@ -551,6 +661,37 @@
             updateOfferDisplay(offer, container);
           });
           
+          // Set up trait selector
+          const traitSelector = companionItem.querySelector('.trait-selector');
+          const traitOptions = companionItem.querySelector('.trait-options');
+          
+          traitSelector.addEventListener('click', (e) => {
+            e.stopPropagation();
+            traitOptions.style.display = traitOptions.style.display === 'flex' ? 'none' : 'flex';
+          });
+          
+          // Handle trait selection
+          const traitOptionButtons = companionItem.querySelectorAll('.trait-option');
+          traitOptionButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const trait = button.dataset.trait;
+              if (trait === 'normal') {
+                offer[index].trait = undefined;
+              } else {
+                offer[index].trait = trait;
+              }
+              updateOfferDisplay(offer, container);
+            });
+          });
+          
+          // Close trait selector when clicking outside
+          document.addEventListener('click', function closeTraitSelector(e) {
+            if (!traitSelector.contains(e.target)) {
+              traitOptions.style.display = 'none';
+            }
+          });
+          
           container.appendChild(companionItem);
         });
       }
@@ -562,9 +703,21 @@
           return;
         }
 
-        // Calculate total values
-        const yourTotal = yourOffer.reduce((sum, c) => sum + (c.value * c.amount), 0);
-        const theirTotal = theirOffer.reduce((sum, c) => sum + (c.value * c.amount), 0);
+        // Calculate total values with trait multipliers
+        const yourTotal = yourOffer.reduce((sum, c) => {
+          let value = c.value * c.amount;
+          if (c.trait === 'gold') value *= 0.2;
+          else if (c.trait === 'atomic') value *= 0.5;
+          return sum + value;
+        }, 0);
+        
+        const theirTotal = theirOffer.reduce((sum, c) => {
+          let value = c.value * c.amount;
+          if (c.trait === 'gold') value *= 0.2;
+          else if (c.trait === 'atomic') value *= 0.5;
+          return sum + value;
+        }, 0);
+        
         const difference = theirTotal - yourTotal;
 
         // Update UI
