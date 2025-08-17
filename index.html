@@ -4,51 +4,69 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stats Gain Calculator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #00c3ff;
-      --secondary: #ff1b6b;
-      --bg-dark: #0e0e12;
-      --bg-card: #1c1c24;
-      --bg-element: #292933;
-      --border: #444;
-      --text-main: #f0f0f0;
-      --text-secondary: #bbb;
-      --accent: #222228;
+      --primary: #00f2fe;
+      --secondary: #4facfe;
+      --tertiary: #a6c1ee;
+      --bg-dark: #0a0a12;
+      --bg-darker: #07070e;
+      --bg-card: #15151e;
+      --bg-element: #23232e;
+      --border: rgba(255,255,255,0.08);
+      --text-main: #f8f8ff;
+      --text-secondary: #b8b8d0;
+      --accent: #1e1e2a;
+      --glow: 0 0 20px rgba(0, 242, 254, 0.15);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
+    
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+    
     body {
       font-family: 'Oxanium', sans-serif;
-      background: var(--bg-dark);
+      background: radial-gradient(ellipse at bottom, var(--bg-dark) 0%, var(--bg-darker) 100%);
       color: var(--text-main);
       min-height: 100vh;
       padding: 2rem 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
+      line-height: 1.6;
     }
+    
     .navbar {
       width: 100%;
       max-width: 1200px;
       background: var(--accent);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 2px 10px rgba(0, 195, 255, 0.1);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: var(--glow);
+      backdrop-filter: blur(4px);
+      border: 1px solid var(--border);
     }
+    
     .navbar a {
-      color: var(--primary);
+      color: var(--tertiary);
       text-decoration: none;
-      font-weight: 700;
+      font-weight: 600;
       font-size: 1.1rem;
-      margin: 0 0.75rem;
-      transition: all 0.2s ease;
+      margin: 0 1rem;
+      transition: var(--transition);
+      letter-spacing: 0.5px;
     }
+    
+    .navbar a:hover {
+      color: var(--primary);
+      text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+    }
+    
     .main-container {
       display: flex;
       flex-wrap: wrap;
@@ -57,20 +75,31 @@
       max-width: 1200px;
       justify-content: center;
     }
+    
     .calculator-container {
-      background: var(--bg-card);
+      background: linear-gradient(145deg, var(--bg-card) 0%, var(--accent) 100%);
       width: 100%;
       max-width: 550px;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 30px rgba(0, 195, 255, 0.05);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: var(--glow);
+      border: 1px solid var(--border);
+      transition: var(--transition);
     }
+    
+    .calculator-container:hover {
+      box-shadow: 0 0 30px rgba(0, 242, 254, 0.2);
+      transform: translateY(-2px);
+    }
+    
     .logo {
       display: block;
       margin: 0 auto 1.5rem;
-      width: 120px;
-      filter: drop-shadow(0 0 10px var(--primary));
+      width: 100px;
+      filter: drop-shadow(0 0 15px var(--primary));
+      opacity: 0.9;
     }
+    
     .title {
       text-align: center;
       font-size: 2rem;
@@ -78,90 +107,188 @@
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      letter-spacing: 0.5px;
+      font-weight: 700;
     }
+    
     .subtitle {
       text-align: center;
       color: var(--text-secondary);
-      font-size: 0.9rem;
-      margin-bottom: 2rem;
+      font-size: 0.95rem;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+      letter-spacing: 0.3px;
     }
+    
     .form-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1.25rem;
-      margin-bottom: 1.5rem;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
+    
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.75rem;
     }
+    
     label {
       font-size: 0.9rem;
       color: var(--text-secondary);
+      letter-spacing: 0.3px;
+      font-weight: 500;
     }
+    
     input, select {
       background: var(--bg-element);
       border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      padding: 0.9rem 1.2rem;
       color: var(--text-main);
       font-size: 1rem;
+      transition: var(--transition);
+      font-family: 'Oxanium', sans-serif;
     }
+    
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.2);
+    }
+    
+    input::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.6;
+    }
+    
     .btn {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
       color: white;
       font-size: 1rem;
-      font-weight: 700;
-      padding: 0.75rem;
+      font-weight: 600;
+      padding: 1rem;
       border: none;
-      border-radius: 0.5rem;
+      border-radius: 10px;
       cursor: pointer;
       width: 100%;
+      transition: var(--transition);
+      letter-spacing: 0.5px;
+      margin-top: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
     }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
     .result {
-      margin-top: 2rem;
-      background: var(--accent);
-      padding: 1.5rem;
+      margin-top: 2.5rem;
+      background: linear-gradient(145deg, var(--accent) 0%, rgba(30, 30, 42, 0.8) 100%);
+      padding: 1.75rem;
       border-left: 4px solid var(--primary);
-      border-radius: 0.5rem;
+      border-radius: 12px;
+      box-shadow: var(--glow);
+      backdrop-filter: blur(4px);
     }
+    
     .result-item {
-      margin-bottom: 0.75rem;
+      margin-bottom: 1rem;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
+    
+    .result-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    
     .result-value {
       font-weight: 600;
       color: var(--primary);
+      letter-spacing: 0.3px;
     }
+    
     .companion-section {
-      background: rgba(0, 195, 255, 0.1);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin-bottom: 1.5rem;
+      background: linear-gradient(145deg, rgba(0, 242, 254, 0.08) 0%, rgba(0, 242, 254, 0.03) 100%);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(0, 242, 254, 0.1);
     }
+    
     .goal-section {
-      background: rgba(255, 27, 107, 0.1);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin-bottom: 1.5rem;
+      background: linear-gradient(145deg, rgba(79, 172, 254, 0.08) 0%, rgba(79, 172, 254, 0.03) 100%);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(79, 172, 254, 0.1);
     }
+    
     .section-title {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
       color: var(--primary);
       text-align: center;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
+    
     @media (min-width: 640px) {
       .form-grid {
         grid-template-columns: 1fr 1fr;
       }
     }
+    
     @media (min-width: 1000px) {
       .calculator-container {
         max-width: 550px;
       }
+    }
+    
+    /* Smooth scroll behavior */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Fade-in animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .calculator-container {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+    
+    /* Glowing focus effect */
+    .glow-effect {
+      position: relative;
+    }
+    
+    .glow-effect::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+      box-shadow: 0 0 15px var(--primary);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .glow-effect:focus-within::after {
+      opacity: 0.4;
     }
   </style>
 </head>
@@ -175,10 +302,10 @@
     <div class="calculator-container">
       <img src="image1.png" alt="Logo" class="logo">
       <h1 class="title">Stats Gain Calculator</h1>
-      <p class="subtitle">Calculate your training gains</p>
+      <p class="subtitle">Calculate your training gains with precision</p>
 
       <div class="form-grid">
-        <div class="form-group">
+        <div class="form-group glow-effect">
           <label for="statType">Training Type</label>
           <select id="statType">
             <option value="strength">Strength</option>
@@ -187,11 +314,11 @@
             <option value="sword">Sword</option>
           </select>
         </div>
-        <div class="form-group">
+        <div class="form-group glow-effect">
           <label for="gainPerTick">Gain Per Tick</label>
           <input type="text" id="gainPerTick" placeholder="e.g. 1.5sx or 1e21" required>
         </div>
-        <div class="form-group">
+        <div class="form-group glow-effect">
           <label for="time">Time (minutes)</label>
           <input type="number" id="time" placeholder="e.g. 60" required>
         </div>
@@ -199,14 +326,14 @@
 
       <div class="companion-section">
         <div class="form-grid">
-          <div class="form-group">
+          <div class="form-group glow-effect">
             <label for="companionActive">Companion Active</label>
             <select id="companionActive">
               <option value="false">No</option>
               <option value="true">Yes</option>
             </select>
           </div>
-          <div class="form-group">
+          <div class="form-group glow-effect">
             <label for="companionGain">Companion Gain Per Tick</label>
             <input type="text" id="companionGain" placeholder="e.g. 1.5qd or 1e15">
           </div>
@@ -225,7 +352,7 @@
 
       <div class="goal-section">
         <div class="form-grid">
-          <div class="form-group">
+          <div class="form-group glow-effect">
             <label for="goalStatType">Training Type</label>
             <select id="goalStatType">
               <option value="strength">Strength</option>
@@ -234,19 +361,19 @@
               <option value="sword">Sword</option>
             </select>
           </div>
-          <div class="form-group">
+          <div class="form-group glow-effect">
             <label for="goalGainPerTick">Your Gain Per Tick</label>
             <input type="text" id="goalGainPerTick" placeholder="e.g. 1.5sx or 1e21">
           </div>
-          <div class="form-group">
+          <div class="form-group glow-effect">
             <label for="goalCompanionGain">Companion Gain Per Tick</label>
             <input type="text" id="goalCompanionGain" placeholder="e.g. 1.5qd or 1e15">
           </div>
-          <div class="form-group">
+          <div class="form-group glow-effect">
             <label for="currentStat">Current Stat Value</label>
             <input type="text" id="currentStat" placeholder="e.g. 1.5sx or 1e21">
           </div>
-          <div class="form-group">
+          <div class="form-group glow-effect">
             <label for="desiredStat">Desired Stat Value</label>
             <input type="text" id="desiredStat" placeholder="e.g. 2.5sx or 2.5e21">
           </div>
@@ -369,7 +496,7 @@
             <span>Companion Gain:</span>
             <span class="result-value">${abbreviateNumber(companionTotalGain)}</span>
           </div>` : ''}
-          <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid #333">
+          <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid rgba(255,255,255,0.1)">
             <span style="font-weight:700">Total Gain:</span>
             <span class="result-value" style="font-weight:700">${abbreviateNumber(totalGain)}</span>
           </div>
@@ -431,7 +558,7 @@
             <span>Gain Per Minute:</span>
             <span class="result-value">${abbreviateNumber(gainPerMinute)}</span>
           </div>
-          <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid #333">
+          <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid rgba(255,255,255,0.1)">
             <span style="font-weight:700">Time Needed:</span>
             <span class="result-value" style="font-weight:700">${formatTime(minutesNeeded)}</span>
           </div>
@@ -442,11 +569,9 @@
         `;
       }
 
-  
       document.getElementById("calculateBtn").addEventListener("click", calculateGains);
       document.getElementById("calculateGoalBtn").addEventListener("click", calculateTimeToGoal);
       
-     
       const inputs = [
         "gainPerTick", "time", "companionGain", 
         "goalGainPerTick", "goalCompanionGain", "currentStat", "desiredStat"
