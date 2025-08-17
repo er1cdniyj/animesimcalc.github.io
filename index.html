@@ -31,6 +31,47 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* New Animated Background */
+    .bg-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: var(--bg-dark);
+      opacity: 0.8;
+      background-image: 
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 120s linear infinite;
+    }
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
+    }
+    .bg-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0.15;
+      animation: float linear infinite;
+    }
+    @keyframes float {
+      to { transform: translateY(-100vh) translateX(20vw); }
     }
     .navbar {
       width: 100%;
@@ -40,6 +81,7 @@
       border-radius: 0.5rem;
       margin-bottom: 1.5rem;
       box-shadow: 0 2px 10px rgba(0, 195, 255, 0.1);
+      z-index: 10;
     }
     .navbar a {
       color: var(--primary);
@@ -56,14 +98,17 @@
       width: 100%;
       max-width: 1200px;
       justify-content: center;
+      z-index: 10;
     }
     .calculator-container {
-      background: var(--bg-card);
+      background: rgba(28, 28, 36, 0.85);
+      backdrop-filter: blur(10px);
       width: 100%;
       max-width: 550px;
       padding: 2rem;
       border-radius: 1rem;
       box-shadow: 0 0 30px rgba(0, 195, 255, 0.05);
+      border: 1px solid var(--border);
     }
     .logo {
       display: block;
@@ -121,6 +166,11 @@
       border-radius: 0.5rem;
       cursor: pointer;
       width: 100%;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 195, 255, 0.3);
     }
     .result {
       margin-top: 2rem;
@@ -143,12 +193,14 @@
       padding: 1rem;
       border-radius: 0.5rem;
       margin-bottom: 1.5rem;
+      border: 1px solid rgba(0, 195, 255, 0.2);
     }
     .goal-section {
       background: rgba(255, 27, 107, 0.1);
       padding: 1rem;
       border-radius: 0.5rem;
       margin-bottom: 1.5rem;
+      border: 1px solid rgba(255, 27, 107, 0.2);
     }
     .section-title {
       font-size: 1.2rem;
@@ -185,6 +237,7 @@
       opacity: 0;
       transition: opacity 0.3s;
       font-size: 0.8rem;
+      border: 1px solid var(--border);
     }
     .tooltip:hover .tooltiptext {
       visibility: visible;
@@ -197,15 +250,22 @@
     }
     .profile-controls input {
       flex-grow: 1;
+      background: var(--bg-element);
+      border: 1px solid var(--border);
     }
     .profile-btn {
       background: var(--bg-element);
       color: var(--text-main);
-      border: none;
+      border: 1px solid var(--border);
       border-radius: 0.5rem;
       padding: 0 0.75rem;
       cursor: pointer;
       font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .profile-btn:hover {
+      background: var(--primary);
+      color: var(--bg-dark);
     }
     @media (min-width: 640px) {
       .form-grid {
@@ -220,6 +280,10 @@
   </style>
 </head>
 <body>
+  <!-- New Background Elements -->
+  <div class="bg-grid"></div>
+  <div class="bg-particles" id="particles"></div>
+
   <nav class="navbar">
     <a href="index2.html">Coin Calculator</a>
   </nav>
@@ -279,8 +343,8 @@
 
       <div class="profile-controls">
         <input type="text" id="profileName" placeholder="Profile name">
-        <button class="profile-btn" onclick="saveProfile()">Save</button>
-        <button class="profile-btn" onclick="loadProfile()">Load</button>
+        <button class="profile-btn" id="saveProfileBtn">Save</button>
+        <button class="profile-btn" id="loadProfileBtn">Load</button>
       </div>
 
       <button class="btn" id="calculateBtn">Calculate Gains</button>
@@ -334,8 +398,8 @@
 
         <div class="profile-controls">
           <input type="text" id="goalProfileName" placeholder="Profile name">
-          <button class="profile-btn" onclick="saveGoalProfile()">Save</button>
-          <button class="profile-btn" onclick="loadGoalProfile()">Load</button>
+          <button class="profile-btn" id="saveGoalProfileBtn">Save</button>
+          <button class="profile-btn" id="loadGoalProfileBtn">Load</button>
         </div>
 
         <button class="btn" id="calculateGoalBtn">Calculate Time Needed</button>
@@ -347,6 +411,35 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Create animated particles for background
+      function createParticles() {
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = Math.floor(window.innerWidth / 10);
+        
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.classList.add('particle');
+          
+          // Random properties
+          const size = Math.random() * 5 + 1;
+          const posX = Math.random() * window.innerWidth;
+          const posY = Math.random() * window.innerHeight;
+          const duration = Math.random() * 30 + 20;
+          const delay = Math.random() * 5;
+          
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${posX}px`;
+          particle.style.top = `${posY}px`;
+          particle.style.animationDuration = `${duration}s`;
+          particle.style.animationDelay = `${delay}s`;
+          
+          particlesContainer.appendChild(particle);
+        }
+      }
+      
+      createParticles();
+
       const ticksPerMinute = {
         strength: 55,
         energy: 28,
@@ -531,13 +624,17 @@
       // Profile functions
       function saveProfile() {
         const profileName = document.getElementById("profileName").value.trim();
-        if (!profileName) return;
+        if (!profileName) {
+          alert("Please enter a profile name");
+          return;
+        }
         
         const profile = {
           statType: document.getElementById("statType").value,
           gainPerTick: document.getElementById("gainPerTick").value,
           companionActive: document.getElementById("companionActive").value,
-          companionGain: document.getElementById("companionGain").value
+          companionGain: document.getElementById("companionGain").value,
+          time: document.getElementById("time").value
         };
         
         localStorage.setItem(`trainingProfile_${profileName}`, JSON.stringify(profile));
@@ -546,7 +643,10 @@
 
       function loadProfile() {
         const profileName = document.getElementById("profileName").value.trim();
-        if (!profileName) return;
+        if (!profileName) {
+          alert("Please enter a profile name");
+          return;
+        }
         
         const savedProfile = localStorage.getItem(`trainingProfile_${profileName}`);
         if (!savedProfile) {
@@ -554,21 +654,32 @@
           return;
         }
         
-        const profile = JSON.parse(savedProfile);
-        document.getElementById("statType").value = profile.statType;
-        document.getElementById("gainPerTick").value = profile.gainPerTick;
-        document.getElementById("companionActive").value = profile.companionActive;
-        document.getElementById("companionGain").value = profile.companionGain;
+        try {
+          const profile = JSON.parse(savedProfile);
+          document.getElementById("statType").value = profile.statType;
+          document.getElementById("gainPerTick").value = profile.gainPerTick;
+          document.getElementById("companionActive").value = profile.companionActive;
+          document.getElementById("companionGain").value = profile.companionGain || "";
+          if (profile.time) document.getElementById("time").value = profile.time;
+        } catch (e) {
+          alert("Error loading profile");
+          console.error(e);
+        }
       }
 
       function saveGoalProfile() {
         const profileName = document.getElementById("goalProfileName").value.trim();
-        if (!profileName) return;
+        if (!profileName) {
+          alert("Please enter a profile name");
+          return;
+        }
         
         const profile = {
           statType: document.getElementById("goalStatType").value,
           gainPerTick: document.getElementById("goalGainPerTick").value,
-          companionGain: document.getElementById("goalCompanionGain").value
+          companionGain: document.getElementById("goalCompanionGain").value,
+          currentStat: document.getElementById("currentStat").value,
+          desiredStat: document.getElementById("desiredStat").value
         };
         
         localStorage.setItem(`goalProfile_${profileName}`, JSON.stringify(profile));
@@ -577,7 +688,10 @@
 
       function loadGoalProfile() {
         const profileName = document.getElementById("goalProfileName").value.trim();
-        if (!profileName) return;
+        if (!profileName) {
+          alert("Please enter a profile name");
+          return;
+        }
         
         const savedProfile = localStorage.getItem(`goalProfile_${profileName}`);
         if (!savedProfile) {
@@ -585,15 +699,26 @@
           return;
         }
         
-        const profile = JSON.parse(savedProfile);
-        document.getElementById("goalStatType").value = profile.statType;
-        document.getElementById("goalGainPerTick").value = profile.gainPerTick;
-        document.getElementById("goalCompanionGain").value = profile.companionGain;
+        try {
+          const profile = JSON.parse(savedProfile);
+          document.getElementById("goalStatType").value = profile.statType;
+          document.getElementById("goalGainPerTick").value = profile.gainPerTick;
+          document.getElementById("goalCompanionGain").value = profile.companionGain || "";
+          document.getElementById("currentStat").value = profile.currentStat || "";
+          document.getElementById("desiredStat").value = profile.desiredStat || "";
+        } catch (e) {
+          alert("Error loading profile");
+          console.error(e);
+        }
       }
 
       // Event listeners
       document.getElementById("calculateBtn").addEventListener("click", calculateGains);
       document.getElementById("calculateGoalBtn").addEventListener("click", calculateTimeToGoal);
+      document.getElementById("saveProfileBtn").addEventListener("click", saveProfile);
+      document.getElementById("loadProfileBtn").addEventListener("click", loadProfile);
+      document.getElementById("saveGoalProfileBtn").addEventListener("click", saveGoalProfile);
+      document.getElementById("loadGoalProfileBtn").addEventListener("click", loadGoalProfile);
       
       // Enter key support
       const inputs = [
