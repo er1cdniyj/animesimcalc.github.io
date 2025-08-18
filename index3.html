@@ -638,7 +638,7 @@
                   <span class="trait-indicator normal"></span>Normal (×1)
                 </div>
                 <div class="trait-option gold" data-trait="gold">
-                  <span class="trait-indicator gold"></span>Gold (×1.2)
+                  <span class="trait-indicator gold"></span>Gold (×1.3)
                 </div>
                 <div class="trait-option atomic" data-trait="atomic">
                   <span class="trait-indicator atomic"></span>Atomic (×1.5)
@@ -706,14 +706,14 @@
         // Calculate total values with trait multipliers
         const yourTotal = yourOffer.reduce((sum, c) => {
           let value = c.value * c.amount;
-          if (c.trait === 'gold') value *= 1.2;
+          if (c.trait === 'gold') value *= 1.3;
           else if (c.trait === 'atomic') value *= 1.5;
           return sum + value;
         }, 0);
         
         const theirTotal = theirOffer.reduce((sum, c) => {
           let value = c.value * c.amount;
-          if (c.trait === 'gold') value *= 1.2;
+          if (c.trait === 'gold') value *= 1.3;
           else if (c.trait === 'atomic') value *= 1.5;
           return sum + value;
         }, 0);
