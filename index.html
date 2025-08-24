@@ -34,7 +34,7 @@
     
     body {
       font-family: 'Oxanium', sans-serif;
-      background: var(--bg-dark);
+      background: linear-gradient(135deg, #0a0a12 0%, #1a1a2e 50%, #16213e 100%);
       color: var(--text-main);
       min-height: 100vh;
       padding: 1rem;
@@ -46,24 +46,24 @@
     }
     
     /* Animated Background */
-    .bg-grid {
+    .bg-anime {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: -1;
-      opacity: 0.5;
-      background-image: 
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 50px 50px;
-      animation: gridMove 120s linear infinite;
+      opacity: 0.15;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(126, 34, 206, 0.4) 0%, transparent 20%),
+        radial-gradient(circle at 90% 70%, rgba(6, 182, 212, 0.4) 0%, transparent 20%),
+        radial-gradient(circle at 50% 30%, rgba(249, 115, 22, 0.3) 0%, transparent 30%);
+      animation: pulseBackground 15s ease infinite;
     }
     
-    @keyframes gridMove {
-      0% { background-position: 0 0; }
-      100% { background-position: 1000px 1000px; }
+    @keyframes pulseBackground {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: 0.2; }
     }
     
     .bg-particles {
@@ -95,34 +95,34 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
     }
     
     .logo-container {
       display: flex;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
     
     .logo {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-right: 1rem;
-      box-shadow: 0 0 20px var(--primary-glow);
+      margin-right: 0.75rem;
+      box-shadow: 0 0 15px var(--primary-glow);
     }
     
     .logo i {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       color: white;
     }
     
     .title {
-      font-size: 2.5rem;
+      font-size: 2rem;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -131,31 +131,31 @@
     
     .subtitle {
       color: var(--text-secondary);
-      font-size: 1rem;
+      font-size: 0.9rem;
       text-align: center;
       max-width: 600px;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
     
     .navbar {
       display: flex;
       background: var(--bg-card);
-      padding: 0.5rem;
+      padding: 0.4rem;
       border-radius: 0.75rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       margin-bottom: 1rem;
       flex-wrap: wrap;
       justify-content: center;
     }
     
     .nav-btn {
-      padding: 0.75rem 1.5rem;
+      padding: 0.6rem 1.2rem;
       background: transparent;
       border: none;
       color: var(--text-secondary);
       font-family: 'Oxanium', sans-serif;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.9rem;
       border-radius: 0.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -164,7 +164,7 @@
     .nav-btn.active {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
-      box-shadow: 0 0 15px rgba(126, 34, 206, 0.4);
+      box-shadow: 0 0 10px rgba(126, 34, 206, 0.4);
     }
     
     .nav-btn:hover:not(.active) {
@@ -176,26 +176,23 @@
     .main-container {
       width: 100%;
       max-width: 1200px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-    
-    @media (min-width: 992px) {
-      .main-container {
-        grid-template-columns: 1fr 1fr;
-      }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     
     .calculator-container {
-      background: linear-gradient(to bottom, rgba(26, 26, 46, 0.9), rgba(26, 26, 46, 0.7));
+      background: linear-gradient(to bottom, rgba(26, 26, 46, 0.95), rgba(26, 26, 46, 0.85));
       backdrop-filter: blur(10px);
-      padding: 2rem;
-      border-radius: 1.25rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
       border: 1px solid var(--border);
       position: relative;
       overflow: hidden;
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 1rem;
     }
     
     .calculator-container::before {
@@ -204,13 +201,13 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
+      height: 3px;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
     }
     
     .calculator-title {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      margin-bottom: 0.4rem;
       color: var(--primary-glow);
       display: flex;
       align-items: center;
@@ -219,16 +216,16 @@
     
     .calculator-subtitle {
       color: var(--text-secondary);
-      font-size: 0.9rem;
-      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      margin-bottom: 1.2rem;
     }
     
     /* Form Elements */
     .form-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1.25rem;
-      margin-bottom: 1.5rem;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
     }
     
     @media (min-width: 640px) {
@@ -240,11 +237,11 @@
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
     
     .form-label {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: var(--text-secondary);
       display: flex;
       align-items: center;
@@ -254,10 +251,10 @@
     .form-input, .form-select {
       background: var(--bg-element);
       border: 1px solid var(--border);
-      border-radius: 0.75rem;
-      padding: 0.75rem 1rem;
+      border-radius: 0.6rem;
+      padding: 0.6rem 0.8rem;
       color: var(--text-main);
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-family: 'Oxanium', sans-serif;
       transition: all 0.3s ease;
     }
@@ -270,52 +267,52 @@
     
     .checkbox-group {
       display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
     }
     
     .checkbox-label {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
+      gap: 0.4rem;
+      font-size: 0.85rem;
       color: var(--text-secondary);
       cursor: pointer;
     }
     
     .checkbox-input {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       accent-color: var(--primary);
     }
     
     /* Sections */
     .section {
       background: rgba(37, 37, 66, 0.5);
-      padding: 1.25rem;
-      border-radius: 0.75rem;
-      margin-bottom: 1.5rem;
+      padding: 1rem;
+      border-radius: 0.6rem;
+      margin-bottom: 1.2rem;
       border: 1px solid rgba(76, 76, 120, 0.3);
     }
     
     .section-title {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
       color: var(--secondary);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
     
     /* Buttons */
     .btn {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 700;
-      padding: 0.875rem;
+      padding: 0.7rem;
       border: none;
-      border-radius: 0.75rem;
+      border-radius: 0.6rem;
       cursor: pointer;
       width: 100%;
       transition: all 0.3s ease;
@@ -323,12 +320,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
     
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(6, 182, 212, 0.3);
+      box-shadow: 0 6px 15px rgba(6, 182, 212, 0.3);
     }
     
     .btn-secondary {
@@ -337,34 +334,35 @@
     }
     
     .btn-secondary:hover {
-      box-shadow: 0 8px 20px rgba(76, 76, 120, 0.3);
+      box-shadow: 0 6px 15px rgba(76, 76, 120, 0.3);
     }
     
     /* Profile Controls */
     .profile-controls {
       display: flex;
-      gap: 0.5rem;
-      margin-top: 1rem;
+      gap: 0.4rem;
+      margin-top: 0.8rem;
     }
     
     .profile-input {
       flex-grow: 1;
       background: var(--bg-element);
       border: 1px solid var(--border);
-      border-radius: 0.75rem;
-      padding: 0.5rem 1rem;
+      border-radius: 0.6rem;
+      padding: 0.4rem 0.8rem;
       color: var(--text-main);
       font-family: 'Oxanium', sans-serif;
+      font-size: 0.85rem;
     }
     
     .profile-btn {
       background: var(--bg-element);
       color: var(--text-main);
       border: 1px solid var(--border);
-      border-radius: 0.75rem;
-      padding: 0.5rem 0.75rem;
+      border-radius: 0.6rem;
+      padding: 0.4rem 0.6rem;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       transition: all 0.2s;
       font-family: 'Oxanium', sans-serif;
     }
@@ -376,15 +374,16 @@
     
     /* Results */
     .result {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
       background: rgba(37, 37, 66, 0.7);
-      padding: 1.5rem;
-      border-radius: 0.75rem;
-      border-left: 4px solid var(--primary);
+      padding: 1.2rem;
+      border-radius: 0.6rem;
+      border-left: 3px solid var(--primary);
+      font-size: 0.9rem;
     }
     
     .result-item {
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -403,25 +402,25 @@
     .tooltip {
       position: relative;
       display: inline-block;
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       background: var(--primary);
       color: var(--bg-dark);
       border-radius: 50%;
       text-align: center;
-      font-size: 12px;
-      line-height: 16px;
+      font-size: 10px;
+      line-height: 14px;
       cursor: help;
     }
     
     .tooltip .tooltiptext {
       visibility: hidden;
-      width: 200px;
+      width: 180px;
       background-color: var(--bg-element);
       color: var(--text-main);
       text-align: center;
       border-radius: 6px;
-      padding: 8px;
+      padding: 6px;
       position: absolute;
       z-index: 1;
       bottom: 125%;
@@ -429,7 +428,7 @@
       transform: translateX(-50%);
       opacity: 0;
       transition: opacity 0.3s;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       border: 1px solid var(--border);
     }
     
@@ -441,10 +440,13 @@
     /* Tabs */
     .tab-content {
       display: none;
+      width: 100%;
+      align-items: center;
+      flex-direction: column;
     }
     
     .tab-content.active {
-      display: block;
+      display: flex;
     }
     
     /* Animations */
@@ -461,7 +463,7 @@
     .trade-container {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      gap: 1.2rem;
     }
     
     @media (min-width: 768px) {
@@ -472,15 +474,15 @@
     
     .trade-panel {
       background: rgba(37, 37, 66, 0.7);
-      padding: 1.5rem;
-      border-radius: 0.75rem;
+      padding: 1.2rem;
+      border-radius: 0.6rem;
       border: 1px solid rgba(76, 76, 120, 0.5);
-      min-height: 300px;
+      min-height: 250px;
     }
     
     .panel-title {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
       color: var(--primary-glow);
       text-align: center;
     }
@@ -488,8 +490,8 @@
     .add-companion-btn {
       background: var(--bg-element);
       border: 2px dashed var(--border);
-      border-radius: 0.75rem;
-      padding: 1.5rem;
+      border-radius: 0.6rem;
+      padding: 1.2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -497,8 +499,8 @@
       cursor: pointer;
       transition: all 0.2s;
       color: var(--text-secondary);
-      font-size: 1rem;
-      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
     }
     
     .add-companion-btn:hover {
@@ -507,35 +509,36 @@
     }
     
     .add-companion-btn i {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.7rem;
+      margin-bottom: 0.4rem;
     }
     
     .selected-companions {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.6rem;
     }
     
     .companion-item {
       background: var(--bg-element);
-      border-radius: 0.5rem;
-      padding: 0.75rem;
+      border-radius: 0.4rem;
+      padding: 0.6rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: relative;
+      font-size: 0.85rem;
     }
     
     .companion-info {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.6rem;
     }
     
     .companion-image {
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
       object-fit: contain;
       border-radius: 50%;
       background: var(--bg-dark);
@@ -549,18 +552,19 @@
     .companion-amount {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
     
     .amount-input {
       background: var(--bg-dark);
       border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      padding: 0.4rem 0.5rem;
+      border-radius: 0.4rem;
+      padding: 0.3rem 0.4rem;
       color: var(--text-main);
-      width: 60px;
+      width: 50px;
       text-align: center;
       font-family: 'Oxanium', sans-serif;
+      font-size: 0.8rem;
     }
     
     .remove-btn {
@@ -568,7 +572,7 @@
       border: none;
       color: var(--error);
       cursor: pointer;
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       display: flex;
       align-items: center;
     }
@@ -589,25 +593,25 @@
     
     .modal-content {
       background: var(--bg-card);
-      border-radius: 0.75rem;
+      border-radius: 0.6rem;
       width: 90%;
-      max-width: 800px;
-      max-height: 80vh;
+      max-width: 700px;
+      max-height: 70vh;
       overflow-y: auto;
-      padding: 1.5rem;
+      padding: 1.2rem;
       border: 1px solid var(--primary);
-      box-shadow: 0 0 30px rgba(126, 34, 206, 0.3);
+      box-shadow: 0 0 25px rgba(126, 34, 206, 0.3);
     }
     
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
     
     .modal-title {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       color: var(--primary);
     }
     
@@ -615,20 +619,20 @@
       background: none;
       border: none;
       color: var(--text-secondary);
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       cursor: pointer;
     }
     
     .companion-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 0.8rem;
     }
     
     .companion-option {
       background: var(--bg-element);
-      border-radius: 0.5rem;
-      padding: 0.75rem;
+      border-radius: 0.4rem;
+      padding: 0.6rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -643,63 +647,64 @@
     }
     
     .companion-option img {
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
       object-fit: contain;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       background: var(--bg-dark);
       border-radius: 50%;
-      padding: 5px;
+      padding: 4px;
     }
     
     .companion-option span {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       text-align: center;
     }
     
     .companion-value {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--primary);
-      margin-top: 0.25rem;
+      margin-top: 0.2rem;
     }
     
     /* Trait Selector */
     .trait-selector {
       position: absolute;
-      top: -10px;
-      right: -10px;
+      top: -8px;
+      right: -8px;
       background: var(--bg-element);
       border-radius: 50%;
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       z-index: 1;
       border: 1px solid var(--border);
+      font-size: 0.7rem;
     }
     
     .trait-options {
       position: absolute;
-      top: 30px;
+      top: 25px;
       right: 0;
       background: var(--bg-element);
-      border-radius: 0.5rem;
-      padding: 0.5rem;
+      border-radius: 0.4rem;
+      padding: 0.4rem;
       display: none;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.4rem;
       z-index: 2;
       border: 1px solid var(--border);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
     
     .trait-option {
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.2rem;
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       white-space: nowrap;
     }
     
@@ -720,11 +725,11 @@
     }
     
     .trait-indicator {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       display: inline-block;
-      margin-right: 0.25rem;
+      margin-right: 0.2rem;
     }
     
     .trait-indicator.normal {
@@ -741,11 +746,11 @@
     
     .trait-display {
       position: absolute;
-      top: -8px;
-      left: -8px;
-      font-size: 0.7rem;
-      padding: 0.1rem 0.3rem;
-      border-radius: 0.25rem;
+      top: -6px;
+      left: -6px;
+      font-size: 0.6rem;
+      padding: 0.1rem 0.25rem;
+      border-radius: 0.2rem;
       font-weight: bold;
     }
     
@@ -762,7 +767,7 @@
 </head>
 <body>
   
-  <div class="bg-grid"></div>
+  <div class="bg-anime"></div>
   <div class="bg-particles" id="particles"></div>
 
   <div class="header">
@@ -777,16 +782,16 @@
     
     <div class="navbar">
       <button class="nav-btn active" data-tab="stats-calc">
-        <i class="fas fa-chart-line"></i> Stats Calculator
+        <i class="fas fa-chart-line"></i> Stats
       </button>
       <button class="nav-btn" data-tab="coin-calc">
-        <i class="fas fa-coins"></i> Coin Calculator
+        <i class="fas fa-coins"></i> Coin
       </button>
       <button class="nav-btn" data-tab="goal-calc">
-        <i class="fas fa-bullseye"></i> Goal Calculator
+        <i class="fas fa-bullseye"></i> Goal
       </button>
       <button class="nav-btn" data-tab="trade-calc">
-        <i class="fas fa-exchange-alt"></i> Trading Calculator
+        <i class="fas fa-exchange-alt"></i> Trading
       </button>
     </div>
   </div>
@@ -1046,13 +1051,13 @@
       
       function createParticles() {
         const particlesContainer = document.getElementById('particles');
-        const particleCount = Math.floor(window.innerWidth / 10);
+        const particleCount = Math.floor(window.innerWidth / 15);
         
         for (let i = 0; i < particleCount; i++) {
           const particle = document.createElement('div');
           particle.classList.add('particle');
           
-          const size = Math.random() * 5 + 1;
+          const size = Math.random() * 4 + 1;
           const posX = Math.random() * window.innerWidth;
           const posY = Math.random() * window.innerHeight;
           const duration = Math.random() * 30 + 20;
@@ -1064,6 +1069,10 @@
           particle.style.top = `${posY}px`;
           particle.style.animationDuration = `${duration}s`;
           particle.style.animationDelay = `${delay}s`;
+          
+          // Random color from theme
+          const colors = ['var(--primary)', 'var(--secondary)', 'var(--accent)'];
+          particle.style.background = colors[Math.floor(Math.random() * colors.length)];
           
           particlesContainer.appendChild(particle);
         }
