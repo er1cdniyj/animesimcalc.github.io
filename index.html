@@ -3,38 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stats Gain Calculator</title>
+  <title>Anime RPG Calculators</title>
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --primary: #00c3ff;
-      --secondary: #ff1b6b;
-      --bg-dark: #0e0e12;
-      --bg-card: #1c1c24;
-      --bg-element: #292933;
-      --border: #444;
+      --primary: #7e22ce;
+      --primary-glow: #c084fc;
+      --secondary: #06b6d4;
+      --secondary-glow: #22d3ee;
+      --accent: #f97316;
+      --accent-glow: #fdba74;
+      --bg-dark: #0f0f19;
+      --bg-card: #1a1a2e;
+      --bg-element: #252542;
+      --border: #4c4c78;
       --text-main: #f0f0f0;
-      --text-secondary: #bbb;
-      --accent: #222228;
+      --text-secondary: #a1a1aa;
+      --success: #22c55e;
+      --error: #ef4444;
     }
+    
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+    
     body {
       font-family: 'Oxanium', sans-serif;
       background: var(--bg-dark);
       color: var(--text-main);
       min-height: 100vh;
-      padding: 2rem 1rem;
+      padding: 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
       overflow-x: hidden;
     }
-    /* New Animated Background */
+    
+    /* Animated Background */
     .bg-grid {
       position: fixed;
       top: 0;
@@ -42,18 +51,19 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: var(--bg-dark);
-      opacity: 0.8;
+      opacity: 0.5;
       background-image: 
         linear-gradient(var(--border) 1px, transparent 1px),
         linear-gradient(90deg, var(--border) 1px, transparent 1px);
       background-size: 50px 50px;
       animation: gridMove 120s linear infinite;
     }
+    
     @keyframes gridMove {
       0% { background-position: 0 0; }
       100% { background-position: 1000px 1000px; }
     }
+    
     .bg-particles {
       position: fixed;
       top: 0;
@@ -63,6 +73,7 @@
       z-index: -2;
       overflow: hidden;
     }
+    
     .particle {
       position: absolute;
       background: var(--primary);
@@ -70,144 +81,321 @@
       opacity: 0.15;
       animation: float linear infinite;
     }
+    
     @keyframes float {
       to { transform: translateY(-100vh) translateX(20vw); }
     }
-    .navbar {
+    
+    /* Header & Navigation */
+    .header {
       width: 100%;
       max-width: 1200px;
-      background: var(--accent);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 2px 10px rgba(0, 195, 255, 0.1);
-      z-index: 10;
-    }
-    .navbar a {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.1rem;
-      margin: 0 0.75rem;
-      transition: all 0.2s ease;
-    }
-    .main-container {
       display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      width: 100%;
-      max-width: 1200px;
-      justify-content: center;
-      z-index: 10;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
     }
-    .calculator-container {
-      background: rgba(28, 28, 36, 0.85);
-      backdrop-filter: blur(10px);
-      width: 100%;
-      max-width: 550px;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 30px rgba(0, 195, 255, 0.05);
-      border: 1px solid var(--border);
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
     }
+    
     .logo {
-      display: block;
-      margin: 0 auto 1.5rem;
-      width: 120px;
-      filter: drop-shadow(0 0 10px var(--primary));
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      box-shadow: 0 0 20px var(--primary-glow);
     }
+    
+    .logo i {
+      font-size: 1.8rem;
+      color: white;
+    }
+    
     .title {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
+      font-size: 2.5rem;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(126, 34, 206, 0.3);
     }
+    
     .subtitle {
+      color: var(--text-secondary);
+      font-size: 1rem;
       text-align: center;
+      max-width: 600px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .navbar {
+      display: flex;
+      background: var(--bg-card);
+      padding: 0.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1rem;
+    }
+    
+    .nav-btn {
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-family: 'Oxanium', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 0 15px rgba(126, 34, 206, 0.4);
+    }
+    
+    .nav-btn:hover:not(.active) {
+      background: rgba(126, 34, 206, 0.1);
+      color: var(--primary-glow);
+    }
+    
+    /* Main Container */
+    .main-container {
+      width: 100%;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    @media (min-width: 992px) {
+      .main-container {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    .calculator-container {
+      background: linear-gradient(to bottom, rgba(26, 26, 46, 0.9), rgba(26, 26, 46, 0.7));
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 1.25rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .calculator-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+    
+    .calculator-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-glow);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .calculator-subtitle {
       color: var(--text-secondary);
       font-size: 0.9rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
+    
+    /* Form Elements */
     .form-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.25rem;
       margin-bottom: 1.5rem;
     }
+    
+    @media (min-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
     .form-group {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
     }
-    label {
+    
+    .form-label {
       font-size: 0.9rem;
       color: var(--text-secondary);
       display: flex;
       align-items: center;
       gap: 0.25rem;
     }
-    input, select {
+    
+    .form-input, .form-select {
       background: var(--bg-element);
       border: 1px solid var(--border);
-      border-radius: 0.5rem;
+      border-radius: 0.75rem;
       padding: 0.75rem 1rem;
       color: var(--text-main);
       font-size: 1rem;
+      font-family: 'Oxanium', sans-serif;
+      transition: all 0.3s ease;
     }
+    
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.3);
+    }
+    
+    .checkbox-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    
+    .checkbox-input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+    }
+    
+    /* Sections */
+    .section {
+      background: rgba(37, 37, 66, 0.5);
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(76, 76, 120, 0.3);
+    }
+    
+    .section-title {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    /* Buttons */
     .btn {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
       font-size: 1rem;
       font-weight: 700;
-      padding: 0.75rem;
+      padding: 0.875rem;
       border: none;
-      border-radius: 0.5rem;
+      border-radius: 0.75rem;
       cursor: pointer;
       width: 100%;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: all 0.3s ease;
+      font-family: 'Oxanium', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
     }
+    
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 195, 255, 0.3);
+      box-shadow: 0 8px 20px rgba(6, 182, 212, 0.3);
     }
+    
+    .btn-secondary {
+      background: var(--bg-element);
+      color: var(--text-main);
+    }
+    
+    .btn-secondary:hover {
+      box-shadow: 0 8px 20px rgba(76, 76, 120, 0.3);
+    }
+    
+    /* Profile Controls */
+    .profile-controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .profile-input {
+      flex-grow: 1;
+      background: var(--bg-element);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 0.5rem 1rem;
+      color: var(--text-main);
+      font-family: 'Oxanium', sans-serif;
+    }
+    
+    .profile-btn {
+      background: var(--bg-element);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      font-family: 'Oxanium', sans-serif;
+    }
+    
+    .profile-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    /* Results */
     .result {
       margin-top: 2rem;
-      background: var(--accent);
+      background: rgba(37, 37, 66, 0.7);
       padding: 1.5rem;
+      border-radius: 0.75rem;
       border-left: 4px solid var(--primary);
-      border-radius: 0.5rem;
     }
+    
     .result-item {
       margin-bottom: 0.75rem;
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
+    
+    .result-label {
+      color: var(--text-secondary);
+    }
+    
     .result-value {
       font-weight: 600;
-      color: var(--primary);
+      color: var(--primary-glow);
     }
-    .companion-section {
-      background: rgba(0, 195, 255, 0.1);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin-bottom: 1.5rem;
-      border: 1px solid rgba(0, 195, 255, 0.2);
-    }
-    .goal-section {
-      background: rgba(255, 27, 107, 0.1);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin-bottom: 1.5rem;
-      border: 1px solid rgba(255, 27, 107, 0.2);
-    }
-    .section-title {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
-      text-align: center;
-    }
+    
+    /* Tooltips */
     .tooltip {
       position: relative;
       display: inline-block;
@@ -221,6 +409,7 @@
       line-height: 16px;
       cursor: help;
     }
+    
     .tooltip .tooltiptext {
       visibility: hidden;
       width: 200px;
@@ -228,7 +417,7 @@
       color: var(--text-main);
       text-align: center;
       border-radius: 6px;
-      padding: 5px;
+      padding: 8px;
       position: absolute;
       z-index: 1;
       bottom: 125%;
@@ -239,43 +428,29 @@
       font-size: 0.8rem;
       border: 1px solid var(--border);
     }
+    
     .tooltip:hover .tooltiptext {
       visibility: visible;
       opacity: 1;
     }
-    .profile-controls {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 1rem;
+    
+    /* Tabs */
+    .tab-content {
+      display: none;
     }
-    .profile-controls input {
-      flex-grow: 1;
-      background: var(--bg-element);
-      border: 1px solid var(--border);
+    
+    .tab-content.active {
+      display: block;
     }
-    .profile-btn {
-      background: var(--bg-element);
-      color: var(--text-main);
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      padding: 0 0.75rem;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.2s;
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .profile-btn:hover {
-      background: var(--primary);
-      color: var(--bg-dark);
-    }
-    @media (min-width: 640px) {
-      .form-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    @media (min-width: 1000px) {
-      .calculator-container {
-        max-width: 550px;
-      }
+    
+    .calculator-container {
+      animation: fadeIn 0.5s ease-out;
     }
   </style>
 </head>
@@ -284,87 +459,41 @@
   <div class="bg-grid"></div>
   <div class="bg-particles" id="particles"></div>
 
-  <nav class="navbar">
-    <a href="index2.html">Coin Calculator</a>
-    <a href="index3.html">Trading Calculator</a>
-  </nav>
+  <div class="header">
+    <div class="logo-container">
+      <div class="logo">
+        <i class="fas fa-calculator"></i>
+      </div>
+      <h1 class="title">Anime RPG Calculators</h1>
+    </div>
+    <p class="subtitle">Powerful calculators for your anime RPG gaming needs</p>
+    
+    <div class="navbar">
+      <button class="nav-btn active" data-tab="stats-calc">
+        <i class="fas fa-chart-line"></i> Stats Calculator
+      </button>
+      <button class="nav-btn" data-tab="coin-calc">
+        <i class="fas fa-coins"></i> Coin Calculator
+      </button>
+      <button class="nav-btn" data-tab="goal-calc">
+        <i class="fas fa-bullseye"></i> Goal Calculator
+      </button>
+    </div>
+  </div>
 
   <div class="main-container">
-    <!-- Original Calculator -->
-    <div class="calculator-container">
-      <img src="image1.png" alt="Logo" class="logo">
-      <h1 class="title">Stats Gain Calculator</h1>
-      <p class="subtitle">Calculate your training gains</p>
+    <!-- Stats Calculator -->
+    <div class="tab-content active" id="stats-calc">
+      <div class="calculator-container">
+        <h2 class="calculator-title"><i class="fas fa-chart-line"></i> Stats Gain Calculator</h2>
+        <p class="calculator-subtitle">Calculate your training gains</p>
 
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="statType">Training Type
-            <div class="tooltip">?<span class="tooltiptext">Select the stat you're training (Strength, Energy, Defense, or Sword)</span></div>
-          </label>
-          <select id="statType">
-            <option value="strength">Strength</option>
-            <option value="energy">Energy</option>
-            <option value="defense">Defense</option>
-            <option value="sword">Sword</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="gainPerTick">Gain Per Tick
-            <div class="tooltip">?<span class="tooltiptext">Amount gained each training tick (e.g. 1.5sx or 1e21)</span></div>
-          </label>
-          <input type="text" id="gainPerTick" placeholder="e.g. 1.5sx or 1e21" required>
-        </div>
-        <div class="form-group">
-          <label for="time">Time (minutes)
-            <div class="tooltip">?<span class="tooltiptext">Duration of your training session in minutes</span></div>
-          </label>
-          <input type="number" id="time" placeholder="e.g. 60" required>
-        </div>
-      </div>
-
-      <div class="companion-section">
         <div class="form-grid">
           <div class="form-group">
-            <label for="companionActive">Companion Active
-              <div class="tooltip">?<span class="tooltiptext">Toggle if you have an active companion</span></div>
-            </label>
-            <select id="companionActive">
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="companionGain">Companion Gain Per Tick
-              <div class="tooltip">?<span class="tooltiptext">Amount your companion gives per tick (e.g. 1.5qd or 1e15)</span></div>
-            </label>
-            <input type="text" id="companionGain" placeholder="e.g. 1.5qd or 1e15">
-          </div>
-        </div>
-      </div>
-
-      <div class="profile-controls">
-        <input type="text" id="profileName" placeholder="Profile name">
-        <button class="profile-btn" id="saveProfileBtn">Save</button>
-        <button class="profile-btn" id="loadProfileBtn">Load</button>
-      </div>
-
-      <button class="btn" id="calculateBtn">Calculate Gains</button>
-      
-      <div class="result" id="result"></div>
-    </div>
-
-    <!-- Goal Calculator -->
-    <div class="calculator-container">
-      <h1 class="title">Goal Calculator</h1>
-      <p class="subtitle">Calculate time to reach your target</p>
-
-      <div class="goal-section">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="goalStatType">Training Type
+            <label for="statType" class="form-label">Training Type
               <div class="tooltip">?<span class="tooltiptext">Select the stat you're training (Strength, Energy, Defense, or Sword)</span></div>
             </label>
-            <select id="goalStatType">
+            <select id="statType" class="form-select">
               <option value="strength">Strength</option>
               <option value="energy">Energy</option>
               <option value="defense">Defense</option>
@@ -372,38 +501,165 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="goalGainPerTick">Your Gain Per Tick
-              <div class="tooltip">?<span class="tooltiptext">Amount you gain each training tick (e.g. 1.5sx or 1e21)</span></div>
+            <label for="gainPerTick" class="form-label">Gain Per Tick
+              <div class="tooltip">?<span class="tooltiptext">Amount gained each training tick (e.g. 1.5sx or 1e21)</span></div>
             </label>
-            <input type="text" id="goalGainPerTick" placeholder="e.g. 1.5sx or 1e21">
+            <input type="text" id="gainPerTick" class="form-input" placeholder="e.g. 1.5sx or 1e21" required>
           </div>
           <div class="form-group">
-            <label for="goalCompanionGain">Companion Gain Per Tick
-              <div class="tooltip">?<span class="tooltiptext">Amount your companion gives per tick (e.g. 1.5qd or 1e15)</span></div>
+            <label for="time" class="form-label">Time (minutes)
+              <div class="tooltip">?<span class="tooltiptext">Duration of your training session in minutes</span></div>
             </label>
-            <input type="text" id="goalCompanionGain" placeholder="e.g. 1.5qd or 1e15">
+            <input type="number" id="time" class="form-input" placeholder="e.g. 60" required>
           </div>
-          <div class="form-group">
-            <label for="currentStat">Current Stat Value
-              <div class="tooltip">?<span class="tooltiptext">Your current stat value (e.g. 1.5sx or 1e21)</span></div>
-            </label>
-            <input type="text" id="currentStat" placeholder="e.g. 1.5sx or 1e21">
-          </div>
-          <div class="form-group">
-            <label for="desiredStat">Desired Stat Value
-              <div class="tooltip">?<span class="tooltiptext">Your target stat value (e.g. 2.5sx or 2.5e21)</span></div>
-            </label>
-            <input type="text" id="desiredStat" placeholder="e.g. 2.5sx or 2.5e21">
+        </div>
+
+        <div class="section">
+          <h3 class="section-title"><i class="fas fa-robot"></i> Companion Settings</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="companionActive" class="form-label">Companion Active
+                <div class="tooltip">?<span class="tooltiptext">Toggle if you have an active companion</span></div>
+              </label>
+              <select id="companionActive" class="form-select">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="companionGain" class="form-label">Companion Gain Per Tick
+                <div class="tooltip">?<span class="tooltiptext">Amount your companion gives per tick (e.g. 1.5qd or 1e15)</span></div>
+              </label>
+              <input type="text" id="companionGain" class="form-input" placeholder="e.g. 1.5qd or 1e15">
+            </div>
           </div>
         </div>
 
         <div class="profile-controls">
-          <input type="text" id="goalProfileName" placeholder="Profile name">
-          <button class="profile-btn" id="saveGoalProfileBtn">Save</button>
-          <button class="profile-btn" id="loadGoalProfileBtn">Load</button>
+          <input type="text" id="profileName" class="profile-input" placeholder="Profile name">
+          <button class="profile-btn" id="saveProfileBtn"><i class="fas fa-save"></i> Save</button>
+          <button class="profile-btn" id="loadProfileBtn"><i class="fas fa-folder-open"></i> Load</button>
         </div>
 
-        <button class="btn" id="calculateGoalBtn">Calculate Time Needed</button>
+        <button class="btn" id="calculateBtn"><i class="fas fa-calculator"></i> Calculate Gains</button>
+        
+        <div class="result" id="result"></div>
+      </div>
+    </div>
+
+    <!-- Coin Calculator -->
+    <div class="tab-content" id="coin-calc">
+      <div class="calculator-container">
+        <h2 class="calculator-title"><i class="fas fa-coins"></i> Coin Calculator</h2>
+        <p class="calculator-subtitle">Calculate your coin earnings based on rank and bonuses</p>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="rankSelect" class="form-label">Select Rank</label>
+            <select id="rankSelect" class="form-select">
+              <option value="0">Rookie</option>
+              <option value="1">Ninja</option>
+              <option value="2">Pirate</option>
+              <option value="3">Ghoul</option>
+              <option value="4">Hero</option>
+              <option value="5">Reaper</option>
+              <option value="6">Warrior</option>
+              <option value="7">Sin</option>
+              <option value="8">Mage</option>
+              <option value="9">Demon</option>
+              <option value="10">Emperor</option>
+              <option value="11">Elder</option>
+              <option value="12">Overlord</option>
+              <option value="13">Leader</option>
+              <option value="14">Deity</option>
+              <option value="15">Sage</option>
+              <option value="16">Mask</option>
+              <option value="17">Shinigami</option>
+              <option value="18">Hashira</option>
+              <option value="19">Destroyer</option>
+              <option value="20">Otsutsuki</option>
+              <option value="21">Pirate King</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="coinTimeInput" class="form-label">Time (minutes)
+              <div class="tooltip">?<span class="tooltiptext">Duration of coin earning in minutes</span></div>
+            </label>
+            <input type="number" id="coinTimeInput" class="form-input" placeholder="e.g. 60" required>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title"><i class="fas fa-gem"></i> Bonuses</h3>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="doubleCoins" class="checkbox-input">
+              2x Coins Gamepass
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="goldCompanion" class="checkbox-input">
+              Gold Companion (+20%)
+            </label>
+          </div>
+        </div>
+
+        <button class="btn" id="calculateCoinsBtn"><i class="fas fa-coins"></i> Calculate Earnings</button>
+        
+        <div class="result" id="coinResult"></div>
+      </div>
+    </div>
+
+    <!-- Goal Calculator -->
+    <div class="tab-content" id="goal-calc">
+      <div class="calculator-container">
+        <h2 class="calculator-title"><i class="fas fa-bullseye"></i> Goal Calculator</h2>
+        <p class="calculator-subtitle">Calculate time to reach your target</p>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="goalStatType" class="form-label">Training Type
+              <div class="tooltip">?<span class="tooltiptext">Select the stat you're training (Strength, Energy, Defense, or Sword)</span></div>
+            </label>
+            <select id="goalStatType" class="form-select">
+              <option value="strength">Strength</option>
+              <option value="energy">Energy</option>
+              <option value="defense">Defense</option>
+              <option value="sword">Sword</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="goalGainPerTick" class="form-label">Your Gain Per Tick
+              <div class="tooltip">?<span class="tooltiptext">Amount you gain each training tick (e.g. 1.5sx or 1e21)</span></div>
+            </label>
+            <input type="text" id="goalGainPerTick" class="form-input" placeholder="e.g. 1.5sx or 1e21">
+          </div>
+          <div class="form-group">
+            <label for="goalCompanionGain" class="form-label">Companion Gain Per Tick
+              <div class="tooltip">?<span class="tooltiptext">Amount your companion gives per tick (e.g. 1.5qd or 1e15)</span></div>
+            </label>
+            <input type="text" id="goalCompanionGain" class="form-input" placeholder="e.g. 1.5qd or 1e15">
+          </div>
+          <div class="form-group">
+            <label for="currentStat" class="form-label">Current Stat Value
+              <div class="tooltip">?<span class="tooltiptext">Your current stat value (e.g. 1.5sx or 1e21)</span></div>
+            </label>
+            <input type="text" id="currentStat" class="form-input" placeholder="e.g. 1.5sx or 1e21">
+          </div>
+          <div class="form-group">
+            <label for="desiredStat" class="form-label">Desired Stat Value
+              <div class="tooltip">?<span class="tooltiptext">Your target stat value (e.g. 2.5sx or 2.5e21)</span></div>
+            </label>
+            <input type="text" id="desiredStat" class="form-input" placeholder="e.g. 2.5sx or 2.5e21">
+          </div>
+        </div>
+
+        <div class="profile-controls">
+          <input type="text" id="goalProfileName" class="profile-input" placeholder="Profile name">
+          <button class="profile-btn" id="saveGoalProfileBtn"><i class="fas fa-save"></i> Save</button>
+          <button class="profile-btn" id="loadGoalProfileBtn"><i class="fas fa-folder-open"></i> Load</button>
+        </div>
+
+        <button class="btn" id="calculateGoalBtn"><i class="fas fa-bullseye"></i> Calculate Time Needed</button>
         
         <div class="result" id="goalResult"></div>
       </div>
@@ -420,7 +676,6 @@
         for (let i = 0; i < particleCount; i++) {
           const particle = document.createElement('div');
           particle.classList.add('particle');
-          
           
           const size = Math.random() * 5 + 1;
           const posX = Math.random() * window.innerWidth;
@@ -441,6 +696,25 @@
       
       createParticles();
 
+      // Tab functionality
+      const tabButtons = document.querySelectorAll('.nav-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const tabId = button.getAttribute('data-tab');
+          
+          // Update active button
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+          
+          // Show active tab
+          tabContents.forEach(content => content.classList.remove('active'));
+          document.getElementById(tabId).classList.add('active');
+        });
+      });
+
+      // Stats Calculator Variables
       const ticksPerMinute = {
         strength: 55,
         energy: 28,
@@ -449,6 +723,33 @@
       };
       const companionTicksPerMinute = 10;
 
+      // Coin Calculator Variables
+      const ranks = [
+        { name: "Rookie", coinPerMinute: 5 },
+        { name: "Ninja", coinPerMinute: 10 },
+        { name: "Pirate", coinPerMinute: 25 },
+        { name: "Ghoul", coinPerMinute: 50 },
+        { name: "Hero", coinPerMinute: 100 },
+        { name: "Reaper", coinPerMinute: 250 },
+        { name: "Warrior", coinPerMinute: 500 },
+        { name: "Sin", coinPerMinute: 1000 },
+        { name: "Mage", coinPerMinute: 5000 },
+        { name: "Demon", coinPerMinute: 10000 },
+        { name: "Emperor", coinPerMinute: 50000 },
+        { name: "Elder", coinPerMinute: 100000 },
+        { name: "Overlord", coinPerMinute: 500000 },
+        { name: "Leader", coinPerMinute: 1000000 },
+        { name: "Deity", coinPerMinute: 5000000 },
+        { name: "Sage", coinPerMinute: 10000000 },
+        { name: "Mask", coinPerMinute: 50000000 },
+        { name: "Shinigami", coinPerMinute: 100000000 },
+        { name: "Hashira", coinPerMinute: 500000000 },
+        { name: "Destroyer", coinPerMinute: 1000000000 },
+        { name: "Otsutsuki", coinPerMinute: 5000000000 },
+        { name: "Pirate King", coinPerMinute: 10000000000 }
+      ];
+
+      // Utility Functions
       function parseNumberWithSuffix(input) {
         if (!input) return NaN;
         if (/^[0-9.]+e[0-9]+$/i.test(input)) return parseFloat(input);
@@ -488,6 +789,7 @@
         return `${days.toFixed(1)} days`;
       }
 
+      // Stats Calculator Function
       function calculateGains() {
         const statType = document.getElementById("statType").value;
         const gainPerTick = parseNumberWithSuffix(document.getElementById("gainPerTick").value);
@@ -496,24 +798,22 @@
         const companionGain = hasCompanion ? parseNumberWithSuffix(document.getElementById("companionGain").value) : 0;
 
         if (isNaN(gainPerTick)) {
-          document.getElementById("result").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter a valid gain per tick</div>`;
+          document.getElementById("result").innerHTML = `<div class="result-item" style="color:var(--error)">Please enter a valid gain per tick</div>`;
           return;
         }
 
         if (isNaN(time) || time <= 0) {
-          document.getElementById("result").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter a valid time</div>`;
+          document.getElementById("result").innerHTML = `<div class="result-item" style="color:var(--error)">Please enter a valid time</div>`;
           return;
         }
 
         if (hasCompanion && isNaN(companionGain)) {
-          document.getElementById("result").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter valid companion gains</div>`;
+          document.getElementById("result").innerHTML = `<div class="result-item" style="color:var(--error)">Please enter valid companion gains</div>`;
           return;
         }
 
-        
         const ticks = ticksPerMinute[statType] * time;
         const mainGain = gainPerTick * ticks;
-        
         
         let companionTotalGain = 0;
         if (hasCompanion) {
@@ -525,45 +825,115 @@
 
         document.getElementById("result").innerHTML = `
           <div class="result-item">
-            <span>Training Type:</span>
+            <span class="result-label">Training Type:</span>
             <span class="result-value">${statType.charAt(0).toUpperCase()+statType.slice(1)}</span>
           </div>
           <div class="result-item">
-            <span>Ticks Per Minute:</span>
+            <span class="result-label">Ticks Per Minute:</span>
             <span class="result-value">${ticksPerMinute[statType]}</span>
           </div>
           <div class="result-item">
-            <span>Total Ticks:</span>
+            <span class="result-label">Total Ticks:</span>
             <span class="result-value">${ticks}</span>
           </div>
           <div class="result-item">
-            <span>Main Gain:</span>
+            <span class="result-label">Main Gain:</span>
             <span class="result-value">${abbreviateNumber(mainGain)}</span>
           </div>
           ${hasCompanion ? `
           <div class="result-item">
-            <span>Companion Ticks:</span>
+            <span class="result-label">Companion Ticks:</span>
             <span class="result-value">${companionTicksPerMinute * time}</span>
           </div>
           <div class="result-item">
-            <span>Companion Gain:</span>
+            <span class="result-label">Companion Gain:</span>
             <span class="result-value">${abbreviateNumber(companionTotalGain)}</span>
           </div>` : ''}
-          <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid #333">
-            <span style="font-weight:700">Total Gain:</span>
+          <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--border)">
+            <span class="result-label" style="font-weight:700">Total Gain:</span>
             <span class="result-value" style="font-weight:700">${abbreviateNumber(totalGain)}</span>
           </div>
           <div class="result-item">
-            <span>Gain Per Minute:</span>
+            <span class="result-label">Gain Per Minute:</span>
             <span class="result-value">${abbreviateNumber(totalGain / time)}</span>
           </div>
           <div class="result-item">
-            <span>Gain Per Hour:</span>
+            <span class="result-label">Gain Per Hour:</span>
             <span class="result-value">${abbreviateNumber(totalGain / time * 60)}</span>
           </div>
         `;
       }
 
+      // Coin Calculator Function
+      function calculateCoins() {
+        const selectedRankIndex = parseInt(document.getElementById("rankSelect").value);
+        const selectedRank = ranks[selectedRankIndex];
+        const doubleCoins = document.getElementById("doubleCoins").checked;
+        const goldCompanion = document.getElementById("goldCompanion").checked;
+        const timeInput = document.getElementById("coinTimeInput").value;
+        const time = parseInt(timeInput);
+
+        if (!timeInput || isNaN(time) || time <= 0) {
+          document.getElementById("coinResult").innerHTML = `
+            <div class="result-item">
+              <span style="color: var(--error);">Please enter a valid time</span>
+            </div>
+          `;
+          return;
+        }
+
+        let coinsPerMinute = selectedRank.coinPerMinute;
+        let bonuses = [];
+
+        if (doubleCoins) {
+          coinsPerMinute *= 2;
+          bonuses.push("2x Gamepass");
+        }
+
+        if (goldCompanion) {
+          coinsPerMinute *= 1.2;
+          bonuses.push("Gold Companion");
+        }
+
+        const totalCoins = coinsPerMinute * time;
+        const formattedCPM = abbreviateNumber(coinsPerMinute);
+        const formattedTotal = abbreviateNumber(totalCoins);
+
+        let resultHTML = `
+          <div class="result-item">
+            <span class="result-label">Rank:</span>
+            <span class="result-value">${selectedRank.name}</span>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Coins/Min:</span>
+            <span class="result-value">${formattedCPM}</span>
+          </div>
+        `;
+
+        if (bonuses.length > 0) {
+          resultHTML += `
+            <div class="result-item">
+              <span class="result-label">Active Bonuses:</span>
+              <span class="result-value">${bonuses.join(" + ")}</span>
+            </div>
+          `;
+        }
+
+        resultHTML += `
+          <div class="result-item">
+            <span class="result-label">Time:</span>
+            <span class="result-value">${time} minutes</span>
+          </div>
+          <div class="result-item" style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 10px;">
+            <span class="result-label" style="font-size: 1.1em;">Total Earnings:</span>
+            <span class="result-value" style="font-size: 1.1em;">${formattedTotal}</span>
+          </div>
+        `;
+
+        document.getElementById("coinResult").innerHTML = resultHTML;
+      }
+
+      // Goal Calculator Function
       function calculateTimeToGoal() {
         const statType = document.getElementById("goalStatType").value;
         const gainPerTick = parseNumberWithSuffix(document.getElementById("goalGainPerTick").value);
@@ -572,17 +942,17 @@
         const desiredStat = parseNumberWithSuffix(document.getElementById("desiredStat").value);
 
         if (isNaN(gainPerTick)) {
-          document.getElementById("goalResult").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter a valid gain per tick</div>`;
+          document.getElementById("goalResult").innerHTML = `<div class="result-item" style="color:var(--error)">Please enter a valid gain per tick</div>`;
           return;
         }
 
         if (isNaN(currentStat)) {
-          document.getElementById("goalResult").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter your current stat value</div>`;
+          document.getElementById("goalResult").innerHTML = `<div class="result-item" style="color:var(--error)">Please enter your current stat value</div>`;
           return;
         }
 
         if (isNaN(desiredStat) || desiredStat <= currentStat) {
-          document.getElementById("goalResult").innerHTML = `<div class="result-item" style="color:#ff6b6b">Please enter a valid desired stat higher than current</div>`;
+          document.getElementById("goalResult").innerHTML = `<div class="result-item" style="color:var(--error)">Please enter a valid desired stat higher than current</div>`;
           return;
         }
 
@@ -592,37 +962,37 @@
 
         document.getElementById("goalResult").innerHTML = `
           <div class="result-item">
-            <span>Training Type:</span>
+            <span class="result-label">Training Type:</span>
             <span class="result-value">${statType.charAt(0).toUpperCase()+statType.slice(1)}</span>
           </div>
           <div class="result-item">
-            <span>Current Stat:</span>
+            <span class="result-label">Current Stat:</span>
             <span class="result-value">${abbreviateNumber(currentStat)}</span>
           </div>
           <div class="result-item">
-            <span>Desired Stat:</span>
+            <span class="result-label">Desired Stat:</span>
             <span class="result-value">${abbreviateNumber(desiredStat)}</span>
           </div>
           <div class="result-item">
-            <span>Gain Needed:</span>
+            <span class="result-label">Gain Needed:</span>
             <span class="result-value">${abbreviateNumber(neededGain)}</span>
           </div>
           <div class="result-item">
-            <span>Gain Per Minute:</span>
+            <span class="result-label">Gain Per Minute:</span>
             <span class="result-value">${abbreviateNumber(gainPerMinute)}</span>
           </div>
-          <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid #333">
-            <span style="font-weight:700">Time Needed:</span>
+          <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--border)">
+            <span class="result-label" style="font-weight:700">Time Needed:</span>
             <span class="result-value" style="font-weight:700">${formatTime(minutesNeeded)}</span>
           </div>
           <div class="result-item">
-            <span>At This Rate You'll Reach It:</span>
+            <span class="result-label">At This Rate You'll Reach It:</span>
             <span class="result-value">${new Date(Date.now() + minutesNeeded * 60000).toLocaleString()}</span>
           </div>
         `;
       }
 
-     
+      // Profile Management Functions
       function saveProfile() {
         const profileName = document.getElementById("profileName").value.trim();
         if (!profileName) {
@@ -713,23 +1083,29 @@
         }
       }
 
-      
+      // Event Listeners
       document.getElementById("calculateBtn").addEventListener("click", calculateGains);
+      document.getElementById("calculateCoinsBtn").addEventListener("click", calculateCoins);
       document.getElementById("calculateGoalBtn").addEventListener("click", calculateTimeToGoal);
+      
       document.getElementById("saveProfileBtn").addEventListener("click", saveProfile);
       document.getElementById("loadProfileBtn").addEventListener("click", loadProfile);
       document.getElementById("saveGoalProfileBtn").addEventListener("click", saveGoalProfile);
       document.getElementById("loadGoalProfileBtn").addEventListener("click", loadGoalProfile);
       
-      
+      // Enter key support
       const inputs = [
         "gainPerTick", "time", "companionGain", 
-        "goalGainPerTick", "goalCompanionGain", "currentStat", "desiredStat"
+        "goalGainPerTick", "goalCompanionGain", "currentStat", "desiredStat",
+        "coinTimeInput"
       ];
+      
       inputs.forEach(id => {
         document.getElementById(id).addEventListener("keypress", function(e) {
           if (e.key === "Enter") {
-            if (id === "gainPerTick" || id === "time" || id === "companionGain") {
+            if (id === "coinTimeInput") {
+              calculateCoins();
+            } else if (id === "gainPerTick" || id === "time" || id === "companionGain") {
               calculateGains();
             } else {
               calculateTimeToGoal();
