@@ -1472,21 +1472,93 @@
       // Trading Calculator Functionality
       // Companion data
       const companions = [
-        { name: "Turbo", value: 1500, image: "turbo.png" },
-        { name: "Seidon", value: 500, image: "seidon.png" },
-        { name: "Ultra Gogo", value: 9000, image: "ui.png" },
-        { name: "Mahoraga", value: 3700, image: "m.png" },
-        { name: "Freeah", value: 10000, image: "freeah.png" },
-        { name: "Sid", value: 25000, image: "cid.png" },
-        { name: "Emperor Teach", value: 200000, image: "emp.png" },
-        { name: "Super Baybe", value: 300000, image: "sbb.png" },
-        { name: "Naru Baryon", value: 400000, image: "naru.png" },
-        { name: "BroBro", value: 770000, image: "brobro.png" },
-        { name: "Demon Galo", value: 740000, image: "galo.png" },
-        { name: "Better World", value: 920000, image: "betterworld.png" },
+        { 
+          name: "Turbo", 
+          value: 1500, 
+          goldValue: 1950, 
+          atomicValue: 2250, 
+          image: "turbo.png" 
+        },
+        { 
+          name: "Seidon", 
+          value: 500, 
+          goldValue: 650, 
+          atomicValue: 750, 
+          image: "seidon.png" 
+        },
+        { 
+          name: "Ultra Gogo", 
+          value: 9000, 
+          goldValue: 11700, 
+          atomicValue: 13500, 
+          image: "ui.png" 
+        },
+        { 
+          name: "Mahoraga", 
+          value: 3700, 
+          goldValue: 4810, 
+          atomicValue: 5550, 
+          image: "m.png" 
+        },
+        { 
+          name: "Freeah", 
+          value: 10000, 
+          goldValue: 13000, 
+          atomicValue: 15000, 
+          image: "freeah.png" 
+        },
+        { 
+          name: "Sid", 
+          value: 25000, 
+          goldValue: 32500, 
+          atomicValue: 37500, 
+          image: "cid.png" 
+        },
+        { 
+          name: "Emperor Teach", 
+          value: 200000, 
+          goldValue: 260000, 
+          atomicValue: 300000, 
+          image: "emp.png" 
+        },
+        { 
+          name: "Super Baybe", 
+          value: 300000, 
+          goldValue: 390000, 
+          atomicValue: 450000, 
+          image: "sbb.png" 
+        },
+        { 
+          name: "Naru Baryon", 
+          value: 400000, 
+          goldValue: 520000, 
+          atomicValue: 600000, 
+          image: "naru.png" 
+        },
+        { 
+          name: "BroBro", 
+          value: 770000, 
+          goldValue: 1001000, 
+          atomicValue: 1155000, 
+          image: "brobro.png" 
+        },
+        { 
+          name: "Demon Galo", 
+          value: 740000, 
+          goldValue: 962000, 
+          atomicValue: 1110000, 
+          image: "galo.png" 
+        },
+        { 
+          name: "Better World", 
+          value: 920000, 
+          goldValue: 1196000, 
+          atomicValue: 1380000, 
+          image: "betterworld.png" 
+        },
       ];
 
-      // Trade state
+     // Trade state
       let currentPanel = null; // Tracks which panel (yours/theirs) is adding companions
       const yourOffer = [];
       const theirOffer = [];
@@ -1655,18 +1727,28 @@
           return;
         }
 
-        // Calculate total values with trait multipliers
+        // Calculate total values with custom trait values
         const yourTotal = yourOffer.reduce((sum, c) => {
-          let value = c.value * c.amount;
-          if (c.trait === 'gold') value *= 1.3;
-          else if (c.trait === 'atomic') value *= 1.5;
+          let value;
+          if (c.trait === 'gold') {
+            value = c.goldValue * c.amount;
+          } else if (c.trait === 'atomic') {
+            value = c.atomicValue * c.amount;
+          } else {
+            value = c.value * c.amount;
+          }
           return sum + value;
         }, 0);
         
         const theirTotal = theirOffer.reduce((sum, c) => {
-          let value = c.value * c.amount;
-          if (c.trait === 'gold') value *= 1.3;
-          else if (c.trait === 'atomic') value *= 1.5;
+          let value;
+          if (c.trait === 'gold') {
+            value = c.goldValue * c.amount;
+          } else if (c.trait === 'atomic') {
+            value = c.atomicValue * c.amount;
+          } else {
+            value = c.value * c.amount;
+          }
           return sum + value;
         }, 0);
         
