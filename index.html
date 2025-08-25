@@ -45,7 +45,7 @@
       overflow-x: hidden;
     }
     
-    /* Animated Background */
+    
     .bg-anime {
       position: fixed;
       top: 0;
@@ -88,7 +88,7 @@
       to { transform: translateY(-100vh) translateX(20vw); }
     }
     
-    /* Header & Navigation */
+    
     .header {
       width: 100%;
       max-width: 1200px;
@@ -172,7 +172,7 @@
       color: var(--primary-glow);
     }
     
-    /* Main Container */
+    
     .main-container {
       width: 100%;
       max-width: 1200px;
@@ -220,7 +220,7 @@
       margin-bottom: 1.2rem;
     }
     
-    /* Form Elements */
+    
     .form-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -286,7 +286,7 @@
       accent-color: var(--primary);
     }
     
-    /* Sections */
+    
     .section {
       background: rgba(37, 37, 66, 0.5);
       padding: 1rem;
@@ -304,7 +304,7 @@
       gap: 0.4rem;
     }
     
-    /* Buttons */
+    
     .btn {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
@@ -337,7 +337,7 @@
       box-shadow: 0 6px 15px rgba(76, 76, 120, 0.3);
     }
     
-    /* Profile Controls */
+    
     .profile-controls {
       display: flex;
       gap: 0.4rem;
@@ -372,7 +372,7 @@
       color: white;
     }
     
-    /* Results */
+    
     .result {
       margin-top: 1.5rem;
       background: rgba(37, 37, 66, 0.7);
@@ -398,7 +398,7 @@
       color: var(--primary-glow);
     }
     
-    /* Tooltips */
+    
     .tooltip {
       position: relative;
       display: inline-block;
@@ -437,7 +437,7 @@
       opacity: 1;
     }
     
-    /* Tabs */
+    
     .tab-content {
       display: none;
       width: 100%;
@@ -449,7 +449,7 @@
       display: flex;
     }
     
-    /* Animations */
+    
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -459,7 +459,7 @@
       animation: fadeIn 0.5s ease-out;
     }
     
-    /* Trading Calculator Styles */
+    
     .trade-container {
       display: grid;
       grid-template-columns: 1fr;
@@ -577,7 +577,7 @@
       align-items: center;
     }
     
-    /* Companion Select Modal */
+    
     .modal {
       display: none;
       position: fixed;
@@ -667,7 +667,7 @@
       margin-top: 0.2rem;
     }
     
-    /* Trait Selector */
+    
     .trait-selector {
       position: absolute;
       top: -8px;
@@ -862,7 +862,7 @@
       </div>
     </div>
 
-    <!-- Coin Calculator -->
+    
     <div class="tab-content" id="coin-calc">
       <div class="calculator-container">
         <h2 class="calculator-title"><i class="fas fa-coins"></i> Coin Calculator</h2>
@@ -924,7 +924,7 @@
       </div>
     </div>
 
-    <!-- Goal Calculator -->
+    
     <div class="tab-content" id="goal-calc">
       <div class="calculator-container">
         <h2 class="calculator-title"><i class="fas fa-bullseye"></i> Goal Calculator</h2>
@@ -980,7 +980,7 @@
       </div>
     </div>
 
-    <!-- Trading Calculator -->
+    
     <div class="tab-content" id="trade-calc">
       <div class="calculator-container">
         <h2 class="calculator-title"><i class="fas fa-exchange-alt"></i> Companion Trading Calculator</h2>
@@ -990,7 +990,7 @@
 
 
         <div class="trade-container">
-          <!-- Your Offer Panel -->
+          
           <div class="trade-panel">
             <h2 class="panel-title">Your Offer</h2>
             <div class="add-companion-btn" id="add-your-companion">
@@ -1000,7 +1000,7 @@
             <div class="selected-companions" id="your-offer"></div>
           </div>
 
-          <!-- Their Offer Panel -->
+          
           <div class="trade-panel">
             <h2 class="panel-title">Their Offer</h2>
             <div class="add-companion-btn" id="add-their-companion">
@@ -1035,7 +1035,7 @@
     </div>
   </div>
 
-  <!-- Companion Selection Modal -->
+  
   <div class="modal" id="companion-modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -1072,7 +1072,7 @@
           particle.style.animationDuration = `${duration}s`;
           particle.style.animationDelay = `${delay}s`;
           
-          // Random color from theme
+          
           const colors = ['var(--primary)', 'var(--secondary)', 'var(--accent)'];
           particle.style.background = colors[Math.floor(Math.random() * colors.length)];
           
@@ -1082,7 +1082,7 @@
       
       createParticles();
 
-      // Tab functionality
+      
       const tabButtons = document.querySelectorAll('.nav-btn');
       const tabContents = document.querySelectorAll('.tab-content');
       
@@ -1090,17 +1090,17 @@
         button.addEventListener('click', () => {
           const tabId = button.getAttribute('data-tab');
           
-          // Update active button
+          
           tabButtons.forEach(btn => btn.classList.remove('active'));
           button.classList.add('active');
           
-          // Show active tab
+          
           tabContents.forEach(content => content.classList.remove('active'));
           document.getElementById(tabId).classList.add('active');
         });
       });
 
-      // Stats Calculator Variables
+      
       const ticksPerMinute = {
         strength: 55,
         energy: 28,
@@ -1109,7 +1109,7 @@
       };
       const companionTicksPerMinute = 10;
 
-      // Coin Calculator Variables
+      
       const ranks = [
         { name: "Rookie", coinPerMinute: 5 },
         { name: "Ninja", coinPerMinute: 10 },
@@ -1135,7 +1135,7 @@
         { name: "Pirate King", coinPerMinute: 10000000000 }
       ];
 
-      // Utility Functions
+      
       function parseNumberWithSuffix(input) {
         if (!input) return NaN;
         if (/^[0-9.]+e[0-9]+$/i.test(input)) return parseFloat(input);
@@ -1175,7 +1175,7 @@
         return `${days.toFixed(1)} days`;
       }
 
-      // Stats Calculator Function
+      
       function calculateGains() {
         const statType = document.getElementById("statType").value;
         const gainPerTick = parseNumberWithSuffix(document.getElementById("gainPerTick").value);
@@ -1250,7 +1250,7 @@
         `;
       }
 
-      // Coin Calculator Function
+      
       function calculateCoins() {
         const selectedRankIndex = parseInt(document.getElementById("rankSelect").value);
         const selectedRank = ranks[selectedRankIndex];
@@ -1319,7 +1319,7 @@
         document.getElementById("coinResult").innerHTML = resultHTML;
       }
 
-      // Goal Calculator Function
+      
       function calculateTimeToGoal() {
         const statType = document.getElementById("goalStatType").value;
         const gainPerTick = parseNumberWithSuffix(document.getElementById("goalGainPerTick").value);
@@ -1378,7 +1378,7 @@
         `;
       }
 
-      // Profile Management Functions
+      
       function saveProfile() {
         const profileName = document.getElementById("profileName").value.trim();
         if (!profileName) {
@@ -1469,8 +1469,7 @@
         }
       }
 
-      // Trading Calculator Functionality
-      // Companion data
+      
       const companions = [
         { 
           name: "Turbo", 
@@ -1558,14 +1557,14 @@
         },
       ];
 
-     // Trade state
-      let currentPanel = null; // Tracks which panel (yours/theirs) is adding companions
+     
+      let currentPanel = null; 
       const yourOffer = [];
       const theirOffer = [];
       const modal = document.getElementById('companion-modal');
       const companionGrid = document.getElementById('companion-grid');
 
-      // Populate companion grid in modal
+      
       function populateCompanionGrid() {
         companionGrid.innerHTML = '';
         companions.forEach(companion => {
@@ -1584,7 +1583,7 @@
         });
       }
 
-      // Set up add companion buttons
+      
       document.getElementById('add-your-companion').addEventListener('click', () => {
         currentPanel = 'yours';
         modal.style.display = 'flex';
@@ -1595,15 +1594,15 @@
         modal.style.display = 'flex';
       });
 
-      // Close modal
+      
       document.getElementById('close-modal').addEventListener('click', () => {
         modal.style.display = 'none';
       });
 
-      // Calculate trade
+      
       document.getElementById('calculate-trade').addEventListener('click', calculateTrade);
 
-      // Add companion to the appropriate offer
+      
       function addCompanionToOffer(companion) {
         if (!currentPanel) return;
         
@@ -1612,7 +1611,7 @@
           ? document.getElementById('your-offer') 
           : document.getElementById('their-offer');
         
-        // Check if companion already exists in offer
+       
         const existingIndex = offer.findIndex(c => c.name === companion.name && c.trait === undefined);
         if (existingIndex >= 0) {
           offer[existingIndex].amount += 1;
@@ -1620,14 +1619,14 @@
           offer.push({
             ...companion,
             amount: 1,
-            trait: undefined // Start with no trait
+            trait: undefined 
           });
         }
         
         updateOfferDisplay(offer, container);
       }
 
-      // Update the display of companions in a panel
+      
       function updateOfferDisplay(offer, container) {
         container.innerHTML = '';
         
@@ -1635,7 +1634,7 @@
           const companionItem = document.createElement('div');
           companionItem.classList.add('companion-item');
           
-          // Add trait indicator if it exists
+          
           let traitBadge = '';
           if (companion.trait === 'gold') {
             traitBadge = '<span class="trait-display gold">GOLD</span>';
@@ -1671,21 +1670,21 @@
             </div>
           `;
           
-          // Set up amount change listener
+         
           const amountInput = companionItem.querySelector('.amount-input');
           amountInput.addEventListener('change', (e) => {
             const newAmount = parseInt(e.target.value) || 1;
             offer[index].amount = newAmount;
           });
           
-          // Set up remove button
+          
           const removeBtn = companionItem.querySelector('.remove-btn');
           removeBtn.addEventListener('click', () => {
             offer.splice(index, 1);
             updateOfferDisplay(offer, container);
           });
           
-          // Set up trait selector
+          
           const traitSelector = companionItem.querySelector('.trait-selector');
           const traitOptions = companionItem.querySelector('.trait-options');
           
@@ -1694,7 +1693,7 @@
             traitOptions.style.display = traitOptions.style.display === 'flex' ? 'none' : 'flex';
           });
           
-          // Handle trait selection
+          
           const traitOptionButtons = companionItem.querySelectorAll('.trait-option');
           traitOptionButtons.forEach(button => {
             button.addEventListener('click', (e) => {
@@ -1709,7 +1708,7 @@
             });
           });
           
-          // Close trait selector when clicking outside
+          
           document.addEventListener('click', function closeTraitSelector(e) {
             if (!traitSelector.contains(e.target)) {
               traitOptions.style.display = 'none';
@@ -1720,14 +1719,14 @@
         });
       }
 
-      // Calculate the trade
+      
       function calculateTrade() {
         if (yourOffer.length === 0 || theirOffer.length === 0) {
           alert("Please add companions to both offers");
           return;
         }
 
-        // Calculate total values with custom trait values
+       
         const yourTotal = yourOffer.reduce((sum, c) => {
           let value;
           if (c.trait === 'gold') {
@@ -1754,12 +1753,12 @@
         
         const difference = theirTotal - yourTotal;
 
-        // Update UI
+       
         document.getElementById('your-value').textContent = formatNumber(yourTotal);
         document.getElementById('their-value').textContent = formatNumber(theirTotal);
         document.getElementById('difference-value').textContent = formatNumber(Math.abs(difference));
 
-        // Determine result
+        
         let resultText = "Fair Trade";
         let resultColor = "#7e22ce";
         
@@ -1777,7 +1776,7 @@
         document.getElementById('trade-result').style.display = 'block';
       }
 
-      // Format numbers with K/M suffixes
+      
       function formatNumber(num) {
         if (num >= 1000000) {
           return (num / 1000000).toFixed(1) + 'M';
@@ -1788,17 +1787,17 @@
         return num.toString();
       }
 
-      // Close modal when clicking outside
+      
       window.addEventListener('click', (e) => {
         if (e.target === modal) {
           modal.style.display = 'none';
         }
       });
 
-      // Initialize the companion grid
+      
       populateCompanionGrid();
 
-      // Event Listeners
+     
       document.getElementById("calculateBtn").addEventListener("click", calculateGains);
       document.getElementById("calculateCoinsBtn").addEventListener("click", calculateCoins);
       document.getElementById("calculateGoalBtn").addEventListener("click", calculateTimeToGoal);
@@ -1808,7 +1807,7 @@
       document.getElementById("saveGoalProfileBtn").addEventListener("click", saveGoalProfile);
       document.getElementById("loadGoalProfileBtn").addEventListener("click", loadGoalProfile);
       
-      // Enter key support
+     
       const inputs = [
         "gainPerTick", "time", "companionGain", 
         "goalGainPerTick", "goalCompanionGain", "currentStat", "desiredStat",
