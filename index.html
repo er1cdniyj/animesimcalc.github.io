@@ -45,7 +45,6 @@
       overflow-x: hidden;
     }
     
-    
     .bg-anime {
       position: fixed;
       top: 0;
@@ -87,7 +86,6 @@
     @keyframes float {
       to { transform: translateY(-100vh) translateX(20vw); }
     }
-    
     
     .header {
       width: 100%;
@@ -172,7 +170,6 @@
       color: var(--primary-glow);
     }
     
-    
     .main-container {
       width: 100%;
       max-width: 1200px;
@@ -219,7 +216,6 @@
       font-size: 0.85rem;
       margin-bottom: 1.2rem;
     }
-    
     
     .form-grid {
       display: grid;
@@ -286,7 +282,6 @@
       accent-color: var(--primary);
     }
     
-    
     .section {
       background: rgba(37, 37, 66, 0.5);
       padding: 1rem;
@@ -303,7 +298,6 @@
       align-items: center;
       gap: 0.4rem;
     }
-    
     
     .btn {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -336,7 +330,6 @@
     .btn-secondary:hover {
       box-shadow: 0 6px 15px rgba(76, 76, 120, 0.3);
     }
-    
     
     .profile-controls {
       display: flex;
@@ -372,7 +365,6 @@
       color: white;
     }
     
-    
     .result {
       margin-top: 1.5rem;
       background: rgba(37, 37, 66, 0.7);
@@ -397,7 +389,6 @@
       font-weight: 600;
       color: var(--primary-glow);
     }
-    
     
     .tooltip {
       position: relative;
@@ -437,7 +428,6 @@
       opacity: 1;
     }
     
-    
     .tab-content {
       display: none;
       width: 100%;
@@ -449,7 +439,6 @@
       display: flex;
     }
     
-    
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -458,7 +447,6 @@
     .calculator-container {
       animation: fadeIn 0.5s ease-out;
     }
-    
     
     .trade-container {
       display: grid;
@@ -577,7 +565,6 @@
       align-items: center;
     }
     
-    
     .modal {
       display: none;
       position: fixed;
@@ -608,6 +595,11 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.2rem;
+      position: sticky;
+      top: 0;
+      background: var(--bg-card);
+      padding: 1rem 0;
+      z-index: 10;
     }
     
     .modal-title {
@@ -666,7 +658,6 @@
       color: var(--primary);
       margin-top: 0.2rem;
     }
-    
     
     .trait-selector {
       position: absolute;
@@ -763,6 +754,120 @@
       background: var(--atomic);
       color: #000;
     }
+    
+    /* New styles for values tab */
+    .values-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      width: 100%;
+    }
+    
+    .values-section {
+      background: rgba(37, 37, 66, 0.7);
+      padding: 1.2rem;
+      border-radius: 0.6rem;
+      border: 1px solid rgba(76, 76, 120, 0.5);
+    }
+    
+    .values-section-title {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: var(--primary-glow);
+      text-align: center;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+    
+    .value-item {
+      background: var(--bg-element);
+      border-radius: 0.6rem;
+      padding: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+    
+    .value-item:hover {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    .value-image {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      margin-bottom: 0.6rem;
+      background: var(--bg-dark);
+      border-radius: 50%;
+      padding: 6px;
+    }
+    
+    .value-name {
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    
+    .value-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      width: 100%;
+    }
+    
+    .value-detail {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+    }
+    
+    .value-label {
+      color: var(--text-secondary);
+    }
+    
+    .value-amount {
+      font-weight: 600;
+      color: var(--primary-glow);
+    }
+    
+    .gold-value {
+      color: var(--gold);
+    }
+    
+    .atomic-value {
+      color: var(--atomic);
+    }
+    
+    .search-box {
+      margin-bottom: 1rem;
+      width: 100%;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border-radius: 0.6rem;
+      background: var(--bg-element);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      font-family: 'Oxanium', sans-serif;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.3);
+    }
   </style>
 </head>
 <body>
@@ -792,6 +897,10 @@
       </button>
       <button class="nav-btn" data-tab="trade-calc">
         <i class="fas fa-exchange-alt"></i> Trading
+      </button>
+      <!-- New Values Tab Button -->
+      <button class="nav-btn" data-tab="values-tab">
+        <i class="fas fa-list-alt"></i> Values
       </button>
     </div>
   </div>
@@ -862,7 +971,7 @@
       </div>
     </div>
 
-    
+    <!-- Coin Calculator -->
     <div class="tab-content" id="coin-calc">
       <div class="calculator-container">
         <h2 class="calculator-title"><i class="fas fa-coins"></i> Coin Calculator</h2>
@@ -924,7 +1033,7 @@
       </div>
     </div>
 
-    
+    <!-- Goal Calculator -->
     <div class="tab-content" id="goal-calc">
       <div class="calculator-container">
         <h2 class="calculator-title"><i class="fas fa-bullseye"></i> Goal Calculator</h2>
@@ -980,17 +1089,16 @@
       </div>
     </div>
 
-    
+    <!-- Trading Calculator -->
     <div class="tab-content" id="trade-calc">
       <div class="calculator-container">
         <h2 class="calculator-title"><i class="fas fa-exchange-alt"></i> Companion Trading Calculator</h2>
         <p class="calculator-subtitle">Calculate the value of your companion trades</p>
-       <b> <p class="calculator-subtitle">Special thanks to Harry the Tester, BruceWaynie, and War for making these values!  </p></b>
-         <b>  <p class="calculator-subtitle">Trading is at your own risk! These values will be change and are not set in concrete. Do not DM devs or Testers help for scams</p></b>
-
+        <b> <p class="calculator-subtitle">Special thanks to Harry the Tester for making these values!  </p></b>
+        <b>  <p class="calculator-subtitle">Trading is at your own risk! Do not DM devs or Testers help for scams</p></b>
 
         <div class="trade-container">
-          
+          <!-- Your Offer -->
           <div class="trade-panel">
             <h2 class="panel-title">Your Offer</h2>
             <div class="add-companion-btn" id="add-your-companion">
@@ -1000,7 +1108,7 @@
             <div class="selected-companions" id="your-offer"></div>
           </div>
 
-          
+          <!-- Their Offer -->
           <div class="trade-panel">
             <h2 class="panel-title">Their Offer</h2>
             <div class="add-companion-btn" id="add-their-companion">
@@ -1033,9 +1141,46 @@
         </div>
       </div>
     </div>
+
+    <!-- New Values Tab -->
+    <div class="tab-content" id="values-tab">
+      <div class="calculator-container">
+        <h2 class="calculator-title"><i class="fas fa-list-alt"></i> Companion & Aura Values</h2>
+        <p class="calculator-subtitle">Reference values for trading companions and auras</p>
+        <p class="calculator-subtitle" style="color: var(--gold); margin-top: 0.5rem;">
+          <i class="fas fa-exclamation-triangle"></i> Values are approximate and may change over time
+        </p>
+
+        <div class="search-box">
+          <input type="text" id="values-search" class="search-input" placeholder="Search companions and auras...">
+        </div>
+
+        <div class="values-container">
+          <!-- Companions Section -->
+          <div class="values-section">
+            <h3 class="values-section-title">
+              <i class="fas fa-robot"></i> Companions
+            </h3>
+            <div class="values-grid" id="companions-values">
+              <!-- Companions will be populated by JavaScript -->
+            </div>
+          </div>
+
+          <!-- Auras Section -->
+          <div class="values-section">
+            <h3 class="values-section-title">
+              <i class="fas fa-certificate"></i> Auras
+            </h3>
+            <div class="values-grid" id="auras-values">
+              <!-- Auras will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  
+  <!-- Companion Selection Modal -->
   <div class="modal" id="companion-modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -1072,7 +1217,6 @@
           particle.style.animationDuration = `${duration}s`;
           particle.style.animationDelay = `${delay}s`;
           
-          
           const colors = ['var(--primary)', 'var(--secondary)', 'var(--accent)'];
           particle.style.background = colors[Math.floor(Math.random() * colors.length)];
           
@@ -1082,7 +1226,7 @@
       
       createParticles();
 
-      
+      // Tab switching functionality
       const tabButtons = document.querySelectorAll('.nav-btn');
       const tabContents = document.querySelectorAll('.tab-content');
       
@@ -1090,17 +1234,17 @@
         button.addEventListener('click', () => {
           const tabId = button.getAttribute('data-tab');
           
-          
+          // Update active button
           tabButtons.forEach(btn => btn.classList.remove('active'));
           button.classList.add('active');
           
-          
+          // Show active tab
           tabContents.forEach(content => content.classList.remove('active'));
           document.getElementById(tabId).classList.add('active');
         });
       });
 
-      
+      // Training rates
       const ticksPerMinute = {
         strength: 55,
         energy: 28,
@@ -1109,7 +1253,7 @@
       };
       const companionTicksPerMinute = 10;
 
-      
+      // Rank data
       const ranks = [
         { name: "Rookie", coinPerMinute: 5 },
         { name: "Ninja", coinPerMinute: 10 },
@@ -1135,7 +1279,7 @@
         { name: "Pirate King", coinPerMinute: 10000000000 }
       ];
 
-      
+      // Number parsing and formatting functions
       function parseNumberWithSuffix(input) {
         if (!input) return NaN;
         if (/^[0-9.]+e[0-9]+$/i.test(input)) return parseFloat(input);
@@ -1175,7 +1319,7 @@
         return `${days.toFixed(1)} days`;
       }
 
-      
+      // Stats calculator
       function calculateGains() {
         const statType = document.getElementById("statType").value;
         const gainPerTick = parseNumberWithSuffix(document.getElementById("gainPerTick").value);
@@ -1250,7 +1394,7 @@
         `;
       }
 
-      
+      // Coin calculator
       function calculateCoins() {
         const selectedRankIndex = parseInt(document.getElementById("rankSelect").value);
         const selectedRank = ranks[selectedRankIndex];
@@ -1319,7 +1463,7 @@
         document.getElementById("coinResult").innerHTML = resultHTML;
       }
 
-      
+      // Goal calculator
       function calculateTimeToGoal() {
         const statType = document.getElementById("goalStatType").value;
         const gainPerTick = parseNumberWithSuffix(document.getElementById("goalGainPerTick").value);
@@ -1378,7 +1522,7 @@
         `;
       }
 
-      
+      // Profile management
       function saveProfile() {
         const profileName = document.getElementById("profileName").value.trim();
         if (!profileName) {
@@ -1469,7 +1613,7 @@
         }
       }
 
-      
+      // Trading calculator data
       const companions = [
         { 
           name: "Aizo", 
@@ -1593,7 +1737,7 @@
         { 
           name: "Atomic", 
           value: 100,
-          image: "atomic.pmg.png" 
+          image: "atomic.png" 
         },
         { 
           name: "Death", 
@@ -1632,14 +1776,58 @@
         },
       ];
 
-     
+      // Define auras data
+      const auras = [
+        { 
+          name: "Atomic+", 
+          value: 1000000, 
+          image: "atomic_plus.png" 
+        },
+        { 
+          name: "Death+", 
+          value: 50000, 
+          image: "death_plus.png" 
+        },
+        { 
+          name: "Solo+", 
+          value: 100000, 
+          image: "solo_plus.png" 
+        },
+        { 
+          name: "Babylon+", 
+          value: 500000, 
+          image: "babylon_plus.png" 
+        },
+        { 
+          name: "Infinity+", 
+          value: 4200000, 
+          image: "infinity_plus.png" 
+        },
+        { 
+          name: "Sacred+", 
+          value: 1800000, 
+          image: "sacred_plus.png" 
+        },
+        { 
+          name: "Chronology+", 
+          value: 5200000, 
+          image: "chronology_plus.png" 
+        },
+        { 
+          name: "Prodigy+", 
+          value: 6400000, 
+          image: "prodigy_plus.png" 
+        },
+      ];
+
+      // Trading calculator functionality
       let currentPanel = null; 
       const yourOffer = [];
       const theirOffer = [];
       const modal = document.getElementById('companion-modal');
       const companionGrid = document.getElementById('companion-grid');
 
-      
+      // Populate companion selection modal
       function populateCompanionGrid() {
         companionGrid.innerHTML = '';
         companions.forEach(companion => {
@@ -1658,26 +1846,27 @@
         });
       }
 
-      
+      // Open modal for your offer
       document.getElementById('add-your-companion').addEventListener('click', () => {
         currentPanel = 'yours';
         modal.style.display = 'flex';
       });
 
+      // Open modal for their offer
       document.getElementById('add-their-companion').addEventListener('click', () => {
         currentPanel = 'theirs';
         modal.style.display = 'flex';
       });
 
-      
+      // Close modal
       document.getElementById('close-modal').addEventListener('click', () => {
         modal.style.display = 'none';
       });
 
-      
+      // Calculate trade
       document.getElementById('calculate-trade').addEventListener('click', calculateTrade);
 
-      
+      // Add companion to current offer
       function addCompanionToOffer(companion) {
         if (!currentPanel) return;
         
@@ -1686,7 +1875,7 @@
           ? document.getElementById('your-offer') 
           : document.getElementById('their-offer');
         
-       
+        // Check if companion already exists in offer
         const existingIndex = offer.findIndex(c => c.name === companion.name && c.trait === undefined);
         if (existingIndex >= 0) {
           offer[existingIndex].amount += 1;
@@ -1701,7 +1890,7 @@
         updateOfferDisplay(offer, container);
       }
 
-      
+      // Update the display of companions in an offer
       function updateOfferDisplay(offer, container) {
         container.innerHTML = '';
         
@@ -1709,7 +1898,7 @@
           const companionItem = document.createElement('div');
           companionItem.classList.add('companion-item');
           
-          
+          // Add trait badge if applicable
           let traitBadge = '';
           if (companion.trait === 'gold') {
             traitBadge = '<span class="trait-display gold">GOLD</span>';
@@ -1745,21 +1934,21 @@
             </div>
           `;
           
-         
+          // Update amount when changed
           const amountInput = companionItem.querySelector('.amount-input');
           amountInput.addEventListener('change', (e) => {
             const newAmount = parseInt(e.target.value) || 1;
             offer[index].amount = newAmount;
           });
           
-          
+          // Remove companion
           const removeBtn = companionItem.querySelector('.remove-btn');
           removeBtn.addEventListener('click', () => {
             offer.splice(index, 1);
             updateOfferDisplay(offer, container);
           });
           
-          
+          // Trait selector functionality
           const traitSelector = companionItem.querySelector('.trait-selector');
           const traitOptions = companionItem.querySelector('.trait-options');
           
@@ -1768,7 +1957,7 @@
             traitOptions.style.display = traitOptions.style.display === 'flex' ? 'none' : 'flex';
           });
           
-          
+          // Set trait
           const traitOptionButtons = companionItem.querySelectorAll('.trait-option');
           traitOptionButtons.forEach(button => {
             button.addEventListener('click', (e) => {
@@ -1783,7 +1972,7 @@
             });
           });
           
-          
+          // Close trait selector when clicking elsewhere
           document.addEventListener('click', function closeTraitSelector(e) {
             if (!traitSelector.contains(e.target)) {
               traitOptions.style.display = 'none';
@@ -1794,14 +1983,14 @@
         });
       }
 
-      
+      // Calculate trade values
       function calculateTrade() {
         if (yourOffer.length === 0 || theirOffer.length === 0) {
           alert("Please add companions to both offers");
           return;
         }
 
-       
+        // Calculate total values
         const yourTotal = yourOffer.reduce((sum, c) => {
           let value;
           if (c.trait === 'gold') {
@@ -1828,12 +2017,12 @@
         
         const difference = theirTotal - yourTotal;
 
-       
+        // Update UI with results
         document.getElementById('your-value').textContent = formatNumber(yourTotal);
         document.getElementById('their-value').textContent = formatNumber(theirTotal);
         document.getElementById('difference-value').textContent = formatNumber(Math.abs(difference));
 
-        
+        // Determine trade result
         let resultText = "Fair Trade";
         let resultColor = "#7e22ce";
         
@@ -1851,7 +2040,7 @@
         document.getElementById('trade-result').style.display = 'block';
       }
 
-      
+      // Format numbers for display (K, M, etc.)
       function formatNumber(num) {
         if (num >= 1000000) {
           return (num / 1000000).toFixed(1) + 'M';
@@ -1862,17 +2051,113 @@
         return num.toString();
       }
 
-      
+      // Close modal when clicking outside
       window.addEventListener('click', (e) => {
         if (e.target === modal) {
           modal.style.display = 'none';
         }
       });
 
-      
-      populateCompanionGrid();
+      // Populate Values Tab
+      function populateValuesTab() {
+        const companionsContainer = document.getElementById('companions-values');
+        const aurasContainer = document.getElementById('auras-values');
+        
+        // Clear containers
+        companionsContainer.innerHTML = '';
+        aurasContainer.innerHTML = '';
+        
+        // Add companions to values tab
+        companions.forEach(companion => {
+          const valueItem = document.createElement('div');
+          valueItem.classList.add('value-item');
+          
+          let valueDetails = '';
+          if (companion.goldValue && companion.atomicValue) {
+            valueDetails = `
+              <div class="value-details">
+                <div class="value-detail">
+                  <span class="value-label">Normal:</span>
+                  <span class="value-amount">${formatNumber(companion.value)}</span>
+                </div>
+                <div class="value-detail">
+                  <span class="value-label gold-value">Gold:</span>
+                  <span class="value-amount gold-value">${formatNumber(companion.goldValue)}</span>
+                </div>
+                <div class="value-detail">
+                  <span class="value-label atomic-value">Atomic:</span>
+                  <span class="value-amount atomic-value">${formatNumber(companion.atomicValue)}</span>
+                </div>
+              </div>
+            `;
+          } else {
+            valueDetails = `
+              <div class="value-details">
+                <div class="value-detail">
+                  <span class="value-label">Value:</span>
+                  <span class="value-amount">${formatNumber(companion.value)}</span>
+                </div>
+              </div>
+            `;
+          }
+          
+          valueItem.innerHTML = `
+            <img src="${companion.image}" alt="${companion.name}" class="value-image">
+            <div class="value-name">${companion.name}</div>
+            ${valueDetails}
+          `;
+          
+          companionsContainer.appendChild(valueItem);
+        });
+        
+        // Add auras to values tab
+        auras.forEach(auras => {
+          const valueItem = document.createElement('div');
+          valueItem.classList.add('value-item');
+          
+          valueItem.innerHTML = `
+            <img src="${auras.image}" alt="${auras.name}" class="value-image">
+            <div class="value-name">${auras.name}</div>
+            <div class="value-details">
+              <div class="value-detail">
+                <span class="value-label">Value:</span>
+                <span class="value-amount">${formatNumber(auras.value)}</span>
+              </div>
+            </div>
+          `;
+          
+          aurasContainer.appendChild(valueItem);
+        });
+      }
 
-     
+      // Search functionality for values tab
+      function setupSearch() {
+        const searchInput = document.getElementById('values-search');
+        searchInput.addEventListener('input', () => {
+          const searchTerm = searchInput.value.toLowerCase();
+          
+          // Filter companions
+          const companionItems = document.querySelectorAll('#companions-values .value-item');
+          companionItems.forEach(item => {
+            const name = item.querySelector('.value-name').textContent.toLowerCase();
+            item.style.display = name.includes(searchTerm) ? 'flex' : 'none';
+          });
+          
+          // Filter auras
+          const auraItems = document.querySelectorAll('#auras-values .value-item');
+          auraItems.forEach(item => {
+            const name = item.querySelector('.value-name').textContent.toLowerCase();
+            item.style.display = name.includes(searchTerm) ? 'flex' : 'none';
+          });
+        });
+      }
+
+      // Initialize everything
+      populateCompanionGrid();
+      populateValuesTab();
+      setupSearch();
+
+      // Event listeners for calculators
       document.getElementById("calculateBtn").addEventListener("click", calculateGains);
       document.getElementById("calculateCoinsBtn").addEventListener("click", calculateCoins);
       document.getElementById("calculateGoalBtn").addEventListener("click", calculateTimeToGoal);
@@ -1882,7 +2167,7 @@
       document.getElementById("saveGoalProfileBtn").addEventListener("click", saveGoalProfile);
       document.getElementById("loadGoalProfileBtn").addEventListener("click", loadGoalProfile);
       
-     
+      // Enter key support for inputs
       const inputs = [
         "gainPerTick", "time", "companionGain", 
         "goalGainPerTick", "goalCompanionGain", "currentStat", "desiredStat",
