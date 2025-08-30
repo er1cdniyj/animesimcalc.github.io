@@ -1511,7 +1511,7 @@
             <span class="result-label">Gain Per Minute:</span>
             <span class="result-value">${abbreviateNumber(gainPerMinute)}</span>
           </div>
-          <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--border)">
+          <div class"result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--border)">
             <span class="result-label" style="font-weight:700">Time Needed:</span>
             <span class="result-value" style="font-weight:700">${formatTime(minutesNeeded)}</span>
           </div>
@@ -1616,166 +1616,193 @@
       // Trading calculator data
       const companions = [
         { 
+          name: "Aizo", 
+          value: 100, 
+          goldValue: 3000, 
+          atomicValue: 40000, 
+          image: "aizo.png",
+          isAura: false
+        },
+        { 
           name: "Momo", 
           value: 100, 
           goldValue: 3000, 
-          atomicValue: 4000, 
-          image: "momo.png" 
-        },
-        { 
-          name: "Ana", 
-          value: 100, 
-          goldValue: 3000, 
-          atomicValue: 4000, 
-          image: "ana.png" 
+          atomicValue: 40000, 
+          image: "momo.png",
+          isAura: false
         },
         { 
           name: "Eddie", 
           value: 100, 
           goldValue: 3000, 
-          atomicValue: 4000, 
-          image: "eddie.png" 
+          atomicValue: 40000, 
+          image: "eddie.png",
+          isAura: false
         },
         { 
           name: "Jojo", 
           value: 100, 
           goldValue: 3000, 
-          atomicValue: 4000, 
-          image: "jojo.png" 
+          atomicValue: 40000, 
+          image: "jojo.png",
+          isAura: false
         },
         { 
           name: "Mino", 
           value: 100, 
           goldValue: 3000, 
-          atomicValue: 4000, 
-          image: "mino.png" 
+          atomicValue: 40000, 
+          image: "mino.png",
+          isAura: false
         },
         { 
           name: "Turbo", 
           value: 2500, 
           goldValue: 15000, 
           atomicValue: 25000, 
-          image: "turbo.png" 
+          image: "turbo.png",
+          isAura: false
         },
         { 
           name: "Seidon", 
           value: 3500, 
           goldValue: 20000, 
           atomicValue: 22000, 
-          image: "seidon.png" 
+          image: "seidon.png",
+          isAura: false
         },
         { 
           name: "Ultra Gogo", 
           value: 5000, 
           goldValue: 20000, 
           atomicValue: 30000, 
-          image: "ui.png" 
+          image: "ui.png",
+          isAura: false
         },
         { 
           name: "Mahoraga", 
           value: 5000, 
           goldValue: 20000, 
           atomicValue: 30000, 
-          image: "m.png" 
+          image: "m.png",
+          isAura: false
         },
         { 
           name: "Freeah", 
           value: 10000, 
           goldValue: 50000, 
           atomicValue: 60000, 
-          image: "freeah.png" 
+          image: "freeah.png",
+          isAura: false
         },
         { 
           name: "Sid", 
           value: 30000, 
           goldValue: 70000, 
           atomicValue: 90000, 
-          image: "cid.png" 
+          image: "cid.png",
+          isAura: false
         },
         { 
           name: "Emperor Teach", 
           value: 200000, 
           goldValue: 270000, 
           atomicValue: 290000, 
-          image: "emp.png" 
+          image: "emp.png",
+          isAura: false
         },
         { 
           name: "Super Baybe", 
           value: 220000, 
           goldValue: 280000, 
           atomicValue: 300000, 
-          image: "sbb.png" 
+          image: "sbb.png",
+          isAura: false
         },
         { 
           name: "Naru Baryon", 
           value: 330000, 
           goldValue: 400000, 
           atomicValue: 420000, 
-          image: "naru.png" 
+          image: "naru.png",
+          isAura: false
         },
         { 
           name: "BroBro", 
           value: 520000, 
           goldValue: 640000, 
           atomicValue: 650000, 
-          image: "brobro.png" 
+          image: "brobro.png",
+          isAura: false
         },
         { 
           name: "Demon Galo", 
           value: 520000, 
           goldValue: 640000, 
           atomicValue: 650000, 
-          image: "galo.png" 
+          image: "galo.png",
+          isAura: false
         },
         { 
           name: "Better World", 
           value: 640000, 
           goldValue: 770000, 
           atomicValue: 780000, 
-          image: "betterworld.png" 
+          image: "betterworld.png",
+          isAura: false
         },
+        // Auras - these will only appear in the Auras section of the Values tab
         { 
           name: "Atomic", 
           value: 100,
-          image: "atomic.png" 
+          image: "atomic.png",
+          isAura: true
         },
         { 
           name: "Death", 
           value: 5000, 
-          image: "death.png" 
+          image: "death.png",
+          isAura: true
         },
         { 
           name: "Solo", 
           value: 10000, 
-          image: "solo.png" 
+          image: "solo.png",
+          isAura: true
         },
         { 
           name: "Babylon", 
           value: 50000, 
-          image: "baby.png" 
+          image: "baby.png",
+          isAura: true
         },
         { 
           name: "Infinity", 
           value: 420000, 
-          image: "inf.png" 
+          image: "inf.png",
+          isAura: true
         },
         { 
           name: "Sacred", 
           value: 180000, 
-          image: "sacred.png" 
+          image: "sacred.png",
+          isAura: true
         },
         { 
           name: "Chronology", 
           value: 520000,
-          image: "chrono.png" 
+          image: "chrono.png",
+          isAura: true
         },
         { 
           name: "Prodigy", 
           value: 640000,  
-          image: "prodigy.png" 
+          image: "prodigy.png",
+          isAura: true
         },
       ];
 
+      // Define auras data for the Values tab
       const auras = [
         { 
           name: "Atomic", 
@@ -2066,47 +2093,49 @@
         companionsContainer.innerHTML = '';
         aurasContainer.innerHTML = '';
         
-        // Add companions to values tab
+        // Add companions to values tab (only non-aura companions)
         companions.forEach(companion => {
-          const valueItem = document.createElement('div');
-          valueItem.classList.add('value-item');
-          
-          let valueDetails = '';
-          if (companion.goldValue && companion.atomicValue) {
-            valueDetails = `
-              <div class="value-details">
-                <div class="value-detail">
-                  <span class="value-label">Normal:</span>
-                  <span class="value-amount">${formatNumber(companion.value)}</span>
+          if (!companion.isAura) {
+            const valueItem = document.createElement('div');
+            valueItem.classList.add('value-item');
+            
+            let valueDetails = '';
+            if (companion.goldValue && companion.atomicValue) {
+              valueDetails = `
+                <div class="value-details">
+                  <div class="value-detail">
+                    <span class="value-label">Normal:</span>
+                    <span class="value-amount">${formatNumber(companion.value)}</span>
+                  </div>
+                  <div class="value-detail">
+                    <span class="value-label gold-value">Gold:</span>
+                    <span class="value-amount gold-value">${formatNumber(companion.goldValue)}</span>
+                  </div>
+                  <div class="value-detail">
+                    <span class="value-label atomic-value">Atomic:</span>
+                    <span class="value-amount atomic-value">${formatNumber(companion.atomicValue)}</span>
+                  </div>
                 </div>
-                <div class="value-detail">
-                  <span class="value-label gold-value">Gold:</span>
-                  <span class="value-amount gold-value">${formatNumber(companion.goldValue)}</span>
+              `;
+            } else {
+              valueDetails = `
+                <div class="value-details">
+                  <div class="value-detail">
+                    <span class="value-label">Value:</span>
+                    <span class="value-amount">${formatNumber(companion.value)}</span>
+                  </div>
                 </div>
-                <div class="value-detail">
-                  <span class="value-label atomic-value">Atomic:</span>
-                  <span class="value-amount atomic-value">${formatNumber(companion.atomicValue)}</span>
-                </div>
-              </div>
+              `;
+            }
+            
+            valueItem.innerHTML = `
+              <img src="${companion.image}" alt="${companion.name}" class="value-image">
+              <div class="value-name">${companion.name}</div>
+              ${valueDetails}
             `;
-          } else {
-            valueDetails = `
-              <div class="value-details">
-                <div class="value-detail">
-                  <span class="value-label">Value:</span>
-                  <span class="value-amount">${formatNumber(companion.value)}</span>
-                </div>
-              </div>
-            `;
+            
+            companionsContainer.appendChild(valueItem);
           }
-          
-          valueItem.innerHTML = `
-            <img src="${companion.image}" alt="${companion.name}" class="value-image">
-            <div class="value-name">${companion.name}</div>
-            ${valueDetails}
-          `;
-          
-          companionsContainer.appendChild(valueItem);
         });
         
         // Add auras to values tab
