@@ -1226,7 +1226,7 @@
       
       createParticles();
 
-      // Tab switching functionality
+      
       const tabButtons = document.querySelectorAll('.nav-btn');
       const tabContents = document.querySelectorAll('.tab-content');
       
@@ -1234,17 +1234,17 @@
         button.addEventListener('click', () => {
           const tabId = button.getAttribute('data-tab');
           
-          // Update active button
+          
           tabButtons.forEach(btn => btn.classList.remove('active'));
           button.classList.add('active');
           
-          // Show active tab
+          
           tabContents.forEach(content => content.classList.remove('active'));
           document.getElementById(tabId).classList.add('active');
         });
       });
 
-      // Training rates
+     
       const ticksPerMinute = {
         strength: 55,
         energy: 28,
@@ -1253,7 +1253,7 @@
       };
       const companionTicksPerMinute = 10;
 
-      // Rank data
+      
       const ranks = [
         { name: "Rookie", coinPerMinute: 5 },
         { name: "Ninja", coinPerMinute: 10 },
@@ -1279,7 +1279,7 @@
         { name: "Pirate King", coinPerMinute: 10000000000 }
       ];
 
-      // Number parsing and formatting functions
+      
       function parseNumberWithSuffix(input) {
         if (!input) return NaN;
         if (/^[0-9.]+e[0-9]+$/i.test(input)) return parseFloat(input);
@@ -1319,7 +1319,7 @@
         return `${days.toFixed(1)} days`;
       }
 
-      // Stats calculator
+      
       function calculateGains() {
         const statType = document.getElementById("statType").value;
         const gainPerTick = parseNumberWithSuffix(document.getElementById("gainPerTick").value);
@@ -1394,7 +1394,7 @@
         `;
       }
 
-      // Coin calculator
+      
       function calculateCoins() {
         const selectedRankIndex = parseInt(document.getElementById("rankSelect").value);
         const selectedRank = ranks[selectedRankIndex];
@@ -1463,7 +1463,7 @@
         document.getElementById("coinResult").innerHTML = resultHTML;
       }
 
-      // Goal calculator
+      
       function calculateTimeToGoal() {
         const statType = document.getElementById("goalStatType").value;
         const gainPerTick = parseNumberWithSuffix(document.getElementById("goalGainPerTick").value);
@@ -1522,7 +1522,7 @@
         `;
       }
 
-      // Profile management
+      
       function saveProfile() {
         const profileName = document.getElementById("profileName").value.trim();
         if (!profileName) {
@@ -1613,7 +1613,7 @@
         }
       }
 
-      // Trading calculator data
+     
       const companions = [
         { 
           name: "Aizo", 
@@ -1751,7 +1751,7 @@
           image: "betterworld.png",
           isAura: false
         },
-        // Auras - these will only appear in the Auras section of the Values tab
+       
         { 
           name: "Atomic", 
           value: 100,
@@ -1802,7 +1802,7 @@
         },
       ];
 
-      // Define auras data for the Values tab
+      
       const auras = [
         { 
           name: "Atomic", 
@@ -1846,14 +1846,14 @@
         },
       ];
 
-      // Trading calculator functionality
+     
       let currentPanel = null; 
       const yourOffer = [];
       const theirOffer = [];
       const modal = document.getElementById('companion-modal');
       const companionGrid = document.getElementById('companion-grid');
 
-      // Populate companion selection modal
+      
       function populateCompanionGrid() {
         companionGrid.innerHTML = '';
         companions.forEach(companion => {
@@ -1872,27 +1872,27 @@
         });
       }
 
-      // Open modal for your offer
+     
       document.getElementById('add-your-companion').addEventListener('click', () => {
         currentPanel = 'yours';
         modal.style.display = 'flex';
       });
 
-      // Open modal for their offer
+      
       document.getElementById('add-their-companion').addEventListener('click', () => {
         currentPanel = 'theirs';
         modal.style.display = 'flex';
       });
 
-      // Close modal
+      
       document.getElementById('close-modal').addEventListener('click', () => {
         modal.style.display = 'none';
       });
 
-      // Calculate trade
+      
       document.getElementById('calculate-trade').addEventListener('click', calculateTrade);
 
-      // Add companion to current offer
+      
       function addCompanionToOffer(companion) {
         if (!currentPanel) return;
         
@@ -1901,7 +1901,7 @@
           ? document.getElementById('your-offer') 
           : document.getElementById('their-offer');
         
-        // Check if companion already exists in offer
+        
         const existingIndex = offer.findIndex(c => c.name === companion.name && c.trait === undefined);
         if (existingIndex >= 0) {
           offer[existingIndex].amount += 1;
@@ -1916,7 +1916,7 @@
         updateOfferDisplay(offer, container);
       }
 
-      // Update the display of companions in an offer
+      
       function updateOfferDisplay(offer, container) {
         container.innerHTML = '';
         
@@ -1924,7 +1924,7 @@
           const companionItem = document.createElement('div');
           companionItem.classList.add('companion-item');
           
-          // Add trait badge if applicable
+          
           let traitBadge = '';
           if (companion.trait === 'gold') {
             traitBadge = '<span class="trait-display gold">GOLD</span>';
@@ -1960,21 +1960,21 @@
             </div>
           `;
           
-          // Update amount when changed
+          
           const amountInput = companionItem.querySelector('.amount-input');
           amountInput.addEventListener('change', (e) => {
             const newAmount = parseInt(e.target.value) || 1;
             offer[index].amount = newAmount;
           });
           
-          // Remove companion
+          
           const removeBtn = companionItem.querySelector('.remove-btn');
           removeBtn.addEventListener('click', () => {
             offer.splice(index, 1);
             updateOfferDisplay(offer, container);
           });
           
-          // Trait selector functionality
+          
           const traitSelector = companionItem.querySelector('.trait-selector');
           const traitOptions = companionItem.querySelector('.trait-options');
           
@@ -1983,7 +1983,7 @@
             traitOptions.style.display = traitOptions.style.display === 'flex' ? 'none' : 'flex';
           });
           
-          // Set trait
+          
           const traitOptionButtons = companionItem.querySelectorAll('.trait-option');
           traitOptionButtons.forEach(button => {
             button.addEventListener('click', (e) => {
@@ -1998,7 +1998,7 @@
             });
           });
           
-          // Close trait selector when clicking elsewhere
+          
           document.addEventListener('click', function closeTraitSelector(e) {
             if (!traitSelector.contains(e.target)) {
               traitOptions.style.display = 'none';
@@ -2009,14 +2009,14 @@
         });
       }
 
-      // Calculate trade values
+      
       function calculateTrade() {
         if (yourOffer.length === 0 || theirOffer.length === 0) {
           alert("Please add companions to both offers");
           return;
         }
 
-        // Calculate total values
+        
         const yourTotal = yourOffer.reduce((sum, c) => {
           let value;
           if (c.trait === 'gold') {
@@ -2043,12 +2043,12 @@
         
         const difference = theirTotal - yourTotal;
 
-        // Update UI with results
+        
         document.getElementById('your-value').textContent = formatNumber(yourTotal);
         document.getElementById('their-value').textContent = formatNumber(theirTotal);
         document.getElementById('difference-value').textContent = formatNumber(Math.abs(difference));
 
-        // Determine trade result
+       
         let resultText = "Fair Trade";
         let resultColor = "#7e22ce";
         
@@ -2066,7 +2066,7 @@
         document.getElementById('trade-result').style.display = 'block';
       }
 
-      // Format numbers for display (K, M, etc.)
+      
       function formatNumber(num) {
         if (num >= 1000000) {
           return (num / 1000000).toFixed(1) + 'M';
@@ -2077,23 +2077,23 @@
         return num.toString();
       }
 
-      // Close modal when clicking outside
+      
       window.addEventListener('click', (e) => {
         if (e.target === modal) {
           modal.style.display = 'none';
         }
       });
 
-      // Populate Values Tab
+      
       function populateValuesTab() {
         const companionsContainer = document.getElementById('companions-values');
         const aurasContainer = document.getElementById('auras-values');
         
-        // Clear containers
+        
         companionsContainer.innerHTML = '';
         aurasContainer.innerHTML = '';
         
-        // Add companions to values tab (only non-aura companions)
+        
         companions.forEach(companion => {
           if (!companion.isAura) {
             const valueItem = document.createElement('div');
@@ -2138,7 +2138,7 @@
           }
         });
         
-        // Add auras to values tab
+       
         auras.forEach(auras => {
           const valueItem = document.createElement('div');
           valueItem.classList.add('value-item');
@@ -2158,20 +2158,20 @@
         });
       }
 
-      // Search functionality for values tab
+     
       function setupSearch() {
         const searchInput = document.getElementById('values-search');
         searchInput.addEventListener('input', () => {
           const searchTerm = searchInput.value.toLowerCase();
           
-          // Filter companions
+          
           const companionItems = document.querySelectorAll('#companions-values .value-item');
           companionItems.forEach(item => {
             const name = item.querySelector('.value-name').textContent.toLowerCase();
             item.style.display = name.includes(searchTerm) ? 'flex' : 'none';
           });
           
-          // Filter auras
+          
           const auraItems = document.querySelectorAll('#auras-values .value-item');
           auraItems.forEach(item => {
             const name = item.querySelector('.value-name').textContent.toLowerCase();
@@ -2180,12 +2180,12 @@
         });
       }
 
-      // Initialize everything
+     
       populateCompanionGrid();
       populateValuesTab();
       setupSearch();
 
-      // Event listeners for calculators
+      
       document.getElementById("calculateBtn").addEventListener("click", calculateGains);
       document.getElementById("calculateCoinsBtn").addEventListener("click", calculateCoins);
       document.getElementById("calculateGoalBtn").addEventListener("click", calculateTimeToGoal);
@@ -2195,7 +2195,7 @@
       document.getElementById("saveGoalProfileBtn").addEventListener("click", saveGoalProfile);
       document.getElementById("loadGoalProfileBtn").addEventListener("click", loadGoalProfile);
       
-      // Enter key support for inputs
+      
       const inputs = [
         "gainPerTick", "time", "companionGain", 
         "goalGainPerTick", "goalCompanionGain", "currentStat", "desiredStat",
