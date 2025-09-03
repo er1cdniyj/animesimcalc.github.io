@@ -869,6 +869,61 @@
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.3);
     }
+        .guides-container {
+      width: 100%;
+      max-width: 1000px;
+    }
+    
+    .guide-category {
+      margin-bottom: 2rem;
+    }
+    
+    .guide-category-title {
+      font-size: 1.8rem;
+      color: var(--primary-glow);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary);
+    }
+    
+    .guide-item {
+      background: rgba(37, 37, 66, 0.5);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(5px);
+    }
+    
+    .guide-item-title {
+      font-size: 1.3rem;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .guide-content {
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+    
+    .guide-tip {
+      background: rgba(135, 206, 235, 0.1);
+      border-left: 4px solid var(--secondary);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+    
+    .guide-warning {
+      background: rgba(239, 68, 68, 0.1);
+      border-left: 4px solid var(--error);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
   </style>
 </head>
 <body>
@@ -907,6 +962,9 @@
       
       <button class="nav-btn" data-tab="values-tab">
         <i class="fas fa-list-alt"></i> Values
+      </button>
+      <button class="nav-btn" data-tab="guides-tab">
+        <i class="fas fa-lightbulb"></i> Guides
       </button>
     </div>
   </div>
@@ -1185,6 +1243,7 @@
       </div>
     </div>
   </div>
+  
 
   
   <div class="modal" id="companion-modal">
@@ -1198,7 +1257,81 @@
       </div>
     </div>
   </div>
-
+<div class="tab-content" id="guides-tab">
+      <div class="calculator-container">
+        <h2 class="calculator-title"><i class="fas fa-lightbulb"></i> Tips & Guides</h2>
+        <p class="calculator-subtitle">Expert strategies to help you master Anime Simulator</p>
+        
+        <div class="guides-container">
+          <div class="guide-category">
+            <h3 class="guide-category-title">Boss Fight Strategies</h3>
+            
+            <div class="guide-item">
+              <h4 class="guide-item-title"><i class="fas fa-skull"></i> How to Beat The Ancient One</h4>
+              <div class="guide-content">
+                <p>The Ancient One is one of the toughest bosses in Anime Simulator. Here's how to defeat it:</p>
+                <ul>
+                  <li>Recommended stats: At least 1e25 strength and 1e24 defense</li>
+                  <li>Use hit-and-run tactics - attack then immediately dodge</li>
+                  <li>Focus on dodging its energy blasts which deal massive damage</li>
+                  <li>When it charges its ultimate attack, hide behind obstacles</li>
+                </ul>
+                <div class="guide-tip">
+                  <strong>Pro Tip:</strong> Use companions with healing abilities to sustain through the fight.
+                </div>
+              </div>
+            </div>
+            
+            <div class="guide-item">
+              <h4 class="guide-item-title"><i class="fas fa-crown"></i> defeating the Shadow King</h4>
+              <div class="guide-content">
+                <p>The Shadow King requires precision and timing:</p>
+                <ul>
+                  <li>Recommended: 5e24 strength and 3e24 defense</li>
+                  <li>Attack during his vulnerability phases after his dark vortex attack</li>
+                  <li>Use light-based abilities for 25% more damage</li>
+                  <li>Keep moving to avoid his shadow traps</li>
+                </ul>
+                <div class="guide-warning">
+                  <strong>Warning:</strong> Don't get caught in his shadow realm or you'll take continuous damage!
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="guide-category">
+            <h3 class="guide-category-title">General Gameplay Tips</h3>
+            
+            <div class="guide-item">
+              <h4 class="guide-item-title"><i class="fas fa-chart-line"></i> Efficient Stat Training</h4>
+              <div class="guide-content">
+                <p>Maximize your training efficiency with these strategies:</p>
+                <ul>
+                  <li>Focus on one stat at a time rather than balancing all</li>
+                  <li>Use training multipliers during events</li>
+                  <li>Upgrade your training area for better gains</li>
+                  <li>Join a faction for training bonuses</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="guide-item">
+              <h4 class="guide-item-title"><i class="fas fa-coins"></i> Coin Farming Strategies</h4>
+              <div class="guide-content">
+                <p>Earn coins faster with these methods:</p>
+                <ul>
+                  <li>Complete daily quests for bonus coins</li>
+                  <li>Farm in areas that match your power level for optimal rewards</li>
+                  <li>Use coin multipliers when available</li>
+                  <li>Participate in events for special coin rewards</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       
