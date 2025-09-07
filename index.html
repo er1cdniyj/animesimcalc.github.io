@@ -1,2366 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anime Simulator Calculators</title>
-  <link rel="icon" type="image/x-icon" href="images/icon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --primary: #7e22ce;
-      --primary-glow: #c084fc;
-      --secondary: #06b6d4;
-      --secondary-glow: #22d3ee;
-      --accent: #f97316;
-      --accent-glow: #fdba74;
-      --bg-dark: #0f0f19;
-      --bg-card: #1a1a2e;
-      --bg-element: #252542;
-      --border: #4c4c78;
-      --text-main: #f0f0f0;
-      --text-secondary: #a1a1aa;
-      --success: #22c55e;
-      --error: #ef4444;
-      --gold: #FFD700;
-      --atomic: #50C878;
-    }
-    
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
-    body {
-      font-family: 'Oxanium', sans-serif;
-      background: linear-gradient(135deg, #0a0a12 0%, #1a1a2e 50%, #16213e 100%);
-      color: var(--text-main);
-      min-height: 100vh;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      overflow-x: hidden;
-    }
-    
-    .bg-anime {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      opacity: 0.15;
-      background: 
-        radial-gradient(circle at 10% 20%, rgba(126, 34, 206, 0.4) 0%, transparent 20%),
-        radial-gradient(circle at 90% 70%, rgba(6, 182, 212, 0.4) 0%, transparent 20%),
-        radial-gradient(circle at 50% 30%, rgba(249, 115, 22, 0.3) 0%, transparent 30%);
-      animation: pulseBackground 15s ease infinite;
-    }
-    
-    @keyframes pulseBackground {
-      0%, 100% { opacity: 0.1; }
-      50% { opacity: 0.2; }
-    }
-    
-    .bg-particles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      overflow: hidden;
-    }
-    
-    .particle {
-      position: absolute;
-      background: var(--primary);
-      border-radius: 50%;
-      opacity: 0.15;
-      animation: float linear infinite;
-    }
-    
-    @keyframes float {
-      to { transform: translateY(-100vh) translateX(20vw); }
-    }
-    
-    .header {
-      width: 100%;
-      max-width: 1200px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-    
-    .logo-container {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-    
-    .logo {
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 0.75rem;
-      box-shadow: 0 0 15px var(--primary-glow);
-    }
-    
-    .logo i {
-      font-size: 1.5rem;
-      color: white;
-    }
-    
-    .title {
-      font-size: 2rem;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 10px rgba(126, 34, 206, 0.3);
-    }
-    
-    .subtitle {
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      text-align: center;
-      max-width: 600px;
-      margin-bottom: 1rem;
-    }
-    
-    .navbar {
-      display: flex;
-      background: var(--bg-card);
-      padding: 0.4rem;
-      border-radius: 0.75rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    
-    .nav-btn {
-      padding: 0.6rem 1.2rem;
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .nav-btn.active {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      box-shadow: 0 0 10px rgba(126, 34, 206, 0.4);
-    }
-    
-    .nav-btn:hover:not(.active) {
-      background: rgba(126, 34, 206, 0.1);
-      color: var(--primary-glow);
-    }
-    
-    .main-container {
-      width: 100%;
-      max-width: 1200px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .calculator-container {
-      background: linear-gradient(to bottom, rgba(26, 26, 46, 0.95), rgba(26, 26, 46, 0.85));
-      backdrop-filter: blur(10px);
-      padding: 1.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      max-width: 800px;
-      margin-bottom: 1rem;
-    }
-    
-    .calculator-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-    }
-    
-    .calculator-title {
-      font-size: 1.3rem;
-      margin-bottom: 0.4rem;
-      color: var(--primary-glow);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    .calculator-subtitle {
-      color: var(--text-secondary);
-      font-size: 0.85rem;
-      margin-bottom: 1.2rem;
-    }
-    
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      margin-bottom: 1.2rem;
-    }
-    
-    @media (min-width: 640px) {
-      .form-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    
-    .form-label {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-    
-    .form-input, .form-select {
-      background: var(--bg-element);
-      border: 1px solid var(--border);
-      border-radius: 0.6rem;
-      padding: 0.6rem 0.8rem;
-      color: var(--text-main);
-      font-size: 0.9rem;
-      font-family: 'Oxanium', sans-serif;
-      transition: all 0.3s ease;
-    }
-    
-    .form-input:focus, .form-select:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.3);
-    }
-    
-    .checkbox-group {
-      display: flex;
-      gap: 0.8rem;
-      margin-bottom: 0.8rem;
-    }
-    
-    .checkbox-label {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      cursor: pointer;
-    }
-    
-    .checkbox-input {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--primary);
-    }
-    
-    .section {
-      background: rgba(37, 37, 66, 0.5);
-      padding: 1rem;
-      border-radius: 0.6rem;
-      margin-bottom: 1.2rem;
-      border: 1px solid rgba(76, 76, 120, 0.3);
-    }
-    
-    .section-title {
-      font-size: 1rem;
-      margin-bottom: 0.8rem;
-      color: var(--secondary);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    
-    .btn {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      font-size: 0.9rem;
-      font-weight: 700;
-      padding: 0.7rem;
-      border: none;
-      border-radius: 0.6rem;
-      cursor: pointer;
-      width: 100%;
-      transition: all 0.3s ease;
-      font-family: 'Oxanium', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-    }
-    
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(6, 182, 212, 0.3);
-    }
-    
-    .btn-secondary {
-      background: var(--bg-element);
-      color: var(--text-main);
-    }
-    
-    .btn-secondary:hover {
-      box-shadow: 0 6px 15px rgba(76, 76, 120, 0.3);
-    }
-    
-    .profile-controls {
-      display: flex;
-      gap: 0.4rem;
-      margin-top: 0.8rem;
-    }
-    
-    .profile-input {
-      flex-grow: 1;
-      background: var(--bg-element);
-      border: 1px solid var(--border);
-      border-radius: 0.6rem;
-      padding: 0.4rem 0.8rem;
-      color: var(--text-main);
-      font-family: 'Oxanium', sans-serif;
-      font-size: 0.85rem;
-    }
-    
-    .profile-btn {
-      background: var(--bg-element);
-      color: var(--text-main);
-      border: 1px solid var(--border);
-      border-radius: 0.6rem;
-      padding: 0.4rem 0.6rem;
-      cursor: pointer;
-      font-size: 0.85rem;
-      transition: all 0.2s;
-      font-family: 'Oxanium', sans-serif;
-    }
-    
-    .profile-btn:hover {
-      background: var(--primary);
-      color: white;
-    }
-    
-    .result {
-      margin-top: 1.5rem;
-      background: rgba(37, 37, 66, 0.7);
-      padding: 1.2rem;
-      border-radius: 0.6rem;
-      border-left: 3px solid var(--primary);
-      font-size: 0.9rem;
-    }
-    
-    .result-item {
-      margin-bottom: 0.6rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .result-label {
-      color: var(--text-secondary);
-    }
-    
-    .result-value {
-      font-weight: 600;
-      color: var(--primary-glow);
-    }
-    
-    .tooltip {
-      position: relative;
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      background: var(--primary);
-      color: var(--bg-dark);
-      border-radius: 50%;
-      text-align: center;
-      font-size: 10px;
-      line-height: 14px;
-      cursor: help;
-    }
-    
-    .tooltip .tooltiptext {
-      visibility: hidden;
-      width: 180px;
-      background-color: var(--bg-element);
-      color: var(--text-main);
-      text-align: center;
-      border-radius: 6px;
-      padding: 6px;
-      position: absolute;
-      z-index: 1;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0;
-      transition: opacity 0.3s;
-      font-size: 0.75rem;
-      border: 1px solid var(--border);
-    }
-    
-    .tooltip:hover .tooltiptext {
-      visibility: visible;
-      opacity: 1;
-    }
-    
-    .tab-content {
-      display: none;
-      width: 100%;
-      align-items: center;
-      flex-direction: column;
-    }
-    
-    .tab-content.active {
-      display: flex;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .calculator-container {
-      animation: fadeIn 0.5s ease-out;
-    }
-    
-    .trade-container {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.2rem;
-    }
-    
-    @media (min-width: 768px) {
-      .trade-container {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    
-    .trade-panel {
-      background: rgba(37, 37, 66, 0.7);
-      padding: 1.2rem;
-      border-radius: 0.6rem;
-      border: 1px solid rgba(76, 76, 120, 0.5);
-      min-height: 250px;
-    }
-    
-    .panel-title {
-      font-size: 1.1rem;
-      margin-bottom: 0.8rem;
-      color: var(--primary-glow);
-      text-align: center;
-    }
-    
-    .add-companion-btn {
-      background: var(--bg-element);
-      border: 2px dashed var(--border);
-      border-radius: 0.6rem;
-      padding: 1.2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s;
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      margin-bottom: 0.8rem;
-    }
-    
-    .add-companion-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-    
-    .add-companion-btn i {
-      font-size: 1.7rem;
-      margin-bottom: 0.4rem;
-    }
-    
-    .selected-companions {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-    
-    .companion-item {
-      background: var(--bg-element);
-      border-radius: 0.4rem;
-      padding: 0.6rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-      font-size: 0.85rem;
-    }
-    
-    .companion-info {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    
-    .companion-image {
-      width: 35px;
-      height: 35px;
-      object-fit: contain;
-      border-radius: 50%;
-      background: var(--bg-dark);
-      padding: 2px;
-    }
-    
-    .companion-name {
-      font-weight: 600;
-    }
-    
-    .companion-amount {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    
-    .amount-input {
-      background: var(--bg-dark);
-      border: 1px solid var(--border);
-      border-radius: 0.4rem;
-      padding: 0.3rem 0.4rem;
-      color: var(--text-main);
-      width: 50px;
-      text-align: center;
-      font-family: 'Oxanium', sans-serif;
-      font-size: 0.8rem;
-    }
-    
-    .remove-btn {
-      background: none;
-      border: none;
-      color: var(--error);
-      cursor: pointer;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-    }
-    
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .modal-content {
-      background: var(--bg-card);
-      border-radius: 0.6rem;
-      width: 90%;
-      max-width: 700px;
-      max-height: 70vh;
-      overflow-y: auto;
-      padding: 1.2rem;
-      border: 1px solid var(--primary);
-      box-shadow: 0 0 25px rgba(126, 34, 206, 0.3);
-    }
-    
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.2rem;
-      position: sticky;
-      top: 0;
-      background: var(--bg-card);
-      padding: 1rem 0;
-      z-index: 10;
-    }
-    
-    .modal-title {
-      font-size: 1.3rem;
-      color: var(--primary);
-    }
-    
-    .close-modal {
-      background: none;
-      border: none;
-      color: var(--text-secondary);
-      font-size: 1.3rem;
-      cursor: pointer;
-    }
-    
-    .companion-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-      gap: 0.8rem;
-    }
-    
-    .companion-option {
-      background: var(--bg-element);
-      border-radius: 0.4rem;
-      padding: 0.6rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: 1px solid transparent;
-    }
-    
-    .companion-option:hover {
-      border-color: var(--primary);
-      transform: translateY(-3px);
-    }
-    
-    .companion-option img {
-      width: 45px;
-      height: 45px;
-      object-fit: contain;
-      margin-bottom: 0.4rem;
-      background: var(--bg-dark);
-      border-radius: 50%;
-      padding: 4px;
-    }
-    
-    .companion-option span {
-      font-size: 0.75rem;
-      text-align: center;
-    }
-    
-    .companion-value {
-      font-size: 0.65rem;
-      color: var(--primary);
-      margin-top: 0.2rem;
-    }
-    
-    .trait-selector {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: var(--bg-element);
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 1;
-      border: 1px solid var(--border);
-      font-size: 0.7rem;
-    }
-    
-    .trait-options {
-      position: absolute;
-      top: 25px;
-      right: 0;
-      background: var(--bg-element);
-      border-radius: 0.4rem;
-      padding: 0.4rem;
-      display: none;
-      flex-direction: column;
-      gap: 0.4rem;
-      z-index: 2;
-      border: 1px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    }
-    
-    .trait-option {
-      padding: 0.2rem 0.4rem;
-      border-radius: 0.2rem;
-      cursor: pointer;
-      font-size: 0.7rem;
-      white-space: nowrap;
-    }
-    
-    .trait-option:hover {
-      background: var(--bg-dark);
-    }
-    
-    .trait-option.normal {
-      color: var(--text-main);
-    }
-    
-    .trait-option.gold {
-      color: var(--gold);
-    }
-    
-    .trait-option.atomic {
-      color: var(--atomic);
-    }
-    
-    .trait-indicator {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 0.2rem;
-    }
-    
-    .trait-indicator.normal {
-      background: var(--text-secondary);
-    }
-    
-    .trait-indicator.gold {
-      background: var(--gold);
-    }
-    
-    .trait-indicator.atomic {
-      background: var(--atomic);
-    }
-    
-    .trait-display {
-      position: absolute;
-      top: -6px;
-      left: -6px;
-      font-size: 0.6rem;
-      padding: 0.1rem 0.25rem;
-      border-radius: 0.2rem;
-      font-weight: bold;
-    }
-    
-    .trait-display.gold {
-      background: var(--gold);
-      color: #000;
-    }
-    
-    .trait-display.atomic {
-      background: var(--atomic);
-      color: #000;
-    }
-    
-    
-    .values-container {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      width: 100%;
-    }
-    
-    .values-section {
-      background: rgba(37, 37, 66, 0.7);
-      padding: 1.2rem;
-      border-radius: 0.6rem;
-      border: 1px solid rgba(76, 76, 120, 0.5);
-    }
-    
-    .values-section-title {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-      color: var(--primary-glow);
-      text-align: center;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border);
-    }
-    
-    .values-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 1rem;
-    }
-    
-    .value-item {
-      background: var(--bg-element);
-      border-radius: 0.6rem;
-      padding: 0.8rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: all 0.2s;
-      border: 1px solid transparent;
-    }
-    
-    .value-item:hover {
-      border-color: var(--primary);
-      transform: translateY(-3px);
-    }
-    
-    .value-image {
-      width: 70px;
-      height: 70px;
-      object-fit: contain;
-      margin-bottom: 0.6rem;
-      background: var(--bg-dark);
-      border-radius: 50%;
-      padding: 6px;
-    }
-    
-    .value-name {
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-    
-    .value-details {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-      width: 100%;
-    }
-    
-    .value-detail {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-    }
-    
-    .value-label {
-      color: var(--text-secondary);
-    }
-    
-    .value-amount {
-      font-weight: 600;
-      color: var(--primary-glow);
-    }
-    
-    .gold-value {
-      color: var(--gold);
-    }
-    
-    .atomic-value {
-      color: var(--atomic);
-    }
-    
-    .search-box {
-      margin-bottom: 1rem;
-      width: 100%;
-    }
-    
-    .search-input {
-      width: 100%;
-      padding: 0.6rem 1rem;
-      border-radius: 0.6rem;
-      background: var(--bg-element);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      font-family: 'Oxanium', sans-serif;
-    }
-    
-    .search-input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.3);
-    }
-        .guides-container {
-      width: 100%;
-      max-width: 1000px;
-    }
-    
-    .guide-category {
-      margin-bottom: 2rem;
-    }
-    
-    .guide-category-title {
-      font-size: 1.8rem;
-      color: var(--primary-glow);
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--primary);
-    }
-    
-    .guide-item {
-      background: rgba(37, 37, 66, 0.5);
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      border: 1px solid var(--border);
-      backdrop-filter: blur(5px);
-    }
-    
-    .guide-item-title {
-      font-size: 1.3rem;
-      color: var(--secondary);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    .guide-content {
-      color: var(--text-main);
-      line-height: 1.6;
-    }
-    
-    .guide-tip {
-      background: rgba(135, 206, 235, 0.1);
-      border-left: 4px solid var(--secondary);
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 0 0.5rem 0.5rem 0;
-    }
-    
-    .guide-warning {
-      background: rgba(239, 68, 68, 0.1);
-      border-left: 4px solid var(--error);
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 0 0.5rem 0.5rem 0;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Anime Simulator Calculators</title>
+
+    <link rel="icon" type="image/x-icon" href="images/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="src/styles.css">
 </head>
 <body>
-  
-  <div class="bg-anime"></div>
-  <div class="bg-particles" id="particles"></div>
+<div class="bg-anime"></div>
+<div class="bg-particles" id="particles"></div>
 
-  <div class="header">
+<div class="header">
     <div class="logo-container">
-      <div class="logo">
-        <i class="fas fa-calculator"></i>
-      </div>
-      <h1 class="title">Anime Simulator Calculators</h1>
-       
+        <div class="logo"><i class="fas fa-calculator"></i></div>
+        <h1 class="title">Anime Simulator Calculators</h1>
     </div>
-    <p class="subtitle">Powerful calculators for your anime gaming needs</p>
-     <p class="subtitle">Made by babatunde2289</p>
-    <p class="calculator-subtitle" style="color: var(--gold); margin-top: 0.5rem;">
-          <i class="fas fa-exclamation-triangle"></i> Community Discord Server: https://discord.gg/Xjw2Yd5WYn 
-        </p>
-    
-    
+
+    <p class="subtitle">Calculators for Anime Simulator</p>
+    <p class="subtitle">Made by babatunde2289</p>
+
+    <p class="calculator-subtitle gold-warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        Community Discord Server: https://discord.gg/Xjw2Yd5WYn
+    </p>
+
     <div class="navbar">
-      <button class="nav-btn active" data-tab="stats-calc">
-        <i class="fas fa-chart-line"></i> Stats
-      </button>
-      <button class="nav-btn" data-tab="coin-calc">
-        <i class="fas fa-coins"></i> Coin
-      </button>
-      <button class="nav-btn" data-tab="goal-calc">
-        <i class="fas fa-bullseye"></i> Goal
-      </button>
-      <button class="nav-btn" data-tab="trade-calc">
-        <i class="fas fa-exchange-alt"></i> Trading
-      </button>
-      
-      <button class="nav-btn" data-tab="values-tab">
-        <i class="fas fa-list-alt"></i> Values
-      </button>
-      <button class="nav-btn" data-tab="guides-tab">
-        <i class="fas fa-lightbulb"></i> Guides
-      </button>
+        <button class="nav-btn active" data-tab="stats-calc"><i class="fas fa-chart-line"></i> Stats</button>
+        <button class="nav-btn" data-tab="coin-calc"><i class="fas fa-coins"></i> Coin</button>
+        <button class="nav-btn" data-tab="goal-calc"><i class="fas fa-bullseye"></i> Goal</button>
+        <button class="nav-btn" data-tab="trade-calc"><i class="fas fa-exchange-alt"></i> Trading</button>
+        <button class="nav-btn" data-tab="values-tab"><i class="fas fa-list-alt"></i> Values</button>
+        <button class="nav-btn" data-tab="guides-tab"><i class="fas fa-lightbulb"></i> Guides</button>
     </div>
-  </div>
+</div>
 
-  <div class="main-container">
-    
+<div class="main-container">
+
+    <!-- Stats tab -->
     <div class="tab-content active" id="stats-calc">
-      <div class="calculator-container">
-        <h2 class="calculator-title"><i class="fas fa-chart-line"></i> Stats Gain Calculator</h2>
-        <p class="calculator-subtitle">Calculate your training gains</p>
+        <div class="calculator-container">
+            <h2 class="calculator-title"><i class="fas fa-chart-line"></i> Stats Gain Calculator</h2>
+            <p class="calculator-subtitle">Calculate your training gains</p>
 
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="statType" class="form-label">Training Type
-              <div class="tooltip">?<span class="tooltiptext">Select the stat you're training (Strength, Energy, Defense, or Sword)</span></div>
-            </label>
-            <select id="statType" class="form-select">
-              <option value="strength">Strength</option>
-              <option value="energy">Energy</option>
-              <option value="defense">Defense</option>
-              <option value="sword">Sword</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="gainPerTick" class="form-label">Gain Per Tick
-              <div class="tooltip">?<span class="tooltiptext">Amount gained each training tick (e.g. 1.5sx or 1e21)</span></div>
-            </label>
-            <input type="text" id="gainPerTick" class="form-input" placeholder="e.g. 1.5sx or 1e21" required>
-          </div>
-          <div class="form-group">
-            <label for="time" class="form-label">Time (minutes)
-              <div class="tooltip">?<span class="tooltiptext">Duration of your training session in minutes</span></div>
-            </label>
-            <input type="number" id="time" class="form-input" placeholder="e.g. 60" required>
-          </div>
-        </div>
-
-        <div class="section">
-          <h3 class="section-title"><i class="fas fa-robot"></i> Companion Settings</h3>
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="companionActive" class="form-label">Companion Active
-                <div class="tooltip">?<span class="tooltiptext">Toggle if you have an active companion</span></div>
-              </label>
-              <select id="companionActive" class="form-select">
-                <option value="false">No</option>
-                <option value="true">Yes</option>
-              </select>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="statType" class="form-label">Training Type
+                        <div class="tooltip">?<span class="tooltiptext">Select the stat you're training (Strength, Energy, Defense, or Sword)</span></div>
+                    </label>
+                    <select id="statType" class="form-select">
+                        <option value="strength">Strength</option>
+                        <option value="energy">Energy</option>
+                        <option value="defense">Defense</option>
+                        <option value="sword">Sword</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="gainPerTick" class="form-label">Gain Per Tick
+                        <div class="tooltip">?<span class="tooltiptext">Amount gained each training tick (e.g. 1.5sx or 1e21)</span></div>
+                    </label>
+                    <input type="text" id="gainPerTick" class="form-input" placeholder="e.g. 1.5sx or 1e21" required>
+                </div>
+                <div class="form-group">
+                    <label for="time" class="form-label">Time (minutes)
+                        <div class="tooltip">?<span class="tooltiptext">Duration of your training session in minutes</span></div>
+                    </label>
+                    <input type="number" id="time" class="form-input" placeholder="e.g. 60" required>
+                </div>
             </div>
-            <div class="form-group">
-              <label for="companionGain" class="form-label">Companion Gain Per Tick
-                <div class="tooltip">?<span class="tooltiptext">Amount your companion gives per tick (e.g. 1.5qd or 1e15)</span></div>
-              </label>
-              <input type="text" id="companionGain" class="form-input" placeholder="e.g. 1.5qd or 1e15">
+
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-robot"></i> Companion Settings</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="companionActive" class="form-label">Companion Active
+                            <div class="tooltip">?<span class="tooltiptext">Toggle if you have an active companion</span></div>
+                        </label>
+                        <select id="companionActive" class="form-select">
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="companionGain" class="form-label">Companion Gain Per Tick
+                            <div class="tooltip">?<span class="tooltiptext">Amount your companion gives per tick (e.g. 1.5qd or 1e15)</span></div>
+                        </label>
+                        <input type="text" id="companionGain" class="form-input" placeholder="e.g. 1.5qd or 1e15">
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div class="profile-controls">
-          <input type="text" id="profileName" class="profile-input" placeholder="Profile name">
-          <button class="profile-btn" id="saveProfileBtn"><i class="fas fa-save"></i> Save</button>
-          <button class="profile-btn" id="loadProfileBtn"><i class="fas fa-folder-open"></i> Load</button>
-        </div>
+            <div class="profile-controls">
+                <input type="text" id="profileName" class="profile-input" placeholder="Profile name">
+                <button class="profile-btn" id="saveProfileBtn"><i class="fas fa-save"></i> Save</button>
+                <button class="profile-btn" id="loadProfileBtn"><i class="fas fa-folder-open"></i> Load</button>
+            </div>
 
-        <button class="btn" id="calculateBtn"><i class="fas fa-calculator"></i> Calculate Gains</button>
-        
-        <div class="result" id="result"></div>
-      </div>
+            <button class="btn" id="calculateBtn"><i class="fas fa-calculator"></i> Calculate Gains</button>
+            <div class="result" id="result"></div>
+        </div>
     </div>
 
-    
+    <!-- Coin tab -->
     <div class="tab-content" id="coin-calc">
-      <div class="calculator-container">
-        <h2 class="calculator-title"><i class="fas fa-coins"></i> Coin Calculator</h2>
-        <p class="calculator-subtitle">Calculate your coin earnings based on rank and bonuses</p>
+        <div class="calculator-container">
+            <h2 class="calculator-title"><i class="fas fa-coins"></i> Coin Calculator</h2>
+            <p class="calculator-subtitle">Calculate your coin earnings based on rank and bonuses</p>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="rankSelect" class="form-label">Select Rank</label>
+                    <select id="rankSelect" class="form-select">
+                        <option value="0">Rookie</option>
+                        <option value="1">Ninja</option>
+                        <option value="2">Pirate</option>
+                        <option value="3">Ghoul</option>
+                        <option value="4">Hero</option>
+                        <option value="5">Reaper</option>
+                        <option value="6">Warrior</option>
+                        <option value="7">Sin</option>
+                        <option value="8">Mage</option>
+                        <option value="9">Demon</option>
+                        <option value="10">Emperor</option>
+                        <option value="11">Elder</option>
+                        <option value="12">Overlord</option>
+                        <option value="13">Leader</option>
+                        <option value="14">Deity</option>
+                        <option value="15">Sage</option>
+                        <option value="16">Mask</option>
+                        <option value="17">Shinigami</option>
+                        <option value="18">Hashira</option>
+                        <option value="19">Destroyer</option>
+                        <option value="20">Otsutsuki</option>
+                        <option value="21">Pirate King</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="coinTimeInput" class="form-label">Time (minutes)
+                        <div class="tooltip">?<span class="tooltiptext">Duration of coin earning in minutes</span></div>
+                    </label>
+                    <input type="number" id="coinTimeInput" class="form-input" placeholder="e.g. 60" required>
+                </div>
+            </div>
 
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="rankSelect" class="form-label">Select Rank</label>
-            <select id="rankSelect" class="form-select">
-              <option value="0">Rookie</option>
-              <option value="1">Ninja</option>
-              <option value="2">Pirate</option>
-              <option value="3">Ghoul</option>
-              <option value="4">Hero</option>
-              <option value="5">Reaper</option>
-              <option value="6">Warrior</option>
-              <option value="7">Sin</option>
-              <option value="8">Mage</option>
-              <option value="9">Demon</option>
-              <option value="10">Emperor</option>
-              <option value="11">Elder</option>
-              <option value="12">Overlord</option>
-              <option value="13">Leader</option>
-              <option value="14">Deity</option>
-              <option value="15">Sage</option>
-              <option value="16">Mask</option>
-              <option value="17">Shinigami</option>
-              <option value="18">Hashira</option>
-              <option value="19">Destroyer</option>
-              <option value="20">Otsutsuki</option>
-              <option value="21">Pirate King</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="coinTimeInput" class="form-label">Time (minutes)
-              <div class="tooltip">?<span class="tooltiptext">Duration of coin earning in minutes</span></div>
-            </label>
-            <input type="number" id="coinTimeInput" class="form-input" placeholder="e.g. 60" required>
-          </div>
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-gem"></i> Bonuses</h3>
+                <div class="checkbox-group">
+                    <label class="checkbox-label"><input type="checkbox" id="doubleCoins" class="checkbox-input"> 2x Coins Gamepass</label>
+                    <label class="checkbox-label"><input type="checkbox" id="goldCompanion" class="checkbox-input"> Gold Companion (+20%)</label>
+                </div>
+            </div>
+
+            <button class="btn" id="calculateCoinsBtn"><i class="fas fa-coins"></i> Calculate Earnings</button>
+            <div class="result" id="coinResult"></div>
         </div>
-
-        <div class="section">
-          <h3 class="section-title"><i class="fas fa-gem"></i> Bonuses</h3>
-          <div class="checkbox-group">
-            <label class="checkbox-label">
-              <input type="checkbox" id="doubleCoins" class="checkbox-input">
-              2x Coins Gamepass
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" id="goldCompanion" class="checkbox-input">
-              Gold Companion (+20%)
-            </label>
-          </div>
-        </div>
-
-        <button class="btn" id="calculateCoinsBtn"><i class="fas fa-coins"></i> Calculate Earnings</button>
-        
-        <div class="result" id="coinResult"></div>
-      </div>
     </div>
 
-    
+    <!-- Goal tab -->
     <div class="tab-content" id="goal-calc">
-      <div class="calculator-container">
-        <h2 class="calculator-title"><i class="fas fa-bullseye"></i> Goal Calculator</h2>
-        <p class="calculator-subtitle">Calculate time to reach your target</p>
+        <div class="calculator-container">
+            <h2 class="calculator-title"><i class="fas fa-bullseye"></i> Goal Calculator</h2>
+            <p class="calculator-subtitle">Calculate time to reach your target</p>
 
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="goalStatType" class="form-label">Training Type
-              <div class="tooltip">?<span class="tooltiptext">Select the stat you're training (Strength, Energy, Defense, or Sword)</span></div>
-            </label>
-            <select id="goalStatType" class="form-select">
-              <option value="strength">Strength</option>
-              <option value="energy">Energy</option>
-              <option value="defense">Defense</option>
-              <option value="sword">Sword</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="goalGainPerTick" class="form-label">Your Gain Per Tick
-              <div class="tooltip">?<span class="tooltiptext">Amount you gain each training tick (e.g. 1.5sx or 1e21)</span></div>
-            </label>
-            <input type="text" id="goalGainPerTick" class="form-input" placeholder="e.g. 1.5sx or 1e21">
-          </div>
-          <div class="form-group">
-            <label for="goalCompanionGain" class="form-label">Companion Gain Per Tick
-              <div class="tooltip">?<span class="tooltiptext">Amount your companion gives per tick (e.g. 1.5qd or 1e15)</span></div>
-            </label>
-            <input type="text" id="goalCompanionGain" class="form-input" placeholder="e.g. 1.5qd or 1e15">
-          </div>
-          <div class="form-group">
-            <label for="currentStat" class="form-label">Current Stat Value
-              <div class="tooltip">?<span class="tooltiptext">Your current stat value (e.g. 1.5sx or 1e21)</span></div>
-            </label>
-            <input type="text" id="currentStat" class="form-input" placeholder="e.g. 1.5sx or 1e21">
-          </div>
-          <div class="form-group">
-            <label for="desiredStat" class="form-label">Desired Stat Value
-              <div class="tooltip">?<span class="tooltiptext">Your target stat value (e.g. 2.5sx or 2.5e21)</span></div>
-            </label>
-            <input type="text" id="desiredStat" class="form-input" placeholder="e.g. 2.5sx or 2.5e21">
-          </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="goalStatType" class="form-label">Training Type
+                        <div class="tooltip">?<span class="tooltiptext">Select the stat you're training (Strength, Energy, Defense, or Sword)</span></div>
+                    </label>
+                    <select id="goalStatType" class="form-select">
+                        <option value="strength">Strength</option>
+                        <option value="energy">Energy</option>
+                        <option value="defense">Defense</option>
+                        <option value="sword">Sword</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="goalGainPerTick" class="form-label">Your Gain Per Tick
+                        <div class="tooltip">?<span class="tooltiptext">Amount you gain each training tick (e.g. 1.5sx or 1e21)</span></div>
+                    </label>
+                    <input type="text" id="goalGainPerTick" class="form-input" placeholder="e.g. 1.5sx or 1e21">
+                </div>
+                <div class="form-group">
+                    <label for="goalCompanionGain" class="form-label">Companion Gain Per Tick
+                        <div class="tooltip">?<span class="tooltiptext">Amount your companion gives per tick (e.g. 1.5qd or 1e15)</span></div>
+                    </label>
+                    <input type="text" id="goalCompanionGain" class="form-input" placeholder="e.g. 1.5qd or 1e15">
+                </div>
+                <div class="form-group">
+                    <label for="currentStat" class="form-label">Current Stat Value
+                        <div class="tooltip">?<span class="tooltiptext">Your current stat value (e.g. 1.5sx or 1e21)</span></div>
+                    </label>
+                    <input type="text" id="currentStat" class="form-input" placeholder="e.g. 1.5sx or 1e21">
+                </div>
+                <div class="form-group">
+                    <label for="desiredStat" class="form-label">Desired Stat Value
+                        <div class="tooltip">?<span class="tooltiptext">Your target stat value (e.g. 2.5sx or 2.5e21)</span></div>
+                    </label>
+                    <input type="text" id="desiredStat" class="form-input" placeholder="e.g. 2.5sx or 2.5e21">
+                </div>
+            </div>
+
+            <div class="profile-controls">
+                <input type="text" id="goalProfileName" class="profile-input" placeholder="Profile name">
+                <button class="profile-btn" id="saveGoalProfileBtn"><i class="fas fa-save"></i> Save</button>
+                <button class="profile-btn" id="loadGoalProfileBtn"><i class="fas fa-folder-open"></i> Load</button>
+            </div>
+
+            <button class="btn" id="calculateGoalBtn"><i class="fas fa-bullseye"></i> Calculate Time Needed</button>
+            <div class="result" id="goalResult"></div>
         </div>
-
-        <div class="profile-controls">
-          <input type="text" id="goalProfileName" class="profile-input" placeholder="Profile name">
-          <button class="profile-btn" id="saveGoalProfileBtn"><i class="fas fa-save"></i> Save</button>
-          <button class="profile-btn" id="loadGoalProfileBtn"><i class="fas fa-folder-open"></i> Load</button>
-        </div>
-
-        <button class="btn" id="calculateGoalBtn"><i class="fas fa-bullseye"></i> Calculate Time Needed</button>
-        
-        <div class="result" id="goalResult"></div>
-      </div>
     </div>
 
-    
+    <!-- Trade tab -->
     <div class="tab-content" id="trade-calc">
-      <div class="calculator-container">
-        <h2 class="calculator-title"><i class="fas fa-exchange-alt"></i> Companion Trading Calculator</h2>
-        <p class="calculator-subtitle">Calculate the value of your companion trades</p>
-        <b> <p class="calculator-subtitle">Special thanks to Harry, BruceWaynie, War, Svfe09 and Fantom for their help with values!  </p></b>
-        <b> <p class="calculator-subtitle">Trading is at your own risk! Do not DM devs or Testers help for scams</p></b>
+        <div class="calculator-container">
+            <h2 class="calculator-title"><i class="fas fa-exchange-alt"></i> Companion Trading Calculator</h2>
+            <p class="calculator-subtitle">Calculate the value of your companion trades</p>
+            <b><p class="calculator-subtitle">Special thanks to Harry, BruceWaynie, War, Svfe09 and Fantom for their help with values!</p></b>
+            <b><p class="calculator-subtitle">Trading is at your own risk! Do not DM devs or Testers help for scams</p></b>
 
-        <div class="trade-container">
-          
-          <div class="trade-panel">
-            <h2 class="panel-title">Your Offer</h2>
-            <div class="add-companion-btn" id="add-your-companion">
-              <i class="fas fa-plus-circle"></i>
-              <span>Add Companion</span>
+            <div class="trade-container">
+                <div class="trade-panel">
+                    <h2 class="panel-title">Your Offer</h2>
+                    <div class="add-companion-btn" id="add-your-companion"><i class="fas fa-plus-circle"></i><span>Add Companion</span></div>
+                    <div class="selected-companions" id="your-offer"></div>
+                </div>
+
+                <div class="trade-panel">
+                    <h2 class="panel-title">Their Offer</h2>
+                    <div class="add-companion-btn" id="add-their-companion"><i class="fas fa-plus-circle"></i><span>Add Companion</span></div>
+                    <div class="selected-companions" id="their-offer"></div>
+                </div>
             </div>
-            <div class="selected-companions" id="your-offer"></div>
-          </div>
 
-         
-          <div class="trade-panel">
-            <h2 class="panel-title">Their Offer</h2>
-            <div class="add-companion-btn" id="add-their-companion">
-              <i class="fas fa-plus-circle"></i>
-              <span>Add Companion</span>
+            <button class="btn" id="calculate-trade"><i class="fas fa-calculator"></i> Calculate Trade</button>
+
+            <div class="result" id="trade-result">
+                <div class="result-item"><span>Your Offer Value:</span><span class="result-value" id="your-value">0</span></div>
+                <div class="result-item"><span>Their Offer Value:</span><span class="result-value" id="their-value">0</span></div>
+                <div class="result-item result-divider">
+                    <span class="result-label-strong">Trade Result:</span>
+                    <span class="result-value-strong" id="trade-result-text">Fair Trade</span>
+                </div>
+                <div class="result-item"><span>Difference:</span><span class="result-value" id="difference-value">0</span></div>
             </div>
-            <div class="selected-companions" id="their-offer"></div>
-          </div>
         </div>
-
-        <button class="btn" id="calculate-trade"><i class="fas fa-calculator"></i> Calculate Trade</button>
-        
-        <div class="result" id="trade-result">
-          <div class="result-item">
-            <span>Your Offer Value:</span>
-            <span class="result-value" id="your-value">0</span>
-          </div>
-          <div class="result-item">
-            <span>Their Offer Value:</span>
-            <span class="result-value" id="their-value">0</span>
-          </div>
-          <div class="result-item" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
-            <span style="font-weight: 700;">Trade Result:</span>
-            <span class="result-value" style="font-weight: 700;" id="trade-result-text">Fair Trade</span>
-          </div>
-          <div class="result-item">
-            <span>Difference:</span>
-            <span class="result-value" id="difference-value">0</span>
-          </div>
-        </div>
-      </div>
     </div>
 
-    
+    <!-- Values tab -->
     <div class="tab-content" id="values-tab">
-      <div class="calculator-container">
-        <h2 class="calculator-title"><i class="fas fa-list-alt"></i> Companion & Aura Values</h2>
-        <p class="calculator-subtitle">Reference values for trading companions and auras</p>
-        <p class="calculator-subtitle" style="color: var(--gold); margin-top: 0.5rem;">
-          <i class="fas fa-exclamation-triangle"></i> Values are approximate and may change over time
-        </p>
+        <div class="calculator-container">
+            <h2 class="calculator-title"><i class="fas fa-list-alt"></i> Companion & Aura Values</h2>
+            <p class="calculator-subtitle">Reference values for trading companions and auras</p>
+            <p class="calculator-subtitle gold-warning"><i class="fas fa-exclamation-triangle"></i> Values are approximate and may change over time</p>
 
-        <div class="search-box">
-          <input type="text" id="values-search" class="search-input" placeholder="Search companions and auras...">
-        </div>
-
-        <div class="values-container">
-          
-          <div class="values-section">
-            <h3 class="values-section-title">
-              <i class="fas fa-robot"></i> Companions
-            </h3>
-            <div class="values-grid" id="companions-values">
-             
+            <div class="search-box">
+                <input type="text" id="values-search" class="search-input" placeholder="Search companions and auras...">
             </div>
-          </div>
 
-          
-          <div class="values-section">
-            <h3 class="values-section-title">
-              <i class="fas fa-certificate"></i> Auras
-            </h3>
-            <div class="values-grid" id="auras-values">
-              
+            <div class="values-container">
+                <div class="values-section">
+                    <h3 class="values-section-title"><i class="fas fa-robot"></i> Companions</h3>
+                    <div class="values-grid" id="companions-values"></div>
+                </div>
+                <div class="values-section">
+                    <h3 class="values-section-title"><i class="fas fa-certificate"></i> Auras</h3>
+                    <div class="values-grid" id="auras-values"></div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-  
+</div>
 
-  
-  <div class="modal" id="companion-modal">
+<!-- Modal -->
+<div class="modal" id="companion-modal">
     <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title">Select Companion</h2>
-        <button class="close-modal" id="close-modal">&times;</button>
-      </div>
-      <div class="companion-grid" id="companion-grid">
-        
-      </div>
+        <div class="modal-header">
+            <h2 class="modal-title">Select Companion</h2>
+            <button class="close-modal" id="close-modal">&times;</button>
+        </div>
+        <div class="companion-grid" id="companion-grid"></div>
     </div>
-  </div>
+</div>
+
+<!-- Guides tab -->
 <div class="tab-content" id="guides-tab">
-      <div class="calculator-container">
+    <div class="calculator-container">
         <h2 class="calculator-title"><i class="fas fa-lightbulb"></i> Tips & Guides</h2>
         <p class="calculator-subtitle">Expert strategies to help you master Anime Simulator</p>
-        <p> TIP: Suscribe to SomnoKen for Great Guides </p>
-            <p> LINK : https://www.youtube.com/@SomnoKent </p>
-        
+        <p>TIP: Subscribe to SomnoKen for Great Guides</p>
+        <p>LINK : https://www.youtube.com/@SomnoKent</p>
+        <a href="https://animesimulator.fandom.com/wiki/Anime_Simulator_Wiki"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="wiki-link">
+            Check out the official Wiki for more information
+        </a>
         <div class="guides-container">
-          <div class="guide-category">
-            <h3 class="guide-category-title">Boss Fight Strategies</h3>
-            
-            
-            <div class="guide-item">
-              <h4 class="guide-item-title"><i class="fas fa-skull"></i> How to Beat ANY boss</h4>
-              <div class="guide-content">
-                <p>Bosses in Anime Simulator are tough, especially for low levels. Here's how to defeat them:</p>
-                
-                <ul>
-                  <li>Tailed Form + Gold Digger (before entering the boss)</li>
-                  <li>Tsunami (7 seconds before boss)</li>
-                  <li>Meteorite Destruction (3 seconds before boss)</li>
-                  <li>Gold Digger **C Move** (when boss spawns)</li>
-                  <li>Double jump</li>
-                  <li>Extinction Rain (hold) + Divine Blessing + Multi-Bomb Shuriken + other random powers</li>
-                </ul>
-                <div class="guide-tip">
-                  <strong>Pro Tip:</strong> A good companion to use is **Freeah**, as it provides healing and is effective against bosses..
+            <div class="guide-category">
+                <h3 class="guide-category-title">Boss Fight Strategies</h3>
+
+                <div class="guide-item">
+                    <h4 class="guide-item-title"><i class="fas fa-skull"></i> How to Beat ANY boss</h4>
+                    <div class="guide-content">
+                        <p>Bosses in Anime Simulator are tough, especially for low levels. Here's how to defeat them:</p>
+                        <ul>
+                            <li>Tailed Form + Gold Digger (before entering the boss)</li>
+                            <li>Tsunami (7 seconds before boss)</li>
+                            <li>Meteorite Destruction (3 seconds before boss)</li>
+                            <li>Gold Digger <strong>C Move</strong> (when boss spawns)</li>
+                            <li>Double jump</li>
+                            <li>Extinction Rain (hold) + Divine Blessing + Multi-Bomb Shuriken + other random powers</li>
+                        </ul>
+                        <div class="guide-tip"><strong>Pro Tip:</strong> A good companion to use is <strong>Freeah</strong>, as it provides healing and is effective against bosses.</div>
+                    </div>
                 </div>
-              </div>
-            </div>
-            
-            <div class="guide-item">
-              <h4 class="guide-item-title"><i class="fas fa-crown"></i> Beatin Dungeons</h4>
-              <div class="guide-content">
-                <p>Dungeons are similar to bosses:</p>
-                <ul>
-                  <li>For dungeons, you can use mostly the same moves as for bosses.
 
-                      Another meta transformation to consider is **Sound Breathing:**   </li>
-
-                     <li>Deals good damage  </li>
-                    <li>Has low cooldowns </li>
-                     <li>Some players still prefer **Gold Digger**. </li>
-
-                      <li>As long as you have the moves listed in the boss category, you are all set to grind dungeons efficiently.
-
-                      Have a good Companion and use Shadows.  </li>
-                </ul>
-              </div>
-          </div>
-          
-          <div class="guide-category">
-            <h3 class="guide-category-title">General Gameplay Tips</h3>
-            
-            <div class="guide-item">
-              <h4 class="guide-item-title"><i class="fas fa-chart-line"></i> Efficient Stat Training</h4>
-              <div class="guide-content">
-                <p>Maximize your training efficiency with these strategies:</p>
-                <ul>
-                  <li>Focus on one stat at a time rather than balancing all</li>
-                  <li>Upgrade your multiplier for better gains</li>
-                </ul>
-              </div>
-            </div>
-            
-            <div class="guide-item">
-              <h4 class="guide-item-title"><i class="fas fa-coins"></i> Coin Farming Strategies</h4>
-              <div class="guide-content">
-                <p>Earn coins faster with these methods:</p>
-                <ul>
-                  <li>Complete daily quests for bonus coins</li>
-                  <li>Farm in areas that match your power level for optimal rewards</li>
-                  <li>Use coin multipliers when available</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      
-      function createParticles() {
-        const particlesContainer = document.getElementById('particles');
-        const particleCount = Math.floor(window.innerWidth / 15);
-        
-        for (let i = 0; i < particleCount; i++) {
-          const particle = document.createElement('div');
-          particle.classList.add('particle');
-          
-          const size = Math.random() * 4 + 1;
-          const posX = Math.random() * window.innerWidth;
-          const posY = Math.random() * window.innerHeight;
-          const duration = Math.random() * 30 + 20;
-          const delay = Math.random() * 5;
-          
-          particle.style.width = `${size}px`;
-          particle.style.height = `${size}px`;
-          particle.style.left = `${posX}px`;
-          particle.style.top = `${posY}px`;
-          particle.style.animationDuration = `${duration}s`;
-          particle.style.animationDelay = `${delay}s`;
-          
-          const colors = ['var(--primary)', 'var(--secondary)', 'var(--accent)'];
-          particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-          
-          particlesContainer.appendChild(particle);
-        }
-      }
-      
-      createParticles();
-
-      
-      const tabButtons = document.querySelectorAll('.nav-btn');
-      const tabContents = document.querySelectorAll('.tab-content');
-      
-      tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          const tabId = button.getAttribute('data-tab');
-          
-          
-          tabButtons.forEach(btn => btn.classList.remove('active'));
-          button.classList.add('active');
-          
-          
-          tabContents.forEach(content => content.classList.remove('active'));
-          document.getElementById(tabId).classList.add('active');
-        });
-      });
-
-     
-      const ticksPerMinute = {
-        strength: 55,
-        energy: 28,
-        defense: 36,
-        sword: 55
-      };
-      const companionTicksPerMinute = 10;
-
-      
-      const ranks = [
-        { name: "Rookie", coinPerMinute: 5 },
-        { name: "Ninja", coinPerMinute: 10 },
-        { name: "Pirate", coinPerMinute: 25 },
-        { name: "Ghoul", coinPerMinute: 50 },
-        { name: "Hero", coinPerMinute: 100 },
-        { name: "Reaper", coinPerMinute: 250 },
-        { name: "Warrior", coinPerMinute: 500 },
-        { name: "Sin", coinPerMinute: 1000 },
-        { name: "Mage", coinPerMinute: 5000 },
-        { name: "Demon", coinPerMinute: 10000 },
-        { name: "Emperor", coinPerMinute: 50000 },
-        { name: "Elder", coinPerMinute: 100000 },
-        { name: "Overlord", coinPerMinute: 500000 },
-        { name: "Leader", coinPerMinute: 1000000 },
-        { name: "Deity", coinPerMinute: 5000000 },
-        { name: "Sage", coinPerMinute: 10000000 },
-        { name: "Mask", coinPerMinute: 50000000 },
-        { name: "Shinigami", coinPerMinute: 100000000 },
-        { name: "Hashira", coinPerMinute: 500000000 },
-        { name: "Destroyer", coinPerMinute: 1000000000 },
-        { name: "Otsutsuki", coinPerMinute: 5000000000 },
-        { name: "Pirate King", coinPerMinute: 10000000000 }
-      ];
-
-      
-      function parseNumberWithSuffix(input) {
-        if (!input) return NaN;
-        if (/^[0-9.]+e[0-9]+$/i.test(input)) return parseFloat(input);
-        input = input.toString().trim().toLowerCase();
-        const suffixes = {
-          'k':1e3,'m':1e6,'b':1e9,'t':1e12,'qd':1e15,'qn':1e18,
-          'sx':1e21,'sp':1e24,'oc':1e27,'no':1e30,'dc':1e33
-        };
-        let suffix = '';
-        let numberPart = input;
-        for (const s in suffixes) {
-          if (input.endsWith(s)) {
-            suffix = s;
-            numberPart = input.substring(0, input.length - s.length);
-            break;
-          }
-        }
-        const number = parseFloat(numberPart);
-        return isNaN(number) ? NaN : suffix ? number * suffixes[suffix] : number;
-      }
-
-      function abbreviateNumber(num) {
-        const units = [
-          {v:1e33,s:"Dc"},{v:1e30,s:"No"},{v:1e27,s:"Oc"},{v:1e24,s:"Sp"},
-          {v:1e21,s:"Sx"},{v:1e18,s:"Qn"},{v:1e15,s:"Qd"},{v:1e12,s:"T"},
-          {v:1e9,s:"B"},{v:1e6,s:"M"},{v:1e3,s:"K"}
-        ];
-        for (const {v,s} of units) if (num >= v) return (num/v).toFixed(2)+s;
-        return num.toString();
-      }
-
-      function formatTime(minutes) {
-        if (minutes < 60) return `${minutes.toFixed(1)} minutes`;
-        const hours = minutes / 60;
-        if (hours < 24) return `${hours.toFixed(1)} hours`;
-        const days = hours / 24;
-        return `${days.toFixed(1)} days`;
-      }
-
-      
-      function calculateGains() {
-        const statType = document.getElementById("statType").value;
-        const gainPerTick = parseNumberWithSuffix(document.getElementById("gainPerTick").value);
-        const time = parseFloat(document.getElementById("time").value);
-        const hasCompanion = document.getElementById("companionActive").value === "true";
-        const companionGain = hasCompanion ? parseNumberWithSuffix(document.getElementById("companionGain").value) : 0;
-
-        if (isNaN(gainPerTick)) {
-          document.getElementById("result").innerHTML = `<div class="result-item" style="color:var(--error)">Please enter a valid gain per tick</div>`;
-          return;
-        }
-
-        if (isNaN(time) || time <= 0) {
-          document.getElementById("result").innerHTML = `<div class="result-item" style="color:var(--error)">Please enter a valid time</div>`;
-          return;
-        }
-
-        if (hasCompanion && isNaN(companionGain)) {
-          document.getElementById("result").innerHTML = `<div class="result-item" style="color:var(--error)">Please enter valid companion gains</div>`;
-          return;
-        }
-
-        const ticks = ticksPerMinute[statType] * time;
-        const mainGain = gainPerTick * ticks;
-        
-        let companionTotalGain = 0;
-        if (hasCompanion) {
-          const companionTicks = companionTicksPerMinute * time;
-          companionTotalGain = companionGain * companionTicks;
-        }
-
-        const totalGain = mainGain + companionTotalGain;
-
-        document.getElementById("result").innerHTML = `
-          <div class="result-item">
-            <span class="result-label">Training Type:</span>
-            <span class="result-value">${statType.charAt(0).toUpperCase()+statType.slice(1)}</span>
-          </div>
-          <div class="result-item">
-            <span class="result-label">Ticks Per Minute:</span>
-            <span class="result-value">${ticksPerMinute[statType]}</span>
-          </div>
-          <div class="result-item">
-            <span class="result-label">Total Ticks:</span>
-            <span class="result-value">${ticks}</span>
-          </div>
-          <div class="result-item">
-            <span class="result-label">Main Gain:</span>
-            <span class="result-value">${abbreviateNumber(mainGain)}</span>
-          </div>
-          ${hasCompanion ? `
-          <div class="result-item">
-            <span class="result-label">Companion Ticks:</span>
-            <span class="result-value">${companionTicksPerMinute * time}</span>
-          </div>
-          <div class="result-item">
-            <span class="result-label">Companion Gain:</span>
-            <span class="result-value">${abbreviateNumber(companionTotalGain)}</span>
-          </div>` : ''}
-          <div class="result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--border)">
-            <span class="result-label" style="font-weight:700">Total Gain:</span>
-            <span class="result-value" style="font-weight:700">${abbreviateNumber(totalGain)}</span>
-          </div>
-          <div class="result-item">
-            <span class="result-label">Gain Per Minute:</span>
-            <span class="result-value">${abbreviateNumber(totalGain / time)}</span>
-          </div>
-          <div class="result-item">
-            <span class="result-label">Gain Per Hour:</span>
-            <span class="result-value">${abbreviateNumber(totalGain / time * 60)}</span>
-          </div>
-        `;
-      }
-
-      
-      function calculateCoins() {
-        const selectedRankIndex = parseInt(document.getElementById("rankSelect").value);
-        const selectedRank = ranks[selectedRankIndex];
-        const doubleCoins = document.getElementById("doubleCoins").checked;
-        const goldCompanion = document.getElementById("goldCompanion").checked;
-        const timeInput = document.getElementById("coinTimeInput").value;
-        const time = parseInt(timeInput);
-
-        if (!timeInput || isNaN(time) || time <= 0) {
-          document.getElementById("coinResult").innerHTML = `
-            <div class="result-item">
-              <span style="color: var(--error);">Please enter a valid time</span>
-            </div>
-          `;
-          return;
-        }
-
-        let coinsPerMinute = selectedRank.coinPerMinute;
-        let bonuses = [];
-
-        if (doubleCoins) {
-          coinsPerMinute *= 2;
-          bonuses.push("2x Gamepass");
-        }
-
-        if (goldCompanion) {
-          coinsPerMinute *= 1.2;
-          bonuses.push("Gold Companion");
-        }
-
-        const totalCoins = coinsPerMinute * time;
-        const formattedCPM = abbreviateNumber(coinsPerMinute);
-        const formattedTotal = abbreviateNumber(totalCoins);
-
-        let resultHTML = `
-          <div class="result-item">
-            <span class="result-label">Rank:</span>
-            <span class="result-value">${selectedRank.name}</span>
-          </div>
-          <div class="result-item">
-            <span class="result-label">Coins/Min:</span>
-            <span class="result-value">${formattedCPM}</span>
-          </div>
-        `;
-
-        if (bonuses.length > 0) {
-          resultHTML += `
-            <div class="result-item">
-              <span class="result-label">Active Bonuses:</span>
-              <span class="result-value">${bonuses.join(" + ")}</span>
-            </div>
-          `;
-        }
-
-        resultHTML += `
-          <div class="result-item">
-            <span class="result-label">Time:</span>
-            <span class="result-value">${time} minutes</span>
-          </div>
-          <div class="result-item" style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 10px;">
-            <span class="result-label" style="font-size: 1.1em;">Total Earnings:</span>
-            <span class="result-value" style="font-size: 1.1em;">${formattedTotal}</span>
-          </div>
-        `;
-
-        document.getElementById("coinResult").innerHTML = resultHTML;
-      }
-
-      
-      function calculateTimeToGoal() {
-        const statType = document.getElementById("goalStatType").value;
-        const gainPerTick = parseNumberWithSuffix(document.getElementById("goalGainPerTick").value);
-        const companionGain = parseNumberWithSuffix(document.getElementById("goalCompanionGain").value) || 0;
-        const currentStat = parseNumberWithSuffix(document.getElementById("currentStat").value);
-        const desiredStat = parseNumberWithSuffix(document.getElementById("desiredStat").value);
-
-        if (isNaN(gainPerTick)) {
-          document.getElementById("goalResult").innerHTML = `<div class="result-item" style="color:var(--error)">Please enter a valid gain per tick</div>`;
-          return;
-        }
-
-        if (isNaN(currentStat)) {
-          document.getElementById("goalResult").innerHTML = `<div class="result-item" style="color:var(--error)">Please enter your current stat value</div>`;
-          return;
-        }
-
-        if (isNaN(desiredStat) || desiredStat <= currentStat) {
-          document.getElementById("goalResult").innerHTML = `<div class="result-item" style="color:var(--error)">Please enter a valid desired stat higher than current</div>`;
-          return;
-        }
-
-        const neededGain = desiredStat - currentStat;
-        const gainPerMinute = (gainPerTick * ticksPerMinute[statType]) + (companionGain * companionTicksPerMinute);
-        const minutesNeeded = neededGain / gainPerMinute;
-
-        document.getElementById("goalResult").innerHTML = `
-          <div class="result-item">
-            <span class="result-label">Training Type:</span>
-            <span class="result-value">${statType.charAt(0).toUpperCase()+statType.slice(1)}</span>
-          </div>
-          <div class="result-item">
-            <span class="result-label">Current Stat:</span>
-            <span class="result-value">${abbreviateNumber(currentStat)}</span>
-          </div>
-          <div class="result-item">
-            <span class="result-label">Desired Stat:</span>
-            <span class="result-value">${abbreviateNumber(desiredStat)}</span>
-          </div>
-          <div class="result-item">
-            <span class="result-label">Gain Needed:</span>
-            <span class="result-value">${abbreviateNumber(neededGain)}</span>
-          </div>
-          <div class="result-item">
-            <span class="result-label">Gain Per Minute:</span>
-            <span class="result-value">${abbreviateNumber(gainPerMinute)}</span>
-          </div>
-          <div class"result-item" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--border)">
-            <span class="result-label" style="font-weight:700">Time Needed:</span>
-            <span class="result-value" style="font-weight:700">${formatTime(minutesNeeded)}</span>
-          </div>
-          <div class="result-item">
-            <span class="result-label">At This Rate You'll Reach It:</span>
-            <span class="result-value">${new Date(Date.now() + minutesNeeded * 60000).toLocaleString()}</span>
-          </div>
-        `;
-      }
-
-      
-      function saveProfile() {
-        const profileName = document.getElementById("profileName").value.trim();
-        if (!profileName) {
-          alert("Please enter a profile name");
-          return;
-        }
-        
-        const profile = {
-          statType: document.getElementById("statType").value,
-          gainPerTick: document.getElementById("gainPerTick").value,
-          companionActive: document.getElementById("companionActive").value,
-          companionGain: document.getElementById("companionGain").value,
-          time: document.getElementById("time").value
-        };
-        
-        localStorage.setItem(`trainingProfile_${profileName}`, JSON.stringify(profile));
-        alert(`Profile "${profileName}" saved!`);
-      }
-
-      function loadProfile() {
-        const profileName = document.getElementById("profileName").value.trim();
-        if (!profileName) {
-          alert("Please enter a profile name");
-          return;
-        }
-        
-        const savedProfile = localStorage.getItem(`trainingProfile_${profileName}`);
-        if (!savedProfile) {
-          alert(`Profile "${profileName}" not found!`);
-          return;
-        }
-        
-        try {
-          const profile = JSON.parse(savedProfile);
-          document.getElementById("statType").value = profile.statType;
-          document.getElementById("gainPerTick").value = profile.gainPerTick;
-          document.getElementById("companionActive").value = profile.companionActive;
-          document.getElementById("companionGain").value = profile.companionGain || "";
-          if (profile.time) document.getElementById("time").value = profile.time;
-        } catch (e) {
-          alert("Error loading profile");
-          console.error(e);
-        }
-      }
-
-      function saveGoalProfile() {
-        const profileName = document.getElementById("goalProfileName").value.trim();
-        if (!profileName) {
-          alert("Please enter a profile name");
-          return;
-        }
-        
-        const profile = {
-          statType: document.getElementById("goalStatType").value,
-          gainPerTick: document.getElementById("goalGainPerTick").value,
-          companionGain: document.getElementById("goalCompanionGain").value,
-          currentStat: document.getElementById("currentStat").value,
-          desiredStat: document.getElementById("desiredStat").value
-        };
-        
-        localStorage.setItem(`goalProfile_` + profileName, JSON.stringify(profile));
-        alert(`Profile "${profileName}" saved!`);
-      }
-
-      function loadGoalProfile() {
-        const profileName = document.getElementById("goalProfileName").value.trim();
-        if (!profileName) {
-          alert("Please enter a profile name");
-          return;
-        }
-        
-        const savedProfile = localStorage.getItem(`goalProfile_` + profileName);
-        if (!savedProfile) {
-          alert(`Profile "${profileName}" not found!`);
-          return;
-        }
-        
-        try {
-          const profile = JSON.parse(savedProfile);
-          document.getElementById("goalStatType").value = profile.statType;
-          document.getElementById("goalGainPerTick").value = profile.gainPerTick;
-          document.getElementById("goalCompanionGain").value = profile.companionGain || "";
-          document.getElementById("currentStat").value = profile.currentStat || "";
-          document.getElementById("desiredStat").value = profile.desiredStat || "";
-        } catch (e) {
-          alert("Error loading profile");
-          console.error(e);
-        }
-      }
-
-     
-      const companions = [
-        { 
-          name: "Momo", 
-          value: 100, 
-          goldValue: 3000, 
-          atomicValue: 4000, 
-          image: "images/momo.png",
-          isAura: false
-        },
-        { 
-          name: "Eddie", 
-          value: 100, 
-          goldValue: 3000, 
-          atomicValue: 4000, 
-          image: "images/eddie.png",
-          isAura: false
-        },
-        { 
-          name: "Jojo", 
-          value: 100, 
-          goldValue: 3000, 
-          atomicValue: 4000, 
-          image: "images/jojo.png",
-          isAura: false
-        },
-        { 
-          name: "Mino", 
-          value: 100, 
-          goldValue: 3000, 
-          atomicValue: 4000, 
-          image: "images/mino.png",
-          isAura: false
-        },
-        { 
-          name: "Ana", 
-          value: 100, 
-          goldValue: 3000, 
-          atomicValue: 4000, 
-          image: "images/ana.png",
-          isAura: false
-        },
-        { 
-          name: "Turbo", 
-          value: 2500, 
-          goldValue: 15000, 
-          atomicValue: 25000, 
-          image: "images/turbo.png",
-          isAura: false
-        },
-        { 
-          name: "Seidon", 
-          value: 3500, 
-          goldValue: 20000, 
-          atomicValue: 22000, 
-          image: "images/seidon.png",
-          isAura: false
-        },
-        { 
-          name: "Ultra Gogo", 
-          value: 5000, 
-          goldValue: 20000, 
-          atomicValue: 30000, 
-          image: "images/ui.png",
-          isAura: false
-        },
-        { 
-          name: "Mahoraga", 
-          value: 5000, 
-          goldValue: 20000, 
-          atomicValue: 30000, 
-          image: "images/m.png",
-          isAura: false
-        },
-        { 
-          name: "Freeah", 
-          value: 10000, 
-          goldValue: 50000, 
-          atomicValue: 60000, 
-          image: "images/freeah.png",
-          isAura: false
-        },
-        { 
-          name: "Sid", 
-          value: 30000, 
-          goldValue: 70000, 
-          atomicValue: 90000, 
-          image: "images/cid.png",
-          isAura: false
-        },
-        { 
-          name: "Emperor Teach", 
-          value: 200000, 
-          goldValue: 270000, 
-          atomicValue: 290000, 
-          image: "images/emp.png",
-          isAura: false
-        },
-        { 
-          name: "Super Baybe", 
-          value: 220000, 
-          goldValue: 280000, 
-          atomicValue: 300000, 
-          image: "images/sbb.png",
-          isAura: false
-        },
-        { 
-          name: "Naru Baryon", 
-          value: 330000, 
-          goldValue: 400000, 
-          atomicValue: 420000, 
-          image: "images/naru.png",
-          isAura: false
-        },
-        { 
-          name: "BroBro", 
-          value: 520000, 
-          goldValue: 640000, 
-          atomicValue: 650000, 
-          image: "images/brobro.png",
-          isAura: false
-        },
-        { 
-          name: "Demon Galo", 
-          value: 520000, 
-          goldValue: 640000, 
-          atomicValue: 650000, 
-          image: "images/galo.png",
-          isAura: false
-        },
-        { 
-          name: "Better World", 
-          value: 640000, 
-          goldValue: 770000, 
-          atomicValue: 780000, 
-          image: "images/betterworld.png",
-          isAura: false
-        },
-       
-        { 
-          name: "Atomic", 
-          value: 100,
-          image: "images/atomic.png",
-          isAura: true
-        },
-        { 
-          name: "Death", 
-          value: 5000, 
-          image: "images/death.png",
-          isAura: true
-        },
-        { 
-          name: "Solo", 
-          value: 10000, 
-          image: "images/solo.png",
-          isAura: true
-        },
-        { 
-          name: "Babylon", 
-          value: 50000, 
-          image: "images/baby.png",
-          isAura: true
-        },
-        { 
-          name: "Infinity", 
-          value: 420000, 
-          image: "images/inf.png",
-          isAura: true
-        },
-        { 
-          name: "Sacred", 
-          value: 180000, 
-          image: "images/sacred.png",
-          isAura: true
-        },
-        { 
-          name: "Chronology", 
-          value: 520000,
-          image: "images/chrono.png",
-          isAura: true
-        },
-        { 
-          name: "Prodigy", 
-          value: 640000,  
-          image: "images/prodigy.png",
-          isAura: true
-        },
-      ];
-
-      
-      const auras = [
-        { 
-          name: "Atomic", 
-          value: 100,
-          image: "images/atomic.png"
-        },
-        { 
-          name: "Death", 
-          value: 5000, 
-          image: "images/death.png"
-        },
-        { 
-          name: "Solo", 
-          value: 10000, 
-          image: "images/solo.png"
-        },
-        { 
-          name: "Babylon", 
-          value: 50000, 
-          image: "images/baby.png"
-        },
-        { 
-          name: "Infinity", 
-          value: 420000, 
-          image: "images/inf.png"
-        },
-        { 
-          name: "Sacred", 
-          value: 180000, 
-          image: "images/sacred.png"
-        },
-        { 
-          name: "Chronology", 
-          value: 520000,
-          image: "images/chrono.png"
-        },
-        { 
-          name: "Prodigy", 
-          value: 640000,  
-          image: "images/prodigy.png"
-        },
-      ];
-
-     
-      let currentPanel = null; 
-      const yourOffer = [];
-      const theirOffer = [];
-      const modal = document.getElementById('companion-modal');
-      const companionGrid = document.getElementById('companion-grid');
-
-      
-      function populateCompanionGrid() {
-        companionGrid.innerHTML = '';
-        companions.forEach(companion => {
-          const companionOption = document.createElement('div');
-          companionOption.classList.add('companion-option');
-          companionOption.innerHTML = `
-            <img src="${companion.image}" alt="${companion.name}">
-            <span>${companion.name}</span>
-            <span class="companion-value">${formatNumber(companion.value)}</span>
-          `;
-          companionOption.addEventListener('click', () => {
-            addCompanionToOffer(companion);
-            modal.style.display = 'none';
-          });
-          companionGrid.appendChild(companionOption);
-        });
-      }
-
-     
-      document.getElementById('add-your-companion').addEventListener('click', () => {
-        currentPanel = 'yours';
-        modal.style.display = 'flex';
-      });
-
-      
-      document.getElementById('add-their-companion').addEventListener('click', () => {
-        currentPanel = 'theirs';
-        modal.style.display = 'flex';
-      });
-
-      
-      document.getElementById('close-modal').addEventListener('click', () => {
-        modal.style.display = 'none';
-      });
-
-      
-      document.getElementById('calculate-trade').addEventListener('click', calculateTrade);
-
-      
-      function addCompanionToOffer(companion) {
-        if (!currentPanel) return;
-        
-        const offer = currentPanel === 'yours' ? yourOffer : theirOffer;
-        const container = currentPanel === 'yours' 
-          ? document.getElementById('your-offer') 
-          : document.getElementById('their-offer');
-        
-        
-        const existingIndex = offer.findIndex(c => c.name === companion.name && c.trait === undefined);
-        if (existingIndex >= 0) {
-          offer[existingIndex].amount += 1;
-        } else {
-          offer.push({
-            ...companion,
-            amount: 1,
-            trait: undefined 
-          });
-        }
-        
-        updateOfferDisplay(offer, container);
-      }
-
-      
-      function updateOfferDisplay(offer, container) {
-        container.innerHTML = '';
-        
-        offer.forEach((companion, index) => {
-          const companionItem = document.createElement('div');
-          companionItem.classList.add('companion-item');
-          
-          
-          let traitBadge = '';
-          if (companion.trait === 'gold') {
-            traitBadge = '<span class="trait-display gold">GOLD</span>';
-          } else if (companion.trait === 'atomic') {
-            traitBadge = '<span class="trait-display atomic">ATOMIC</span>';
-          }
-          
-          companionItem.innerHTML = `
-            ${traitBadge}
-            <div class="companion-info">
-              <img src="${companion.image}" alt="${companion.name}" class="companion-image">
-              <span class="companion-name">${companion.name}</span>
-            </div>
-            <div class="companion-amount">
-              <input type="number" class="amount-input" value="${companion.amount}" min="1" data-index="${index}">
-              <button class="remove-btn" data-index="${index}">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-            <div class="trait-selector">
-              <i class="fas fa-tag"></i>
-              <div class="trait-options">
-                <div class="trait-option normal" data-trait="normal">
-                  <span class="trait-indicator normal"></span>Normal
+                <div class="guide-item">
+                    <h4 class="guide-item-title"><i class="fas fa-crown"></i> Beatin Dungeons</h4>
+                    <div class="guide-content">
+                        <p>Dungeons are similar to bosses:</p>
+                        <ul>
+                            <li>Mostly the same moves as for bosses.</li>
+                            <li><strong>Sound Breathing</strong> is another meta transformation:
+                                <ul><li>Good damage</li><li>Low cooldowns</li></ul>
+                            </li>
+                            <li>Some players still prefer <strong>Gold Digger</strong>.</li>
+                            <li>With the moves above, you can grind dungeons efficiently. Have a good Companion and use Shadows.</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="trait-option gold" data-trait="gold">
-                  <span class="trait-indicator gold"></span>Gold
-                </div>
-                <div class="trait-option atomic" data-trait="atomic">
-                  <span class="trait-indicator atomic"></span>Atomic
-                </div>
-              </div>
             </div>
-          `;
-          
-          
-          const amountInput = companionItem.querySelector('.amount-input');
-          amountInput.addEventListener('change', (e) => {
-            const newAmount = parseInt(e.target.value) || 1;
-            offer[index].amount = newAmount;
-          });
-          
-          
-          const removeBtn = companionItem.querySelector('.remove-btn');
-          removeBtn.addEventListener('click', () => {
-            offer.splice(index, 1);
-            updateOfferDisplay(offer, container);
-          });
-          
-          
-          const traitSelector = companionItem.querySelector('.trait-selector');
-          const traitOptions = companionItem.querySelector('.trait-options');
-          
-          traitSelector.addEventListener('click', (e) => {
-            e.stopPropagation();
-            traitOptions.style.display = traitOptions.style.display === 'flex' ? 'none' : 'flex';
-          });
-          
-          
-          const traitOptionButtons = companionItem.querySelectorAll('.trait-option');
-          traitOptionButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-              e.stopPropagation();
-              const trait = button.dataset.trait;
-              if (trait === 'normal') {
-                offer[index].trait = undefined;
-              } else {
-                offer[index].trait = trait;
-              }
-              updateOfferDisplay(offer, container);
-            });
-          });
-          
-          
-          document.addEventListener('click', function closeTraitSelector(e) {
-            if (!traitSelector.contains(e.target)) {
-              traitOptions.style.display = 'none';
-            }
-          });
-          
-          container.appendChild(companionItem);
-        });
-      }
 
-      
-      function calculateTrade() {
-        if (yourOffer.length === 0 || theirOffer.length === 0) {
-          alert("Please add companions to both offers");
-          return;
-        }
-
-        
-        const yourTotal = yourOffer.reduce((sum, c) => {
-          let value;
-          if (c.trait === 'gold') {
-            value = c.goldValue * c.amount;
-          } else if (c.trait === 'atomic') {
-            value = c.atomicValue * c.amount;
-          } else {
-            value = c.value * c.amount;
-          }
-          return sum + value;
-        }, 0);
-        
-        const theirTotal = theirOffer.reduce((sum, c) => {
-          let value;
-          if (c.trait === 'gold') {
-            value = c.goldValue * c.amount;
-          } else if (c.trait === 'atomic') {
-            value = c.atomicValue * c.amount;
-          } else {
-            value = c.value * c.amount;
-          }
-          return sum + value;
-        }, 0);
-        
-        const difference = theirTotal - yourTotal;
-
-        
-        document.getElementById('your-value').textContent = formatNumber(yourTotal);
-        document.getElementById('their-value').textContent = formatNumber(theirTotal);
-        document.getElementById('difference-value').textContent = formatNumber(Math.abs(difference));
-
-       
-        let resultText = "Fair Trade";
-        let resultColor = "#7e22ce";
-        
-        if (difference > 0) {
-          resultText = "Good Trade (You Profit)";
-          resultColor = "#22c55e";
-        } else if (difference < 0) {
-          resultText = "Bad Trade (You Lose)";
-          resultColor = "#ef4444";
-        }
-
-        document.getElementById('trade-result-text').textContent = resultText;
-        document.getElementById('trade-result-text').style.color = resultColor;
-        
-        document.getElementById('trade-result').style.display = 'block';
-      }
-
-      
-      function formatNumber(num) {
-        if (num >= 1000000) {
-          return (num / 1000000).toFixed(1) + 'M';
-        }
-        if (num >= 1000) {
-          return (num / 1000).toFixed(1) + 'K';
-        }
-        return num.toString();
-      }
-
-      
-      window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.style.display = 'none';
-        }
-      });
-
-      
-      function populateValuesTab() {
-        const companionsContainer = document.getElementById('companions-values');
-        const aurasContainer = document.getElementById('auras-values');
-        
-        
-        companionsContainer.innerHTML = '';
-        aurasContainer.innerHTML = '';
-        
-        
-        companions.forEach(companion => {
-          if (!companion.isAura) {
-            const valueItem = document.createElement('div');
-            valueItem.classList.add('value-item');
-            
-            let valueDetails = '';
-            if (companion.goldValue && companion.atomicValue) {
-              valueDetails = `
-                <div class="value-details">
-                  <div class="value-detail">
-                    <span class="value-label">Normal:</span>
-                    <span class="value-amount">${formatNumber(companion.value)}</span>
-                  </div>
-                  <div class="value-detail">
-                    <span class="value-label gold-value">Gold:</span>
-                    <span class="value-amount gold-value">${formatNumber(companion.goldValue)}</span>
-                  </div>
-                  <div class="value-detail">
-                    <span class="value-label atomic-value">Atomic:</span>
-                    <span class="value-amount atomic-value">${formatNumber(companion.atomicValue)}</span>
-                  </div>
+            <div class="guide-category">
+                <h3 class="guide-category-title">General Gameplay Tips</h3>
+                <div class="guide-item">
+                    <h4 class="guide-item-title"><i class="fas fa-chart-line"></i> Efficient Stat Training</h4>
+                    <div class="guide-content">
+                        <p>Maximize your training efficiency:</p>
+                        <ul>
+                            <li>Focus on one stat at a time</li>
+                            <li>Upgrade your multiplier for better gains</li>
+                        </ul>
+                    </div>
                 </div>
-              `;
-            } else {
-              valueDetails = `
-                <div class="value-details">
-                  <div class="value-detail">
-                    <span class="value-label">Value:</span>
-                    <span class="value-amount">${formatNumber(companion.value)}</span>
-                  </div>
+
+                <div class="guide-item">
+                    <h4 class="guide-item-title"><i class="fas fa-coins"></i> Coin Farming Strategies</h4>
+                    <div class="guide-content">
+                        <p>Earn coins faster:</p>
+                        <ul>
+                            <li>Complete daily quests</li>
+                            <li>Farm in areas matching your power level</li>
+                            <li>Use coin multipliers when available</li>
+                        </ul>
+                    </div>
                 </div>
-              `;
-            }
-            
-            valueItem.innerHTML = `
-              <img src="${companion.image}" alt="${companion.name}" class="value-image">
-              <div class="value-name">${companion.name}</div>
-              ${valueDetails}
-            `;
-            
-            companionsContainer.appendChild(valueItem);
-          }
-        });
-        
-       
-        auras.forEach(auras => {
-          const valueItem = document.createElement('div');
-          valueItem.classList.add('value-item');
-          
-          valueItem.innerHTML = `
-            <img src="${auras.image}" alt="${auras.name}" class="value-image">
-            <div class="value-name">${auras.name}</div>
-            <div class="value-details">
-              <div class="value-detail">
-                <span class="value-label">Value:</span>
-                <span class="value-amount">${formatNumber(auras.value)}</span>
-              </div>
-            </div>
-          `;
-          
-          aurasContainer.appendChild(valueItem);
-        });
-      }
+            </div> <!-- /guide-category -->
+        </div> <!-- /guides-container -->
+    </div> <!-- /calculator-container -->
+</div> <!-- /guides-tab -->
 
-     
-      function setupSearch() {
-        const searchInput = document.getElementById('values-search');
-        searchInput.addEventListener('input', () => {
-          const searchTerm = searchInput.value.toLowerCase();
-          
-          
-          const companionItems = document.querySelectorAll('#companions-values .value-item');
-          companionItems.forEach(item => {
-            const name = item.querySelector('.value-name').textContent.toLowerCase();
-            item.style.display = name.includes(searchTerm) ? 'flex' : 'none';
-          });
-          
-          
-          const auraItems = document.querySelectorAll('#auras-values .value-item');
-          auraItems.forEach(item => {
-            const name = item.querySelector('.value-name').textContent.toLowerCase();
-            item.style.display = name.includes(searchTerm) ? 'flex' : 'none';
-          });
-        });
-      }
-
-     
-      populateCompanionGrid();
-      populateValuesTab();
-      setupSearch();
-
-      
-      document.getElementById("calculateBtn").addEventListener("click", calculateGains);
-      document.getElementById("calculateCoinsBtn").addEventListener("click", calculateCoins);
-      document.getElementById("calculateGoalBtn").addEventListener("click", calculateTimeToGoal);
-      
-      document.getElementById("saveProfileBtn").addEventListener("click", saveProfile);
-      document.getElementById("loadProfileBtn").addEventListener("click", loadProfile);
-      document.getElementById("saveGoalProfileBtn").addEventListener("click", saveGoalProfile);
-      document.getElementById("loadGoalProfileBtn").addEventListener("click", loadGoalProfile);
-      
-      
-      const inputs = [
-        "gainPerTick", "time", "companionGain", 
-        "goalGainPerTick", "goalCompanionGain", "currentStat", "desiredStat",
-        "coinTimeInput"
-      ];
-      
-      inputs.forEach(id => {
-        document.getElementById(id).addEventListener("keypress", function(e) {
-          if (e.key === "Enter") {
-            if (id === "coinTimeInput") {
-              calculateCoins();
-            } else if (id === "gainPerTick" || id === "time" || id === "companionGain") {
-              calculateGains();
-            } else {
-              calculateTimeToGoal();
-            }
-          }
-        });
-      });
-    });
-  </script>
+<!-- ES modules -->
+<script type="module" src="src/calc.js"></script>
 </body>
 </html>
