@@ -1,363 +1,363 @@
-<!DOCTYPE html>
-<html lang="en">
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coin Calculator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;700&display=swap" rel="stylesheet">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1683895430624790"
-     crossorigin="anonymous"></script>
-  <meta name="google-adsense-account" content="ca-pub-1683895430624790">
-  <style>
-    body {
-      font-family: 'Oxanium', sans-serif;
-      background: #0e0e12;
-      margin: 0;
-      padding: 20px;
-      color: #f0f0f0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      flex-direction: column;
-    }
+<!--<head>-->
+<!--  <meta charset="UTF-8" />-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+<!--  <title>Coin Calculator</title>-->
+<!--  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;700&display=swap" rel="stylesheet">-->
+<!--  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1683895430624790"-->
+<!--     crossorigin="anonymous"></script>-->
+<!--  <meta name="google-adsense-account" content="ca-pub-1683895430624790">-->
+<!--  <style>-->
+<!--    body {-->
+<!--      font-family: 'Oxanium', sans-serif;-->
+<!--      background: #0e0e12;-->
+<!--      margin: 0;-->
+<!--      padding: 20px;-->
+<!--      color: #f0f0f0;-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      align-items: center;-->
+<!--      min-height: 100vh;-->
+<!--      flex-direction: column;-->
+<!--    }-->
 
-    .navbar {
-      background-color: #1e1e26;
-      width: 100%;
-      max-width: 800px;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(0, 195, 255, 0.2);
-      border-radius: 10px;
-      margin-bottom: 25px;
-    }
+<!--    .navbar {-->
+<!--      background-color: #1e1e26;-->
+<!--      width: 100%;-->
+<!--      max-width: 800px;-->
+<!--      padding: 15px;-->
+<!--      text-align: center;-->
+<!--      box-shadow: 0 2px 10px rgba(0, 195, 255, 0.2);-->
+<!--      border-radius: 10px;-->
+<!--      margin-bottom: 25px;-->
+<!--    }-->
 
-    .navbar a {
-      color: #00c3ff;
-      font-size: 18px;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: all 0.2s ease;
-    }
+<!--    .navbar a {-->
+<!--      color: #00c3ff;-->
+<!--      font-size: 18px;-->
+<!--      margin: 0 15px;-->
+<!--      text-decoration: none;-->
+<!--      font-weight: bold;-->
+<!--      transition: all 0.2s ease;-->
+<!--    }-->
 
-    .navbar a:hover {
-      text-shadow: 0 0 8px rgba(0, 195, 255, 0.6);
-    }
+<!--    .navbar a:hover {-->
+<!--      text-shadow: 0 0 8px rgba(0, 195, 255, 0.6);-->
+<!--    }-->
 
-    .container {
-      background: #1c1c24;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 0 30px rgba(0, 195, 255, 0.1);
-      max-width: 700px;
-      width: 100%;
-    }
+<!--    .container {-->
+<!--      background: #1c1c24;-->
+<!--      padding: 30px;-->
+<!--      border-radius: 16px;-->
+<!--      box-shadow: 0 0 30px rgba(0, 195, 255, 0.1);-->
+<!--      max-width: 700px;-->
+<!--      width: 100%;-->
+<!--    }-->
 
-    .logo {
-      display: block;
-      margin: 0 auto 20px;
-      max-width: 120px;
-      filter: drop-shadow(0 0 10px #00c3ff);
-    }
+<!--    .logo {-->
+<!--      display: block;-->
+<!--      margin: 0 auto 20px;-->
+<!--      max-width: 120px;-->
+<!--      filter: drop-shadow(0 0 10px #00c3ff);-->
+<!--    }-->
 
-    h1 {
-      text-align: center;
-      font-size: 32px;
-      margin-bottom: 10px;
-      background: linear-gradient(90deg, #00c3ff, #ff1b6b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+<!--    h1 {-->
+<!--      text-align: center;-->
+<!--      font-size: 32px;-->
+<!--      margin-bottom: 10px;-->
+<!--      background: linear-gradient(90deg, #00c3ff, #ff1b6b);-->
+<!--      -webkit-background-clip: text;-->
+<!--      -webkit-text-fill-color: transparent;-->
+<!--    }-->
 
-    .subtitle {
-      text-align: center;
-      color: #bbb;
-      font-size: 14px;
-      margin-bottom: 25px;
-    }
+<!--    .subtitle {-->
+<!--      text-align: center;-->
+<!--      color: #bbb;-->
+<!--      font-size: 14px;-->
+<!--      margin-bottom: 25px;-->
+<!--    }-->
 
-    .form-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-bottom: 15px;
-      align-items: center;
-    }
+<!--    .form-group {-->
+<!--      display: grid;-->
+<!--      grid-template-columns: 1fr 1fr;-->
+<!--      gap: 15px;-->
+<!--      margin-bottom: 15px;-->
+<!--      align-items: center;-->
+<!--    }-->
 
-    label {
-      font-size: 14px;
-      color: #bbb;
-      text-align: right;
-    }
+<!--    label {-->
+<!--      font-size: 14px;-->
+<!--      color: #bbb;-->
+<!--      text-align: right;-->
+<!--    }-->
 
-    input, select {
-      background: #292933;
-      border: 1px solid #444;
-      color: #f0f0f0;
-      padding: 10px 12px;
-      font-size: 15px;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-    }
+<!--    input, select {-->
+<!--      background: #292933;-->
+<!--      border: 1px solid #444;-->
+<!--      color: #f0f0f0;-->
+<!--      padding: 10px 12px;-->
+<!--      font-size: 15px;-->
+<!--      border-radius: 8px;-->
+<!--      transition: all 0.2s ease;-->
+<!--    }-->
 
-    input:focus, select:focus {
-      border-color: #00c3ff;
-      box-shadow: 0 0 8px rgba(0, 195, 255, 0.4);
-      outline: none;
-    }
+<!--    input:focus, select:focus {-->
+<!--      border-color: #00c3ff;-->
+<!--      box-shadow: 0 0 8px rgba(0, 195, 255, 0.4);-->
+<!--      outline: none;-->
+<!--    }-->
 
-    .checkbox-container {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 15px;
-      justify-content: center;
-    }
+<!--    .checkbox-container {-->
+<!--      display: flex;-->
+<!--      gap: 15px;-->
+<!--      margin-bottom: 15px;-->
+<!--      justify-content: center;-->
+<!--    }-->
 
-    .checkbox-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      color: #bbb;
-    }
+<!--    .checkbox-label {-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      gap: 8px;-->
+<!--      font-size: 14px;-->
+<!--      color: #bbb;-->
+<!--    }-->
 
-    button {
-      background: linear-gradient(135deg, #00c3ff, #ff1b6b);
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 15px;
-      width: 100%;
-      transition: all 0.2s ease;
-    }
+<!--    button {-->
+<!--      background: linear-gradient(135deg, #00c3ff, #ff1b6b);-->
+<!--      color: white;-->
+<!--      font-size: 16px;-->
+<!--      font-weight: bold;-->
+<!--      padding: 12px;-->
+<!--      border: none;-->
+<!--      border-radius: 10px;-->
+<!--      cursor: pointer;-->
+<!--      margin-top: 15px;-->
+<!--      width: 100%;-->
+<!--      transition: all 0.2s ease;-->
+<!--    }-->
 
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(255, 27, 107, 0.4);
-    }
+<!--    button:hover {-->
+<!--      transform: translateY(-2px);-->
+<!--      box-shadow: 0 5px 15px rgba(255, 27, 107, 0.4);-->
+<!--    }-->
 
-    .result {
-      margin-top: 25px;
-      background: #222228;
-      padding: 20px;
-      border-left: 4px solid #00c3ff;
-      border-radius: 8px;
-    }
+<!--    .result {-->
+<!--      margin-top: 25px;-->
+<!--      background: #222228;-->
+<!--      padding: 20px;-->
+<!--      border-left: 4px solid #00c3ff;-->
+<!--      border-radius: 8px;-->
+<!--    }-->
 
-    .result-item {
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-    }
+<!--    .result-item {-->
+<!--      margin-bottom: 8px;-->
+<!--      display: flex;-->
+<!--      justify-content: space-between;-->
+<!--    }-->
 
-    .result-value {
-      font-weight: bold;
-      color: #00c3ff;
-    }
+<!--    .result-value {-->
+<!--      font-weight: bold;-->
+<!--      color: #00c3ff;-->
+<!--    }-->
 
-    @media (max-width: 600px) {
-      .form-group {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
-      
-      label {
-        text-align: left;
-      }
-      
-      .checkbox-container {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-  </style>
-</head>
+<!--    @media (max-width: 600px) {-->
+<!--      .form-group {-->
+<!--        grid-template-columns: 1fr;-->
+<!--        gap: 8px;-->
+<!--      }-->
+<!--      -->
+<!--      label {-->
+<!--        text-align: left;-->
+<!--      }-->
+<!--      -->
+<!--      .checkbox-container {-->
+<!--        flex-direction: column;-->
+<!--        align-items: flex-start;-->
+<!--      }-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
 
-<body>
-  <div class="navbar">
-    <a href="index.html">Stats Calculator</a>
-    <a href="index3.html">Trading Calculator</a>
-  </div>
+<!--<body>-->
+<!--  <div class="navbar">-->
+<!--    <a href="index.html">Stats Calculator</a>-->
+<!--    <a href="index3.html">Trading Calculator</a>-->
+<!--  </div>-->
 
-  <div class="container">
-    <img src="image1.png" alt="Coin Calculator Logo" class="logo">
-    <h1>Coin Calculator</h1>
-    <p class="subtitle">Calculate your coin earnings based on rank and bonuses</p>
+<!--  <div class="container">-->
+<!--    <img src="images/image1.png" alt="Coin Calculator Logo" class="logo">-->
+<!--    <h1>Coin Calculator</h1>-->
+<!--    <p class="subtitle">Calculate your coin earnings based on rank and bonuses</p>-->
 
-    <div class="form-group">
-      <label for="rankSelect">Select Rank:</label>
-      <select id="rankSelect">
-        <option value="0">Rookie</option>
-        <option value="1">Ninja</option>
-        <option value="2">Pirate</option>
-        <option value="3">Ghoul</option>
-        <option value="4">Hero</option>
-        <option value="5">Reaper</option>
-        <option value="6">Warrior</option>
-        <option value="7">Sin</option>
-        <option value="8">Mage</option>
-        <option value="9">Demon</option>
-        <option value="10">Emperor</option>
-        <option value="11">Elder</option>
-        <option value="12">Overlord</option>
-        <option value="13">Leader</option>
-        <option value="14">Deity</option>
-        <option value="15">Sage</option>
-        <option value="16">Mask</option>
-        <option value="17">Shinigami</option>
-        <option value="18">Hashira</option>
-        <option value="19">Destroyer</option>
-        <option value="20">Otsutsuki</option>
-        <option value="21">Pirate King</option>
-      </select>
-    </div>
+<!--    <div class="form-group">-->
+<!--      <label for="rankSelect">Select Rank:</label>-->
+<!--      <select id="rankSelect">-->
+<!--        <option value="0">Rookie</option>-->
+<!--        <option value="1">Ninja</option>-->
+<!--        <option value="2">Pirate</option>-->
+<!--        <option value="3">Ghoul</option>-->
+<!--        <option value="4">Hero</option>-->
+<!--        <option value="5">Reaper</option>-->
+<!--        <option value="6">Warrior</option>-->
+<!--        <option value="7">Sin</option>-->
+<!--        <option value="8">Mage</option>-->
+<!--        <option value="9">Demon</option>-->
+<!--        <option value="10">Emperor</option>-->
+<!--        <option value="11">Elder</option>-->
+<!--        <option value="12">Overlord</option>-->
+<!--        <option value="13">Leader</option>-->
+<!--        <option value="14">Deity</option>-->
+<!--        <option value="15">Sage</option>-->
+<!--        <option value="16">Mask</option>-->
+<!--        <option value="17">Shinigami</option>-->
+<!--        <option value="18">Hashira</option>-->
+<!--        <option value="19">Destroyer</option>-->
+<!--        <option value="20">Otsutsuki</option>-->
+<!--        <option value="21">Pirate King</option>-->
+<!--      </select>-->
+<!--    </div>-->
 
-    <div class="checkbox-container">
-      <label class="checkbox-label">
-        <input type="checkbox" id="doubleCoins"> 2x Coins Gamepass
-      </label>
-      <label class="checkbox-label">
-        <input type="checkbox" id="goldCompanion"> Gold Companion (+20%)
-      </label>
-    </div>
+<!--    <div class="checkbox-container">-->
+<!--      <label class="checkbox-label">-->
+<!--        <input type="checkbox" id="doubleCoins"> 2x Coins Gamepass-->
+<!--      </label>-->
+<!--      <label class="checkbox-label">-->
+<!--        <input type="checkbox" id="goldCompanion"> Gold Companion (+20%)-->
+<!--      </label>-->
+<!--    </div>-->
 
-    <div class="form-group">
-      <label for="timeInput">Time (minutes):</label>
-      <input type="number" id="timeInput" placeholder="Enter time in minutes">
-    </div>
+<!--    <div class="form-group">-->
+<!--      <label for="timeInput">Time (minutes):</label>-->
+<!--      <input type="number" id="timeInput" placeholder="Enter time in minutes">-->
+<!--    </div>-->
 
-    <button onclick="calculateCoins()">Calculate Earnings</button>
+<!--    <button onclick="calculateCoins()">Calculate Earnings</button>-->
 
-    <div class="result" id="result">
-      <div class="result-item">
-        <span>Select a rank and enter time to calculate</span>
-      </div>
-    </div>
-  </div>
+<!--    <div class="result" id="result">-->
+<!--      <div class="result-item">-->
+<!--        <span>Select a rank and enter time to calculate</span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 
-  <script>
-    const ranks = [
-      { name: "Rookie", coinPerMinute: 5 },
-      { name: "Ninja", coinPerMinute: 10 },
-      { name: "Pirate", coinPerMinute: 25 },
-      { name: "Ghoul", coinPerMinute: 50 },
-      { name: "Hero", coinPerMinute: 100 },
-      { name: "Reaper", coinPerMinute: 250 },
-      { name: "Warrior", coinPerMinute: 500 },
-      { name: "Sin", coinPerMinute: 1000 },
-      { name: "Mage", coinPerMinute: 5000 },
-      { name: "Demon", coinPerMinute: 10000 },
-      { name: "Emperor", coinPerMinute: 50000 },
-      { name: "Elder", coinPerMinute: 100000 },
-      { name: "Overlord", coinPerMinute: 500000 },
-      { name: "Leader", coinPerMinute: 1000000 },
-      { name: "Deity", coinPerMinute: 5000000 },
-      { name: "Sage", coinPerMinute: 10000000 },
-      { name: "Mask", coinPerMinute: 50000000 },
-      { name: "Shinigami", coinPerMinute: 100000000 },
-      { name: "Hashira", coinPerMinute: 500000000 },
-      { name: "Destroyer", coinPerMinute: 1000000000 },
-      { name: "Otsutsuki", coinPerMinute: 5000000000 },
-      { name: "Pirate King", coinPerMinute: 10000000000 }
-    ];
+<!--  <script>-->
+<!--    const ranks = [-->
+<!--      { name: "Rookie", coinPerMinute: 5 },-->
+<!--      { name: "Ninja", coinPerMinute: 10 },-->
+<!--      { name: "Pirate", coinPerMinute: 25 },-->
+<!--      { name: "Ghoul", coinPerMinute: 50 },-->
+<!--      { name: "Hero", coinPerMinute: 100 },-->
+<!--      { name: "Reaper", coinPerMinute: 250 },-->
+<!--      { name: "Warrior", coinPerMinute: 500 },-->
+<!--      { name: "Sin", coinPerMinute: 1000 },-->
+<!--      { name: "Mage", coinPerMinute: 5000 },-->
+<!--      { name: "Demon", coinPerMinute: 10000 },-->
+<!--      { name: "Emperor", coinPerMinute: 50000 },-->
+<!--      { name: "Elder", coinPerMinute: 100000 },-->
+<!--      { name: "Overlord", coinPerMinute: 500000 },-->
+<!--      { name: "Leader", coinPerMinute: 1000000 },-->
+<!--      { name: "Deity", coinPerMinute: 5000000 },-->
+<!--      { name: "Sage", coinPerMinute: 10000000 },-->
+<!--      { name: "Mask", coinPerMinute: 50000000 },-->
+<!--      { name: "Shinigami", coinPerMinute: 100000000 },-->
+<!--      { name: "Hashira", coinPerMinute: 500000000 },-->
+<!--      { name: "Destroyer", coinPerMinute: 1000000000 },-->
+<!--      { name: "Otsutsuki", coinPerMinute: 5000000000 },-->
+<!--      { name: "Pirate King", coinPerMinute: 10000000000 }-->
+<!--    ];-->
 
-    function abbreviateNumber(num) {
-      const units = [
-        { value: 1e33, symbol: "Dc" },
-        { value: 1e30, symbol: "No" },
-        { value: 1e27, symbol: "Oc" },
-        { value: 1e24, symbol: "Sp" },
-        { value: 1e21, symbol: "Sx" },
-        { value: 1e18, symbol: "Qn" },
-        { value: 1e15, symbol: "Qd" },
-        { value: 1e12, symbol: "T" },
-        { value: 1e9, symbol: "B" },
-        { value: 1e6, symbol: "M" },
-        { value: 1e3, symbol: "K" }
-      ];
-      
-      for (const { value, symbol } of units) {
-        if (num >= value) {
-          return (num / value).toFixed(2) + symbol;
-        }
-      }
-      return num.toString();
-    }
+<!--    function abbreviateNumber(num) {-->
+<!--      const units = [-->
+<!--        { value: 1e33, symbol: "Dc" },-->
+<!--        { value: 1e30, symbol: "No" },-->
+<!--        { value: 1e27, symbol: "Oc" },-->
+<!--        { value: 1e24, symbol: "Sp" },-->
+<!--        { value: 1e21, symbol: "Sx" },-->
+<!--        { value: 1e18, symbol: "Qn" },-->
+<!--        { value: 1e15, symbol: "Qd" },-->
+<!--        { value: 1e12, symbol: "T" },-->
+<!--        { value: 1e9, symbol: "B" },-->
+<!--        { value: 1e6, symbol: "M" },-->
+<!--        { value: 1e3, symbol: "K" }-->
+<!--      ];-->
+<!--      -->
+<!--      for (const { value, symbol } of units) {-->
+<!--        if (num >= value) {-->
+<!--          return (num / value).toFixed(2) + symbol;-->
+<!--        }-->
+<!--      }-->
+<!--      return num.toString();-->
+<!--    }-->
 
-    function calculateCoins() {
-      const selectedRankIndex = parseInt(document.getElementById("rankSelect").value);
-      const selectedRank = ranks[selectedRankIndex];
-      const doubleCoins = document.getElementById("doubleCoins").checked;
-      const goldCompanion = document.getElementById("goldCompanion").checked;
-      const timeInput = document.getElementById("timeInput").value;
-      const time = parseInt(timeInput);
+<!--    function calculateCoins() {-->
+<!--      const selectedRankIndex = parseInt(document.getElementById("rankSelect").value);-->
+<!--      const selectedRank = ranks[selectedRankIndex];-->
+<!--      const doubleCoins = document.getElementById("doubleCoins").checked;-->
+<!--      const goldCompanion = document.getElementById("goldCompanion").checked;-->
+<!--      const timeInput = document.getElementById("timeInput").value;-->
+<!--      const time = parseInt(timeInput);-->
 
-      if (!timeInput || isNaN(time) || time <= 0) {
-        document.getElementById("result").innerHTML = `
-          <div class="result-item">
-            <span style="color: #ff6b6b;">Please enter a valid time</span>
-          </div>
-        `;
-        return;
-      }
+<!--      if (!timeInput || isNaN(time) || time <= 0) {-->
+<!--        document.getElementById("result").innerHTML = `-->
+<!--          <div class="result-item">-->
+<!--            <span style="color: #ff6b6b;">Please enter a valid time</span>-->
+<!--          </div>-->
+<!--        `;-->
+<!--        return;-->
+<!--      }-->
 
-      let coinsPerMinute = selectedRank.coinPerMinute;
-      let bonuses = [];
+<!--      let coinsPerMinute = selectedRank.coinPerMinute;-->
+<!--      let bonuses = [];-->
 
-      if (doubleCoins) {
-        coinsPerMinute *= 2;
-        bonuses.push("2x Gamepass");
-      }
+<!--      if (doubleCoins) {-->
+<!--        coinsPerMinute *= 2;-->
+<!--        bonuses.push("2x Gamepass");-->
+<!--      }-->
 
-      if (goldCompanion) {
-        coinsPerMinute *= 1.2;
-        bonuses.push("Gold Companion");
-      }
+<!--      if (goldCompanion) {-->
+<!--        coinsPerMinute *= 1.2;-->
+<!--        bonuses.push("Gold Companion");-->
+<!--      }-->
 
-      const totalCoins = coinsPerMinute * time;
-      const formattedCPM = abbreviateNumber(coinsPerMinute);
-      const formattedTotal = abbreviateNumber(totalCoins);
+<!--      const totalCoins = coinsPerMinute * time;-->
+<!--      const formattedCPM = abbreviateNumber(coinsPerMinute);-->
+<!--      const formattedTotal = abbreviateNumber(totalCoins);-->
 
-      let resultHTML = `
-        <div class="result-item">
-          <span>Rank:</span>
-          <span class="result-value">${selectedRank.name}</span>
-        </div>
-        <div class="result-item">
-          <span>Coins/Min:</span>
-          <span class="result-value">${formattedCPM}</span>
-        </div>
-      `;
+<!--      let resultHTML = `-->
+<!--        <div class="result-item">-->
+<!--          <span>Rank:</span>-->
+<!--          <span class="result-value">${selectedRank.name}</span>-->
+<!--        </div>-->
+<!--        <div class="result-item">-->
+<!--          <span>Coins/Min:</span>-->
+<!--          <span class="result-value">${formattedCPM}</span>-->
+<!--        </div>-->
+<!--      `;-->
 
-      if (bonuses.length > 0) {
-        resultHTML += `
-          <div class="result-item">
-            <span>Active Bonuses:</span>
-            <span class="result-value">${bonuses.join(" + ")}</span>
-          </div>
-        `;
-      }
+<!--      if (bonuses.length > 0) {-->
+<!--        resultHTML += `-->
+<!--          <div class="result-item">-->
+<!--            <span>Active Bonuses:</span>-->
+<!--            <span class="result-value">${bonuses.join(" + ")}</span>-->
+<!--          </div>-->
+<!--        `;-->
+<!--      }-->
 
-      resultHTML += `
-        <div class="result-item">
-          <span>Time:</span>
-          <span class="result-value">${time} minutes</span>
-        </div>
-        <div class="result-item" style="margin-top: 15px; border-top: 1px solid #333; padding-top: 10px;">
-          <span style="font-size: 1.1em;">Total Earnings:</span>
-          <span class="result-value" style="font-size: 1.1em;">${formattedTotal}</span>
-        </div>
-      `;
+<!--      resultHTML += `-->
+<!--        <div class="result-item">-->
+<!--          <span>Time:</span>-->
+<!--          <span class="result-value">${time} minutes</span>-->
+<!--        </div>-->
+<!--        <div class="result-item" style="margin-top: 15px; border-top: 1px solid #333; padding-top: 10px;">-->
+<!--          <span style="font-size: 1.1em;">Total Earnings:</span>-->
+<!--          <span class="result-value" style="font-size: 1.1em;">${formattedTotal}</span>-->
+<!--        </div>-->
+<!--      `;-->
 
-      document.getElementById("result").innerHTML = resultHTML;
-    }
-  </script>
-</body>
-</html>
+<!--      document.getElementById("result").innerHTML = resultHTML;-->
+<!--    }-->
+<!--  </script>-->
+<!--</body>-->
+<!--</html>-->
