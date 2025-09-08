@@ -15,21 +15,23 @@ Calculators and tools for **Anime Simulator** to help players with stats, coins,
 ---
 
 ## 📂 Project Structure
+```
 project/
-├── index.html # Main page
+├── index.html                 # Main page
 ├── src/
-│ ├── calc.js # App logic
-│ ├── data.js # Companions & Auras data
-│ ├── utils.js # Helper functions for parsing and formatting
-│ └── styles.css # Theme & layout styles
-├── images/ # Icons & companion images
-│ ├── momo.png
-│ ├── eddie.png
-│ └── ...
-├── old/ # Deprecated/Old pages
-│ ├── index2.html
-│ └── index3.html
+│   ├── calc.js               # App logic
+│   ├── data.js               # Companions & Auras data
+│   ├── utils.js              # Helper functions for parsing and formatting
+│   └── styles.css           # Theme & layout styles
+├── images/                   # Icons & companion images
+│   ├── momo.png
+│   ├── eddie.png
+│   └── ...
+├── old/                      # Deprecated/Old pages
+│   ├── index2.html
+│   └── index3.html
 └── README.md
+```
 
 ---
 
